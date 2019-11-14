@@ -1,6 +1,6 @@
 package com.skotori.sunzboot.module.sys.mapper;
 
-import com.skotori.sunzboot.module.sys.model.SysPermission;
+import com.skotori.sunzboot.module.sys.model.SysPower;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -11,13 +11,13 @@ import java.util.List;
  * @date 2019/11/06 20:38
  */
 @Mapper
-public interface SysPermissionMapper {
+public interface SysPowerMapper {
 
     /**
      * 通过角色id数组查询权限数组
      * @param roleIds
      * @return
      */
-    List<SysPermission> selectPermissionListByRoleIds(List<Integer> roleIds);
+    List<SysPower> selectPowerListByRoleIds(List<Integer> roleIds);
 
 }

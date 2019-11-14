@@ -34,14 +34,16 @@ public class SysUser {
     private Integer deptId;
     //状态(1：启用  2：禁用  3：删除）
     private Integer status;
+    //备注
+    private String note;
     //创建时间
     private Date createTime;
     //创建人
-    private Integer createUserId;
+    private Integer createUser;
     //更新时间
     private Date updateTime;
     //更新人
-    private Integer updateUserId;
+    private Integer updateUser;
     //角色列表
     private List<SysRole> roleList;
 
@@ -141,6 +143,14 @@ public class SysUser {
         this.status = status;
     }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -149,12 +159,12 @@ public class SysUser {
         this.createTime = createTime;
     }
 
-    public Integer getCreateUserId() {
-        return createUserId;
+    public Integer getCreateUser() {
+        return createUser;
     }
 
-    public void setCreateUserId(Integer createUserId) {
-        this.createUserId = createUserId;
+    public void setCreateUser(Integer createUser) {
+        this.createUser = createUser;
     }
 
     public Date getUpdateTime() {
@@ -165,12 +175,12 @@ public class SysUser {
         this.updateTime = updateTime;
     }
 
-    public Integer getUpdateUserId() {
-        return updateUserId;
+    public Integer getUpdateUser() {
+        return updateUser;
     }
 
-    public void setUpdateUserId(Integer updateUserId) {
-        this.updateUserId = updateUserId;
+    public void setUpdateUser(Integer updateUser) {
+        this.updateUser = updateUser;
     }
 
     public List<SysRole> getRoleList() {
@@ -196,10 +206,11 @@ public class SysUser {
                 ", phone='" + phone + '\'' +
                 ", deptId=" + deptId +
                 ", status=" + status +
+                ", note='" + note + '\'' +
                 ", createTime=" + createTime +
-                ", createUserId=" + createUserId +
+                ", createUser=" + createUser +
                 ", updateTime=" + updateTime +
-                ", updateUserId=" + updateUserId +
+                ", updateUser=" + updateUser +
                 ", roleList=" + roleList +
                 '}';
     }

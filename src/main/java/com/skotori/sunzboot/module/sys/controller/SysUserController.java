@@ -1,7 +1,6 @@
 package com.skotori.sunzboot.module.sys.controller;
 
 import com.skotori.sunzboot.common.result.Result;
-import com.skotori.sunzboot.module.sys.model.SysUser;
 import com.skotori.sunzboot.module.sys.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +22,7 @@ public class SysUserController {
 
     @GetMapping("query")
     public Result query(@RequestParam("account") String account){
-        SysUser user = sysUserService.queryUser(account);
-        return Result.success(user);
+        return Result.success(sysUserService.queryUser(account));
     }
 
 }

@@ -8,7 +8,7 @@ import java.util.List;
  * @author skotori
  * @date 2019/11/06 20:39
  */
-public class SysPermission {
+public class SysPower {
 
     //主键id
     private Integer id;
@@ -16,32 +16,32 @@ public class SysPermission {
     private Integer pid;
     //父权限id列表
     private String pids;
-    //权限编码
+    //编码
     private String code;
     //名称
     private String name;
-    //url地址
+    //url
     private String url;
-    //是否是菜单（1：是  0：不是）
-    private Integer isMenu;
-    //菜单是否默认打开（1：打开  0：不打开）
-    private Integer isOpen;
-    //菜单图标
+    //图标
     private String icon;
-    //菜单排序号
+    //排序号
     private Integer num;
-    //菜单层级
+    //层级
     private Integer level;
+    //类型(1：菜单 2：页面元素 3：文件 4：功能操作)
+    private Integer type;
     //状态(1：启用  2：禁用  3：删除）
     private Integer status;
+    //备注
+    private String note;
     //创建时间
     private Date createTime;
     //创建人
-    private Integer createUserId;
+    private Integer createUser;
     //更新时间
     private Date updateTime;
     //更新人
-    private Integer updateUserId;
+    private Integer updateUser;
     //角色列表
     private List<SysRole> roleList;
 
@@ -93,22 +93,6 @@ public class SysPermission {
         this.url = url;
     }
 
-    public Integer getIsMenu() {
-        return isMenu;
-    }
-
-    public void setIsMenu(Integer isMenu) {
-        this.isMenu = isMenu;
-    }
-
-    public Integer getIsOpen() {
-        return isOpen;
-    }
-
-    public void setIsOpen(Integer isOpen) {
-        this.isOpen = isOpen;
-    }
-
     public String getIcon() {
         return icon;
     }
@@ -133,12 +117,28 @@ public class SysPermission {
         this.level = level;
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public Integer getStatus() {
         return status;
     }
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public Date getCreateTime() {
@@ -149,12 +149,12 @@ public class SysPermission {
         this.createTime = createTime;
     }
 
-    public Integer getCreateUserId() {
-        return createUserId;
+    public Integer getCreateUser() {
+        return createUser;
     }
 
-    public void setCreateUserId(Integer createUserId) {
-        this.createUserId = createUserId;
+    public void setCreateUser(Integer createUser) {
+        this.createUser = createUser;
     }
 
     public Date getUpdateTime() {
@@ -165,12 +165,12 @@ public class SysPermission {
         this.updateTime = updateTime;
     }
 
-    public Integer getUpdateUserId() {
-        return updateUserId;
+    public Integer getUpdateUser() {
+        return updateUser;
     }
 
-    public void setUpdateUserId(Integer updateUserId) {
-        this.updateUserId = updateUserId;
+    public void setUpdateUser(Integer updateUser) {
+        this.updateUser = updateUser;
     }
 
     public List<SysRole> getRoleList() {
@@ -183,23 +183,23 @@ public class SysPermission {
 
     @Override
     public String toString() {
-        return "SysPermission{" +
+        return "SysPower{" +
                 "id=" + id +
                 ", pid=" + pid +
                 ", pids='" + pids + '\'' +
                 ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
-                ", isMenu=" + isMenu +
-                ", isOpen=" + isOpen +
                 ", icon='" + icon + '\'' +
                 ", num=" + num +
                 ", level=" + level +
+                ", type=" + type +
                 ", status=" + status +
+                ", note='" + note + '\'' +
                 ", createTime=" + createTime +
-                ", createUserId=" + createUserId +
+                ", createUser=" + createUser +
                 ", updateTime=" + updateTime +
-                ", updateUserId=" + updateUserId +
+                ", updateUser=" + updateUser +
                 ", roleList=" + roleList +
                 '}';
     }
