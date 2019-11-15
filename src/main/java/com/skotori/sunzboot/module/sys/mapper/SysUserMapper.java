@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface SysUserMapper {
 
     /**
-     * 通过账号查询管理员
+     * 通过账号查询用户信息
      * @param account
      * @return
      */

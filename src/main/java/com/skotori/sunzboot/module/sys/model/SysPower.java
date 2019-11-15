@@ -10,40 +10,40 @@ import java.util.List;
  */
 public class SysPower {
 
-    //主键id
+    // 主键id
     private Integer id;
-    //父权限id
+    // 父权限id
     private Integer pid;
-    //父权限id列表
+    // 父权限id列表
     private String pids;
-    //编码
+    // 编码
     private String code;
-    //名称
+    // 名称
     private String name;
-    //url
+    // url
     private String url;
-    //图标
+    // 图标
     private String icon;
-    //排序号
+    // 排序号
     private Integer num;
-    //层级
+    // 层级
     private Integer level;
-    //类型(1：菜单 2：页面元素 3：文件 4：功能操作)
+    // 类型(1：菜单 2：页面元素 3：文件 4：功能操作)
     private Integer type;
-    //状态(1：启用  2：禁用  3：删除）
+    // 状态(1：启用  2：禁用  3：删除）
     private Integer status;
-    //备注
+    // 备注
     private String note;
-    //创建时间
+    // 创建时间
     private Date createTime;
-    //创建人
+    // 创建人
     private Integer createUser;
-    //更新时间
+    // 更新时间
     private Date updateTime;
-    //更新人
+    // 更新人
     private Integer updateUser;
-    //角色列表
-    private List<SysRole> roleList;
+    // 角色id列表
+    private List<Integer> roleIds;
 
     public Integer getId() {
         return id;
@@ -173,12 +173,12 @@ public class SysPower {
         this.updateUser = updateUser;
     }
 
-    public List<SysRole> getRoleList() {
-        return roleList;
+    public List<Integer> getRoleIds() {
+        return roleIds;
     }
 
-    public void setRoleList(List<SysRole> roleList) {
-        this.roleList = roleList;
+    public void setRoleIds(List<Integer> roleIds) {
+        this.roleIds = roleIds;
     }
 
     @Override
@@ -200,7 +200,7 @@ public class SysPower {
                 ", createUser=" + createUser +
                 ", updateTime=" + updateTime +
                 ", updateUser=" + updateUser +
-                ", roleList=" + roleList +
+                ", roleIds=" + roleIds +
                 '}';
     }
 }

@@ -2,12 +2,6 @@ package com.skotori.sunzboot.common.shiro;
 
 import com.skotori.sunzboot.common.jwt.JWTToken;
 import com.skotori.sunzboot.common.jwt.JWTUtil;
-import com.skotori.sunzboot.module.sys.mapper.SysPowerMapper;
-import com.skotori.sunzboot.module.sys.mapper.SysRoleMapper;
-import com.skotori.sunzboot.module.sys.mapper.SysUserMapper;
-import com.skotori.sunzboot.module.sys.model.SysPower;
-import com.skotori.sunzboot.module.sys.model.SysRole;
-import com.skotori.sunzboot.module.sys.model.SysUser;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -16,11 +10,8 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,14 +21,8 @@ import java.util.Set;
  */
 public class ShiroRealm extends AuthorizingRealm {
 
-    @Resource
-    private SysUserMapper sysUserMapper;
-
-    @Resource
-    private SysRoleMapper sysRoleMapper;
-
-    @Resource
-    private SysPowerMapper sysPowerMapper;
+    @Autowired
+    private ShiroFactroy shiroFactroy;
 
     /**
      * 必须重写此方法，不然ShiroRealm会报错
@@ -58,26 +43,15 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection token) {
         // 从token中获取account
         String account = JWTUtil.getAccount(String.valueOf(token));
-
+        ShiroUser user = shiroFactroy.getShiroUser(account);
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
 
         // 获取用户角色集
-        SysUser user = sysUserMapper.selectUserByAccount(account);
-        List<SysRole> roles = sysRoleMapper.selectRoleListByUserId(user.getId());
-        List<Integer> roleIds = new ArrayList<>();
-        Set<String> roleIdSet = new HashSet<>();
-        for (SysRole role: roles) {
-            roleIds.add(role.getId());
-            roleIdSet.add(String.valueOf(role.getId()));
-        }
+        Set<String> roleIdSet = shiroFactroy.findRoleIdSetByUserId(user.getId());
         simpleAuthorizationInfo.setRoles(roleIdSet);
 
         // 获取用户权限集
-        List<SysPower> powers = sysPowerMapper.selectPowerListByRoleIds(roleIds);
-        Set<String> powerIdSet = new HashSet<>();
-        for (SysPower power: powers) {
-            powerIdSet.add(String.valueOf(power.getId()));
-        }
+        Set<String> powerIdSet = shiroFactroy.findPowerIdSetByRoleIds(user.getRoleIds());
         simpleAuthorizationInfo.setStringPermissions(powerIdSet);
 
         return simpleAuthorizationInfo;
@@ -101,7 +75,7 @@ public class ShiroRealm extends AuthorizingRealm {
         }
 
         // 通过账户查询用户信息
-        SysUser user = sysUserMapper.selectUserByAccount(account);
+        ShiroUser user = shiroFactroy.getShiroUser(account);
         if (user == null) {
             throw new AuthenticationException("账户不存在");
         } else if (user.getStatus() == 2) {
@@ -115,7 +89,7 @@ public class ShiroRealm extends AuthorizingRealm {
             throw new AuthenticationException("校验token失败");
         }
 
-        return new SimpleAuthenticationInfo(token, token, "shiro_realm");
+        return new SimpleAuthenticationInfo(token, token, super.getName());
     }
 
 }

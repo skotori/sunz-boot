@@ -1,6 +1,5 @@
 package com.skotori.sunzboot.module.auth.dto;
 
-import com.skotori.sunzboot.common.jwt.JWTToken;
 import com.skotori.sunzboot.module.sys.model.SysUser;
 
 /**
@@ -11,7 +10,12 @@ import com.skotori.sunzboot.module.sys.model.SysUser;
 public class AuthResponse {
 
     private SysUser user;
-    private JWTToken token;
+    private String token;
+
+    public AuthResponse(SysUser user, String token) {
+        this.user = user;
+        this.token = token;
+    }
 
     public SysUser getUser() {
         return user;
@@ -21,12 +25,19 @@ public class AuthResponse {
         this.user = user;
     }
 
-    public JWTToken getToken() {
+    public String getToken() {
         return token;
     }
 
-    public void setToken(JWTToken token) {
+    public void setToken(String token) {
         this.token = token;
     }
 
+    @Override
+    public String toString() {
+        return "AuthResponse{" +
+                "user=" + user +
+                ", token='" + token + '\'' +
+                '}';
+    }
 }

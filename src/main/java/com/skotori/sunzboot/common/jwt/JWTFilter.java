@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class JWTFilter extends BasicHttpAuthenticationFilter {
 
-    private Logger log = LoggerFactory.getLogger(this.getClass());
+    private Logger log = LoggerFactory.getLogger(JWTFilter.class);
 
     private static final String TOKEN_HEADER = "Authorization";
 
@@ -34,7 +34,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws UnauthorizedException {
-        // 不需要认证的接口
+        // 请求白名单
         String[] anonUrls = {"/auth"};
         AntPathMatcher pathMatcher = new AntPathMatcher();
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
@@ -45,15 +45,21 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
             }
         }
 
-        // 需要认证的接口
-        if (isLoginAttempt(request, response)) {
-            return executeLogin(request, response);
+        // 判断请求是否需要认证
+        if (!isLoginAttempt(request, response)) {
+            throw new UnauthorizedException("请求头必须携带Authorization字段");
         }
-        return false;
+
+        // 执行认证
+        if (!executeLogin(request, response)) {
+            throw new UnauthorizedException("校验token失败");
+        }
+
+        return true;
     }
 
     /**
-     * 判断用户是否需要认证，检测header是否包含Authorization字段即可
+     * 判断请求是否需要认证，检测header是否包含Authorization字段即可
      * @param request
      * @param response
      * @return

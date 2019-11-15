@@ -41,6 +41,14 @@ public class JWTToken implements AuthenticationToken {
     }
 
     @Override
+    public String toString() {
+        return "JWTToken{" +
+                "token='" + token + '\'' +
+                ", expiresAt='" + expiresAt + '\'' +
+                '}';
+    }
+
+    @Override
     public Object getPrincipal() {
         return token;
     }

@@ -37,7 +37,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
         // 过滤链上加入JWTFilter
-        Map<String, Filter> filters = shiroFilterFactoryBean.getFilters();
+        Map<String, Filter> filters = new LinkedHashMap<>();
         filters.put("jwt", new JWTFilter());
         shiroFilterFactoryBean.setFilters(filters);
 

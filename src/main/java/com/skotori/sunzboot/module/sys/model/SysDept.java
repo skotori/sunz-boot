@@ -1,25 +1,24 @@
 package com.skotori.sunzboot.module.sys.model;
 
 import java.util.Date;
-import java.util.List;
 
 /**
- * 角色实体类
+ * 部门实体类
  * @author skotori
- * @date 2019/11/06 20:39
+ * @date 2019-11-15 11:47
  */
-public class SysRole {
+public class SysDept {
 
     // 主键id
     private Integer id;
-    // 父角色id
+    // 父部门id
     private Integer pid;
+    // 父部门id列表
+    private String pids;
     // 名称
     private String name;
     // 排序号
     private Integer num;
-    // 部门id
-    private Integer deptId;
     // 状态(1：启用  2：禁用  3：删除）
     private Integer status;
     // 备注
@@ -32,10 +31,6 @@ public class SysRole {
     private Date updateTime;
     // 更新人
     private Integer updateUser;
-    // 管理员id列表
-    private List<Integer> userIds;
-    // 权限id列表
-    private List<Integer> powerIds;
 
     public Integer getId() {
         return id;
@@ -53,6 +48,14 @@ public class SysRole {
         this.pid = pid;
     }
 
+    public String getPids() {
+        return pids;
+    }
+
+    public void setPids(String pids) {
+        this.pids = pids;
+    }
+
     public String getName() {
         return name;
     }
@@ -67,14 +70,6 @@ public class SysRole {
 
     public void setNum(Integer num) {
         this.num = num;
-    }
-
-    public Integer getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptId(Integer deptId) {
-        this.deptId = deptId;
     }
 
     public Integer getStatus() {
@@ -125,38 +120,20 @@ public class SysRole {
         this.updateUser = updateUser;
     }
 
-    public List<Integer> getUserIds() {
-        return userIds;
-    }
-
-    public void setUserIds(List<Integer> userIds) {
-        this.userIds = userIds;
-    }
-
-    public List<Integer> getPowerIds() {
-        return powerIds;
-    }
-
-    public void setPowerIds(List<Integer> powerIds) {
-        this.powerIds = powerIds;
-    }
-
     @Override
     public String toString() {
-        return "SysRole{" +
+        return "SysDept{" +
                 "id=" + id +
                 ", pid=" + pid +
+                ", pids='" + pids + '\'' +
                 ", name='" + name + '\'' +
                 ", num=" + num +
-                ", deptId=" + deptId +
                 ", status=" + status +
                 ", note='" + note + '\'' +
                 ", createTime=" + createTime +
                 ", createUser=" + createUser +
                 ", updateTime=" + updateTime +
                 ", updateUser=" + updateUser +
-                ", userIds=" + userIds +
-                ", powerIds=" + powerIds +
                 '}';
     }
 }

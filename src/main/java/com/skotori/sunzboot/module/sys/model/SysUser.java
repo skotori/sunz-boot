@@ -10,42 +10,42 @@ import java.util.List;
  */
 public class SysUser {
 
-    //主键id
+    // 主键id
     private Integer id;
-    //账号
+    // 账号
     private String account;
-    //密码
+    // 密码
     private String password;
-    //md5密码盐
+    // md5密码盐
     private String salt;
-    //名称
+    // 名称
     private String name;
-    //头像
+    // 头像
     private String avatar;
-    //性别（1：男 2：女）
+    // 性别（1：男 2：女）
     private Integer sex;
-    //生日
+    // 生日
     private Date birthday;
-    //邮箱
+    // 邮箱
     private String email;
-    //电话
+    // 电话
     private String phone;
-    //部门id
+    // 部门id
     private Integer deptId;
-    //状态(1：启用  2：禁用  3：删除）
+    // 状态(1：启用  2：禁用  3：删除）
     private Integer status;
-    //备注
+    // 备注
     private String note;
-    //创建时间
+    // 创建时间
     private Date createTime;
-    //创建人
+    // 创建人
     private Integer createUser;
-    //更新时间
+    // 更新时间
     private Date updateTime;
-    //更新人
+    // 更新人
     private Integer updateUser;
-    //角色列表
-    private List<SysRole> roleList;
+    // 角色id列表
+    private List<Integer> roleIds;
 
     public Integer getId() {
         return id;
@@ -183,12 +183,12 @@ public class SysUser {
         this.updateUser = updateUser;
     }
 
-    public List<SysRole> getRoleList() {
-        return roleList;
+    public List<Integer> getRoleIds() {
+        return roleIds;
     }
 
-    public void setRoleList(List<SysRole> roleList) {
-        this.roleList = roleList;
+    public void setRoleIds(List<Integer> roleIds) {
+        this.roleIds = roleIds;
     }
 
     @Override
@@ -211,15 +211,15 @@ public class SysUser {
                 ", createUser=" + createUser +
                 ", updateTime=" + updateTime +
                 ", updateUser=" + updateUser +
-                ", roleList=" + roleList +
+                ", roleIds=" + roleIds +
                 '}';
     }
 
     /**
-     * 密码盐. 重新对盐重新进行了定义，账号+salt，这样就不容易被破解，可以采用多种方式定义加盐
+     * 密码盐. 重新对盐重新进行了定义，account + salt
      * @return
      */
     public String getCredentialsSalt(){
-        return this.account+this.salt;
+        return this.account + this.salt;
     }
 }
