@@ -1,6 +1,8 @@
 package com.skotori.sunzboot.common.jwt;
 
-import org.apache.shiro.authz.UnauthorizedException;
+import com.alibaba.fastjson.JSON;
+import com.skotori.sunzboot.common.result.Result;
+import com.skotori.sunzboot.common.shiro.ShiroUtil;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * jwt过滤器，代码的执行流程preHandle->isAccessAllowed->isLoginAttempt->executeLogin
@@ -22,18 +26,15 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
 
     private Logger log = LoggerFactory.getLogger(JWTFilter.class);
 
-    private static final String TOKEN_HEADER = "Authorization";
-
     /**
      * 判断请求是否允许访问
      * @param request
      * @param response
      * @param mappedValue
      * @return
-     * @throws UnauthorizedException
      */
     @Override
-    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws UnauthorizedException {
+    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         // 请求白名单
         String[] anonUrls = {"/auth"};
         AntPathMatcher pathMatcher = new AntPathMatcher();
@@ -47,12 +48,14 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
 
         // 判断请求是否需要认证
         if (!isLoginAttempt(request, response)) {
-            throw new UnauthorizedException("请求头必须携带Authorization字段");
+            isLoginAttemptFail(request, response);
+            return false;
         }
 
         // 执行认证
         if (!executeLogin(request, response)) {
-            throw new UnauthorizedException("校验token失败");
+            executeLoginFail(request, response);
+            return false;
         }
 
         return true;
@@ -66,8 +69,8 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
-        HttpServletRequest req = (HttpServletRequest) request;
-        String bearerToken = req.getHeader(TOKEN_HEADER);
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        String bearerToken = httpServletRequest.getHeader(ShiroUtil.TOKEN_HEADER);
         return bearerToken != null;
     }
 
@@ -80,7 +83,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String token = httpServletRequest.getHeader(TOKEN_HEADER).substring(7);
+        String token = httpServletRequest.getHeader(ShiroUtil.TOKEN_HEADER).substring(7);
         JWTToken jwtToken = new JWTToken(token);
         try {
             // 提交给ShiroRealm进行登录
@@ -112,6 +115,38 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
             return false;
         }
         return super.preHandle(request, response);
+    }
+
+    private void isLoginAttemptFail(ServletRequest request, ServletResponse response) {
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        httpServletResponse.setContentType("application/json");
+        httpServletResponse.setCharacterEncoding("UTF-8");
+        Result result = Result.error("请求头必须携带Authorization字段");
+        String jsonStr = JSON.toJSONString(result);
+        try {
+            PrintWriter writer = httpServletResponse.getWriter();
+            writer.write(jsonStr);
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+    }
+
+    private void executeLoginFail(ServletRequest request, ServletResponse response) {
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        httpServletResponse.setContentType("application/json");
+        httpServletResponse.setCharacterEncoding("UTF-8");
+        Result result = Result.error("认证失败");
+        String jsonStr = JSON.toJSONString(result);
+        try {
+            PrintWriter writer = httpServletResponse.getWriter();
+            writer.write(jsonStr);
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
     }
 
 }

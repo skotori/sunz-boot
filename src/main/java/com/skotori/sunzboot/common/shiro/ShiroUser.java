@@ -16,14 +16,8 @@ public class ShiroUser implements Serializable {
     private Integer id;
     // 账号
     private String account;
-    // 密码
-    private String password;
-    // md5密码盐
-    private String credentialsSalt;
     // 名称
     private String name;
-    // 状态(1：启用  2：禁用  3：删除）
-    private Integer status;
     // 部门id
     private Integer deptId;
     // 角色id集
@@ -49,36 +43,12 @@ public class ShiroUser implements Serializable {
         this.account = account;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getCredentialsSalt() {
-        return credentialsSalt;
-    }
-
-    public void setCredentialsSalt(String credentialsSalt) {
-        this.credentialsSalt = credentialsSalt;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
     }
 
     public Integer getDeptId() {
@@ -102,10 +72,7 @@ public class ShiroUser implements Serializable {
         return "ShiroUser{" +
                 "id=" + id +
                 ", account='" + account + '\'' +
-                ", password='" + password + '\'' +
-                ", credentialsSalt='" + credentialsSalt + '\'' +
                 ", name='" + name + '\'' +
-                ", status=" + status +
                 ", deptId=" + deptId +
                 ", roleIds=" + roleIds +
                 '}';

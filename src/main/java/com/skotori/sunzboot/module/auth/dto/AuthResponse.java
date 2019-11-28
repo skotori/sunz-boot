@@ -1,6 +1,6 @@
 package com.skotori.sunzboot.module.auth.dto;
 
-import com.skotori.sunzboot.module.sys.model.SysUser;
+import com.skotori.sunzboot.common.shiro.ShiroUser;
 
 /**
  * 认证响应数据封装
@@ -9,19 +9,19 @@ import com.skotori.sunzboot.module.sys.model.SysUser;
  */
 public class AuthResponse {
 
-    private SysUser user;
+    private ShiroUser user;
     private String token;
 
-    public AuthResponse(SysUser user, String token) {
+    public AuthResponse(ShiroUser user, String token) {
         this.user = user;
         this.token = token;
     }
 
-    public SysUser getUser() {
+    public ShiroUser getUser() {
         return user;
     }
 
-    public void setUser(SysUser user) {
+    public void setUser(ShiroUser user) {
         this.user = user;
     }
 

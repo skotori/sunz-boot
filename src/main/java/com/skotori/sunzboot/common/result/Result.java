@@ -13,14 +13,14 @@ public class Result {
 
     private Object data;
 
-    private Result(ResultCodeEnum resultCodeEnum) {
-        this.code = resultCodeEnum.code();
-        this.msg = resultCodeEnum.msg();
+    private Result(Integer code, String msg) {
+        this.code = code;
+        this.msg = msg;
     }
 
-    private Result(ResultCodeEnum resultCodeEnum, Object data) {
-        this.code = resultCodeEnum.code();
-        this.msg = resultCodeEnum.msg();
+    private Result(Integer code, String msg, Object data) {
+        this.code = code;
+        this.msg = msg;
         this.data = data;
     }
 
@@ -50,22 +50,27 @@ public class Result {
 
     //成功 不返回数据
     public static Result success() {
-        return new Result(ResultCodeEnum.SUCCESS);
+        return new Result(ResultEnum.SUCCESS.code(), ResultEnum.SUCCESS.msg());
     }
 
     //成功 返回数据
     public static Result success(Object data) {
-        return new Result(ResultCodeEnum.SUCCESS, data);
+        return new Result(ResultEnum.SUCCESS.code(), ResultEnum.SUCCESS.msg(), data);
     }
 
     //失败 不返回失败原因
     public static Result error() {
-        return new Result(ResultCodeEnum.ERROR);
+        return new Result(ResultEnum.ERROR.code(), ResultEnum.ERROR.msg());
     }
 
     //失败 返回失败原因
-    public static Result error(ResultCodeEnum resultCodeEnum) {
-        return new Result(resultCodeEnum);
+    public static Result error(ResultEnum resultEnum) {
+        return new Result(resultEnum.code(), resultEnum.msg());
+    }
+
+    //失败 返回自定义失败原因
+    public static Result error(String msg) {
+        return new Result(0, msg);
     }
 
 }

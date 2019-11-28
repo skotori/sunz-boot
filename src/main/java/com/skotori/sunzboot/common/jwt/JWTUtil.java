@@ -3,7 +3,6 @@ package com.skotori.sunzboot.common.jwt;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +19,7 @@ public class JWTUtil {
     private static Logger log = LoggerFactory.getLogger(JWTUtil.class);
 
     // token有效时间，单位秒
-    private static final long EXPIRE_TIME = 5 * 60 * 1000; // 5分钟
+    private static final Integer EXPIRE_TIME = 60 * 60 * 1000; // 一小时
 
     /**
      * 校验token

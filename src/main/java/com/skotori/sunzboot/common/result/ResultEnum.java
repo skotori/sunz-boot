@@ -5,7 +5,7 @@ package com.skotori.sunzboot.common.result;
  * @author skotori
  * @date 2019/11/06 20:41
  */
-public enum ResultCodeEnum {
+public enum ResultEnum {
 
     /* 成功状态码 */
     SUCCESS(1, "成功"),
@@ -52,7 +52,7 @@ public enum ResultCodeEnum {
 
     private String msg;
 
-    ResultCodeEnum(Integer code, String msg) {
+    ResultEnum(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }
@@ -66,7 +66,7 @@ public enum ResultCodeEnum {
     }
 
     public static String getMsg(String name) {
-        for (ResultCodeEnum item : ResultCodeEnum.values()) {
+        for (ResultEnum item : ResultEnum.values()) {
             if (item.name().equals(name)) {
                 return item.msg;
             }
@@ -75,7 +75,7 @@ public enum ResultCodeEnum {
     }
 
     public static Integer getCode(String name) {
-        for (ResultCodeEnum item : ResultCodeEnum.values()) {
+        for (ResultEnum item : ResultEnum.values()) {
             if (item.name().equals(name)) {
                 return item.code;
             }

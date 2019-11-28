@@ -2,6 +2,7 @@ package com.skotori.sunzboot.common.shiro;
 
 import com.skotori.sunzboot.common.jwt.JWTToken;
 import com.skotori.sunzboot.common.jwt.JWTUtil;
+import com.skotori.sunzboot.module.sys.model.SysUser;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -12,6 +13,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -22,7 +24,7 @@ import java.util.Set;
 public class ShiroRealm extends AuthorizingRealm {
 
     @Autowired
-    private ShiroFactroy shiroFactroy;
+    private ShiroFactory shiroFactory;
 
     /**
      * 必须重写此方法，不然ShiroRealm会报错
@@ -43,15 +45,19 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection token) {
         // 从token中获取account
         String account = JWTUtil.getAccount(String.valueOf(token));
-        ShiroUser user = shiroFactroy.getShiroUser(account);
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+        SysUser user = shiroFactory.getUser(account);
+        ShiroUser shiroUser = shiroFactory.getShiroUser(user);
 
         // 获取用户角色集
-        Set<String> roleIdSet = shiroFactroy.findRoleIdSetByUserId(user.getId());
+        Set<String> roleIdSet = new HashSet<>();
+        for (Integer roleId: shiroUser.getRoleIds()) {
+            roleIdSet.add(String.valueOf(roleId));
+        }
         simpleAuthorizationInfo.setRoles(roleIdSet);
 
         // 获取用户权限集
-        Set<String> powerIdSet = shiroFactroy.findPowerIdSetByRoleIds(user.getRoleIds());
+        Set<String> powerIdSet = shiroFactory.getPowerIdSetByRoleIds(shiroUser.getRoleIds());
         simpleAuthorizationInfo.setStringPermissions(powerIdSet);
 
         return simpleAuthorizationInfo;
@@ -66,7 +72,7 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         // 从JWTFilter的executeLogin的getSubject.login传递过来的jwtToken中获取token
-        String token = (String) authenticationToken.getCredentials();
+        String token = ((JWTToken) authenticationToken).getToken();
 
         // 从token中获取account
         String account = JWTUtil.getAccount(token);
@@ -75,7 +81,7 @@ public class ShiroRealm extends AuthorizingRealm {
         }
 
         // 通过账户查询用户信息
-        ShiroUser user = shiroFactroy.getShiroUser(account);
+        SysUser user = shiroFactory.getUser(account);
         if (user == null) {
             throw new AuthenticationException("账户不存在");
         } else if (user.getStatus() == 2) {

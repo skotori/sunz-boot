@@ -1,6 +1,7 @@
 package com.skotori.sunzboot.module.sys.controller;
 
 import com.skotori.sunzboot.common.result.Result;
+import com.skotori.sunzboot.common.shiro.ShiroUtil;
 import com.skotori.sunzboot.module.sys.service.SysUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,8 @@ public class SysUserController {
     @GetMapping("query")
     public Result query(@RequestParam("account") String account){
         log.info("测试接口");
+        String account1 = ShiroUtil.getAccount();
+        System.out.println(account1);
         return Result.success(sysUserService.queryUser(account));
     }
 
