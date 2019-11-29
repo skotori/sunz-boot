@@ -13,7 +13,7 @@ public class SysLoginLog {
     private Integer id;
     // 账号
     private String account;
-    // 登录日志类型(1：失败日志  2：成功日志）
+    // 登录日志类型(1：成功日志  2：失败日志）
     private Integer type;
     // 登录时间
     private Date time;

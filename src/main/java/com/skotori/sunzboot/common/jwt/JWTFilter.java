@@ -36,14 +36,12 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         // 请求白名单
-        String[] anonUrls = {"/auth"};
         AntPathMatcher pathMatcher = new AntPathMatcher();
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String url = httpServletRequest.getRequestURI();
-        for (String anonUrl : anonUrls) {
-            if (pathMatcher.match(url, anonUrl)) {
-                return true;
-            }
+        String anonUrl = "/auth";
+        if (pathMatcher.match(url, anonUrl)) {
+            return true;
         }
 
         // 判断请求是否需要认证

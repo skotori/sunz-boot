@@ -2,10 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.skotori.sunzboot.module.sys.mapper.SysRoleMapper">
 
-    <select id="selectRoleIdsByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    <select id="selectRolesByUserId" parameterType="java.lang.Integer" resultType="com.skotori.sunzboot.module.sys.model.SysRole">
+        select *
+        from sys_role
+        where id in (
             select role_id
             from sys_user_role
             where user_id = #{userId}
+        )
     </select>
 
 </mapper>

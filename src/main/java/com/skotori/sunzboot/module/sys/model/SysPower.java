@@ -42,8 +42,8 @@ public class SysPower {
     private Date updateTime;
     // 更新人
     private Integer updateUser;
-    // 角色id列表
-    private List<Integer> roleIds;
+    // 角色列表
+    private List<SysRole> roles;
 
     public Integer getId() {
         return id;
@@ -173,12 +173,12 @@ public class SysPower {
         this.updateUser = updateUser;
     }
 
-    public List<Integer> getRoleIds() {
-        return roleIds;
+    public List<SysRole> getRoles() {
+        return roles;
     }
 
-    public void setRoleIds(List<Integer> roleIds) {
-        this.roleIds = roleIds;
+    public void setRoles(List<SysRole> roles) {
+        this.roles = roles;
     }
 
     @Override
@@ -200,7 +200,7 @@ public class SysPower {
                 ", createUser=" + createUser +
                 ", updateTime=" + updateTime +
                 ", updateUser=" + updateUser +
-                ", roleIds=" + roleIds +
+                ", roles=" + roles +
                 '}';
     }
 }

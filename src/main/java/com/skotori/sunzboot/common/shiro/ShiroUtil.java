@@ -1,13 +1,11 @@
 package com.skotori.sunzboot.common.shiro;
 
 import com.skotori.sunzboot.common.jwt.JWTUtil;
+import com.skotori.sunzboot.util.HttpUtil;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Random;
 
 /**
@@ -62,9 +60,7 @@ public class ShiroUtil {
      * @return
      */
     public static String getToken() {
-        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest httpServletRequest = servletRequestAttributes.getRequest();
-        return httpServletRequest.getHeader(TOKEN_HEADER).substring(7);
+        return HttpUtil.getRequest().getHeader(TOKEN_HEADER).substring(7);
     }
 
     /**
@@ -72,18 +68,7 @@ public class ShiroUtil {
      * @return
      */
     public static String getAccount() {
-        String token = getToken();
-        return JWTUtil.getAccount(token);
-    }
-
-    /**
-     * 获取当前ip
-     * @return
-     */
-    public static String getIp() {
-        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest httpServletRequest = servletRequestAttributes.getRequest();
-        return httpServletRequest.getRemoteHost();
+        return JWTUtil.getAccount(getToken());
     }
 
 }

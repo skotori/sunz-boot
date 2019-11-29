@@ -14,10 +14,10 @@ import java.util.List;
 public interface SysRoleMapper {
 
     /**
-     * 通过管理员id查询角色id列表
+     * 通过管理员id查询角色列表
      * @param userId
      * @return
      */
-    List<Integer> selectRoleIdsByUserId(Integer userId);
+    List<SysRole> selectRolesByUserId(Integer userId);
 
 }

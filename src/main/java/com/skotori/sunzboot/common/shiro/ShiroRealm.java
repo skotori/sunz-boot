@@ -11,7 +11,6 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,9 +21,6 @@ import java.util.Set;
  * @date 2019-11-07 17:21
  */
 public class ShiroRealm extends AuthorizingRealm {
-
-    @Autowired
-    private ShiroFactory shiroFactory;
 
     /**
      * 必须重写此方法，不然ShiroRealm会报错
@@ -46,19 +42,17 @@ public class ShiroRealm extends AuthorizingRealm {
         // 从token中获取account
         String account = JWTUtil.getAccount(String.valueOf(token));
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+        ShiroFactory shiroFactory = ShiroFactory.getShiroFactory();
         SysUser user = shiroFactory.getUser(account);
         ShiroUser shiroUser = shiroFactory.getShiroUser(user);
 
         // 获取用户角色集
-        Set<String> roleIdSet = new HashSet<>();
-        for (Integer roleId: shiroUser.getRoleIds()) {
-            roleIdSet.add(String.valueOf(roleId));
-        }
-        simpleAuthorizationInfo.setRoles(roleIdSet);
+        Set<String> roleCodeSet = new HashSet<>(shiroUser.getRoleCodes());
+        simpleAuthorizationInfo.setRoles(roleCodeSet);
 
         // 获取用户权限集
-        Set<String> powerIdSet = shiroFactory.getPowerIdSetByRoleIds(shiroUser.getRoleIds());
-        simpleAuthorizationInfo.setStringPermissions(powerIdSet);
+        Set<String> powerCodeSet = new HashSet<>(shiroUser.getPowerCodes());
+        simpleAuthorizationInfo.setStringPermissions(powerCodeSet);
 
         return simpleAuthorizationInfo;
     }
@@ -81,6 +75,7 @@ public class ShiroRealm extends AuthorizingRealm {
         }
 
         // 通过账户查询用户信息
+        ShiroFactory shiroFactory = ShiroFactory.getShiroFactory();
         SysUser user = shiroFactory.getUser(account);
         if (user == null) {
             throw new AuthenticationException("账户不存在");

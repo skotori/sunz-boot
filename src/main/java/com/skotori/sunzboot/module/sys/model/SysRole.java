@@ -14,6 +14,8 @@ public class SysRole {
     private Integer id;
     // 父角色id
     private Integer pid;
+    // 编码
+    private String code;
     // 名称
     private String name;
     // 排序号
@@ -32,10 +34,10 @@ public class SysRole {
     private Date updateTime;
     // 更新人
     private Integer updateUser;
-    // 管理员id列表
-    private List<Integer> userIds;
-    // 权限id列表
-    private List<Integer> powerIds;
+    // 管理员列表
+    private List<SysUser> users;
+    // 权限列表
+    private List<SysPower> powers;
 
     public Integer getId() {
         return id;
@@ -51,6 +53,14 @@ public class SysRole {
 
     public void setPid(Integer pid) {
         this.pid = pid;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {
@@ -125,20 +135,20 @@ public class SysRole {
         this.updateUser = updateUser;
     }
 
-    public List<Integer> getUserIds() {
-        return userIds;
+    public List<SysUser> getUsers() {
+        return users;
     }
 
-    public void setUserIds(List<Integer> userIds) {
-        this.userIds = userIds;
+    public void setUsers(List<SysUser> users) {
+        this.users = users;
     }
 
-    public List<Integer> getPowerIds() {
-        return powerIds;
+    public List<SysPower> getPowers() {
+        return powers;
     }
 
-    public void setPowerIds(List<Integer> powerIds) {
-        this.powerIds = powerIds;
+    public void setPowers(List<SysPower> powers) {
+        this.powers = powers;
     }
 
     @Override
@@ -146,6 +156,7 @@ public class SysRole {
         return "SysRole{" +
                 "id=" + id +
                 ", pid=" + pid +
+                ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", num=" + num +
                 ", deptId=" + deptId +
@@ -155,8 +166,8 @@ public class SysRole {
                 ", createUser=" + createUser +
                 ", updateTime=" + updateTime +
                 ", updateUser=" + updateUser +
-                ", userIds=" + userIds +
-                ", powerIds=" + powerIds +
+                ", users=" + users +
+                ", powers=" + powers +
                 '}';
     }
 }

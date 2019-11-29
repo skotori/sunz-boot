@@ -1,8 +1,7 @@
 package com.skotori.sunzboot.module.sys.mapper;
 
+import com.skotori.sunzboot.module.sys.model.SysDept;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 /**
  * 部门mapper
@@ -13,10 +12,10 @@ import java.util.List;
 public interface SysDeptMapper {
 
     /**
-     * 通过部门id查询子部门id列表
+     * 通过部门id查询部门信息
      * @param id
      * @return
      */
-    List<Integer> selectSidsById(Integer id);
+    SysDept selectDeptById(Integer id);
 
 }

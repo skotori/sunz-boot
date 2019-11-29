@@ -1,42 +1,45 @@
 server:
-  #服务器端口
+  # 服务器端口
   port: 8888
 
 spring:
-  #数据库连接池
+  # 数据库连接池
   datasource:
     url: jdbc:mysql://localhost:3306/sunz_boot?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
-  #jackson
+  # jackson
   jackson:
-    #日期格式化
+    # 日期格式化
     date-format: yyyy-MM-dd HH:mm:ss
-    #设置空如何序列化
+    # 设置空如何序列化
     default-property-inclusion: non_empty
     serialization:
-      #格式化输出
+      # 格式化输出
       INDENT_OUTPUT: true
-      #忽略无法转换的对象
+      # 忽略无法转换的对象
       FAIL_ON_EMPTY_BEANS: true
     deserialization:
-      #允许对象忽略json中不存在的属性
+      # 允许对象忽略json中不存在的属性
       FAIL_ON_UNKNOWN_PROPERTIES: false
     parser:
-      #允许出现特殊字符和转义符
+      # 允许出现特殊字符和转义符
       ALLOW_UNQUOTED_CONTROL_CHARS: true
-      #允许出现单引号
+      # 允许出现单引号
       ALLOW_SINGLE_QUOTES: true
 
 mybatis:
-  #扫描mapper.xml
+  # 扫描mapper.xml
   mapper-locations: classpath*:mapper/*.xml
-  #扫描实体类
+  # 扫描实体类
   type-aliases-package: com.skotori.sunzboot.module.sys.model
+  # 配置驼峰转换
+  configuration:
+    map-underscore-to-camel-case: true
 
-#打印sql语句
+# 打印sql语句
 logging:
   level:
-    #mapper所在包
+    # mapper所在包
     com.skotori.sunzboot.module.sys.mapper: debug

@@ -12,7 +12,6 @@ import com.skotori.sunzboot.module.auth.dto.AuthResponse;
 import com.skotori.sunzboot.module.sys.model.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,11 +28,9 @@ public class AuthController {
 
     private Logger log = LoggerFactory.getLogger(AuthController.class);
 
-    @Autowired
-    private ShiroFactory shiroFactory;
+    private ShiroFactory shiroFactory = ShiroFactory.getShiroFactory();
 
-    @Autowired
-    private LogFactory logFactory;
+    private LogFactory logFactory = LogFactory.getLogFactory();
 
     /**
      * 管理员登录

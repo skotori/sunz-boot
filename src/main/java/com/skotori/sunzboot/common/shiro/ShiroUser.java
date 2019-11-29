@@ -20,8 +20,12 @@ public class ShiroUser implements Serializable {
     private String name;
     // 部门id
     private Integer deptId;
-    // 角色id集
-    private List<Integer> roleIds;
+    // 部门名称
+    private String deptName;
+    // 角色编码集
+    private List<String> roleCodes;
+    // 权限编码集
+    private List<String> powerCodes;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -59,12 +63,28 @@ public class ShiroUser implements Serializable {
         this.deptId = deptId;
     }
 
-    public List<Integer> getRoleIds() {
-        return roleIds;
+    public String getDeptName() {
+        return deptName;
     }
 
-    public void setRoleIds(List<Integer> roleIds) {
-        this.roleIds = roleIds;
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
+    public List<String> getRoleCodes() {
+        return roleCodes;
+    }
+
+    public void setRoleCodes(List<String> roleCodes) {
+        this.roleCodes = roleCodes;
+    }
+
+    public List<String> getPowerCodes() {
+        return powerCodes;
+    }
+
+    public void setPowerCodes(List<String> powerCodes) {
+        this.powerCodes = powerCodes;
     }
 
     @Override
@@ -74,7 +94,9 @@ public class ShiroUser implements Serializable {
                 ", account='" + account + '\'' +
                 ", name='" + name + '\'' +
                 ", deptId=" + deptId +
-                ", roleIds=" + roleIds +
+                ", deptName='" + deptName + '\'' +
+                ", roleCodes=" + roleCodes +
+                ", powerCodes=" + powerCodes +
                 '}';
     }
 }
