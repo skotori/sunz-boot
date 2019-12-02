@@ -2,11 +2,14 @@ package com.skotori.sunzboot.config;
 
 import com.skotori.sunzboot.common.jwt.JWTFilter;
 import com.skotori.sunzboot.common.shiro.ShiroRealm;
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -52,13 +55,16 @@ public class ShiroConfig {
 
     /**
      * 配置安全管理器
+     * @param shiroCacheManager
      * @return
      */
     @Bean
-    public SecurityManager securityManager() {
+    public SecurityManager securityManager(CacheManager shiroCacheManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 设置ShiroRealm
-        securityManager.setRealm(shiroRealm());
+        securityManager.setRealm(this.shiroRealm());
+        // 设置CacheManager
+        securityManager.setCacheManager(shiroCacheManager);
         return securityManager;
     }
 
@@ -69,6 +75,18 @@ public class ShiroConfig {
     @Bean
     public ShiroRealm shiroRealm() {
         return new ShiroRealm();
+    }
+
+    /**
+     * 自定义CacheManager
+     * @param ehcache
+     * @return
+     */
+    @Bean
+    public CacheManager shiroCacheManager(EhCacheManagerFactoryBean ehcache) {
+        EhCacheManager ehCacheManager = new EhCacheManager();
+        ehCacheManager.setCacheManager(ehcache.getObject());
+        return ehCacheManager;
     }
 
     /**

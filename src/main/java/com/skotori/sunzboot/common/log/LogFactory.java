@@ -2,7 +2,6 @@ package com.skotori.sunzboot.common.log;
 
 import com.skotori.sunzboot.module.sys.mapper.SysLoginLogMapper;
 import com.skotori.sunzboot.module.sys.model.SysLoginLog;
-import com.skotori.sunzboot.util.HttpUtil;
 import com.skotori.sunzboot.util.SpringContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,27 +29,27 @@ public class LogFactory {
         return SpringContextUtil.getBean(LogFactory.class);
     }
 
-    public void loginSuccessLog(String account, String msg) {
+    public void loginSuccessLog(String account, String ip) {
         try {
             SysLoginLog loginLog = new SysLoginLog();
             loginLog.setAccount(account);
             loginLog.setType(1);
             loginLog.setTime(new Date());
-            loginLog.setIp(HttpUtil.getIp());
-            loginLog.setMsg(msg);
+            loginLog.setIp(ip);
+            loginLog.setMsg("");
             sysLoginLogMapper.insertLoginLog(loginLog);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
     }
 
-    public void loginErrorLog(String account, String msg) {
+    public void loginErrorLog(String account, String msg, String ip) {
         try {
             SysLoginLog loginLog = new SysLoginLog();
             loginLog.setAccount(account);
             loginLog.setType(2);
             loginLog.setTime(new Date());
-            loginLog.setIp(HttpUtil.getIp());
+            loginLog.setIp(ip);
             loginLog.setMsg(msg);
             sysLoginLogMapper.insertLoginLog(loginLog);
         } catch (Exception e) {
