@@ -1,5 +1,7 @@
 package com.skotori.sunzboot.common.log;
 
+import com.skotori.sunzboot.module.sys.model.SysOperationLog;
+
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -36,6 +38,17 @@ public class LogManager {
             @Override
             public void run() {
                 logFactory.loginErrorLog(account, msg, ip);
+            }
+        };
+        executor.schedule(task, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);
+    }
+
+    public static void executeInsertLog(SysOperationLog operationLog) {
+        TimerTask task = new TimerTask() {
+
+            @Override
+            public void run() {
+                logFactory.insertLog(operationLog);
             }
         };
         executor.schedule(task, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);

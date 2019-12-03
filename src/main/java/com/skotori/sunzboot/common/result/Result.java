@@ -50,22 +50,22 @@ public class Result {
 
     //成功 不返回数据
     public static Result success() {
-        return new Result(ResultEnum.SUCCESS.code(), ResultEnum.SUCCESS.msg());
+        return new Result(ResultCode.SUCCESS.code(), ResultCode.SUCCESS.msg());
     }
 
     //成功 返回数据
     public static Result success(Object data) {
-        return new Result(ResultEnum.SUCCESS.code(), ResultEnum.SUCCESS.msg(), data);
+        return new Result(ResultCode.SUCCESS.code(), ResultCode.SUCCESS.msg(), data);
     }
 
     //失败 不返回失败原因
     public static Result error() {
-        return new Result(ResultEnum.ERROR.code(), ResultEnum.ERROR.msg());
+        return new Result(ResultCode.ERROR.code(), ResultCode.ERROR.msg());
     }
 
     //失败 返回失败原因
-    public static Result error(ResultEnum resultEnum) {
-        return new Result(resultEnum.code(), resultEnum.msg());
+    public static Result error(ResultCode resultCode) {
+        return new Result(resultCode.code(), resultCode.msg());
     }
 
     //失败 返回自定义失败原因

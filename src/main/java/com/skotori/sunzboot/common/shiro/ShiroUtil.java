@@ -5,6 +5,7 @@ import com.skotori.sunzboot.util.HttpUtil;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Random;
 
@@ -29,6 +30,9 @@ public class ShiroUtil {
 
     // token头名
     public static final String TOKEN_HEADER = "Authorization";
+
+    @Autowired
+    private static ShiroRealm shiroRealm;
 
     /**
      * shiro密码加密工具
@@ -69,6 +73,10 @@ public class ShiroUtil {
      */
     public static String getAccount() {
         return JWTUtil.getAccount(getToken());
+    }
+
+    public static void clearCached() {
+        shiroRealm.clearCached();
     }
 
 }

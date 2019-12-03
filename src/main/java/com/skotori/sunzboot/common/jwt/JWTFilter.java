@@ -7,7 +7,6 @@ import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
@@ -35,15 +34,6 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        // 请求白名单
-        AntPathMatcher pathMatcher = new AntPathMatcher();
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String url = httpServletRequest.getRequestURI();
-        String anonUrl = "/auth";
-        if (pathMatcher.match(url, anonUrl)) {
-            return true;
-        }
-
         // 判断请求是否需要认证
         if (!isLoginAttempt(request, response)) {
             isLoginAttemptFail(request, response);

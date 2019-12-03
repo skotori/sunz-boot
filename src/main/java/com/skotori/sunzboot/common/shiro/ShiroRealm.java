@@ -3,6 +3,7 @@ package com.skotori.sunzboot.common.shiro;
 import com.skotori.sunzboot.common.jwt.JWTToken;
 import com.skotori.sunzboot.common.jwt.JWTUtil;
 import com.skotori.sunzboot.module.sys.model.SysUser;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -91,6 +92,14 @@ public class ShiroRealm extends AuthorizingRealm {
         }
 
         return new SimpleAuthenticationInfo(token, token, super.getName());
+    }
+
+    /**
+     * 清空缓存
+     */
+    public void clearCached() {
+        PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
+        super.clearCache(principals);
     }
 
 }

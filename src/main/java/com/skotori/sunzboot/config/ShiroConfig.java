@@ -45,9 +45,11 @@ public class ShiroConfig {
         filters.put("jwt", new JWTFilter());
         shiroFilterFactoryBean.setFilters(filters);
 
-        // 所有的请求都要经过JWTFilter
+        // 用filterChainDefinitionMap添加拦截的url，其中authc指定需要认证的url，anon指定排除认证的url
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        filterChainDefinitionMap.put("/**", "jwt");
+        filterChainDefinitionMap.put("/auth", "anon"); // 登录接口不需要认证
+        filterChainDefinitionMap.put("/druid/**", "anon"); // druid接口不需要认证
+        filterChainDefinitionMap.put("/**", "jwt"); // 剩下url都要经过JWTFilter
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
         return shiroFilterFactoryBean;

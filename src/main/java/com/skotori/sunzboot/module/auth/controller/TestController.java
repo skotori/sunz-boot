@@ -1,5 +1,7 @@
 package com.skotori.sunzboot.module.auth.controller;
 
+import com.skotori.sunzboot.common.annotation.Log;
+import com.skotori.sunzboot.common.annotation.LogType;
 import com.skotori.sunzboot.common.cache.CacheUtil;
 import com.skotori.sunzboot.common.result.Result;
 import com.skotori.sunzboot.common.shiro.ShiroUtil;
@@ -10,6 +12,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -64,6 +67,13 @@ public class TestController {
     public Integer cacheE(Integer c) {
         System.out.println(c);
         return c;
+    }
+
+    @GetMapping("log")
+    @Log(name = "测试", type = LogType.INSERT_LOG)
+    public Result log(@RequestParam("d") Integer d, @RequestParam("e") Integer e) {
+        System.out.println(d + e);
+        return Result.success();
     }
 
 }
