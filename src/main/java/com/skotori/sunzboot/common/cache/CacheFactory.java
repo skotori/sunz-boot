@@ -37,10 +37,10 @@ public class CacheFactory {
             synchronized(locker) {
                 cache = cacheManager.getCache(cacheName);
                 if (cache == null) {
-                    log.warn("无法找到缓存 [ {} ] 的配置, 使用默认配置", cacheName);
+                    log.warn("无法找到缓存[ {} ]的配置, 使用默认配置", cacheName);
                     cacheManager.addCacheIfAbsent(cacheName);
                     cache = cacheManager.getCache(cacheName);
-                    log.debug("缓存 [ {} ] 启动", cacheName);
+                    log.info("缓存[ {} ]启动", cacheName);
                 }
             }
         }

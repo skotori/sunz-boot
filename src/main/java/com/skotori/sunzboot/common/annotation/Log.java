@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 日志记录注解
+ * 记录日志注解
  * @author skotori
  * @date 2019-12-02 18:01
  */

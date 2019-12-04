@@ -37,7 +37,7 @@ public class JWTUtil {
             verifier.verify(token);
             return true;
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error("校验token异常：[ {} ]", e.getMessage());
             return false;
         }
     }
@@ -52,7 +52,7 @@ public class JWTUtil {
             DecodedJWT jwt = JWT.decode(token);
             return jwt.getClaim("account").asString();
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error("从token中获取account异常：[ {} ]", e.getMessage());
             return null;
         }
     }
@@ -72,7 +72,7 @@ public class JWTUtil {
                     .withExpiresAt(date)
                     .sign(algorithm);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error("生成token异常：[ {} ]", e.getMessage());
             return null;
         }
     }

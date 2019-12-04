@@ -20,33 +20,33 @@ import java.lang.reflect.Method;
 import java.util.Date;
 
 /**
- * 日志记录注解切面
+ * 记录日志注解切面
  * @author skotori
  * @date 2019-12-03 15:17
  */
-@Aspect
+@Aspect // 把当前类标识为一个切面供容器读取
 @Component
 public class LogAspect {
 
     private Logger log = LoggerFactory.getLogger(LogAspect.class);
 
-    @Pointcut("@annotation(com.skotori.sunzboot.common.annotation.Log)")
+    @Pointcut("@annotation(com.skotori.sunzboot.common.annotation.Log)") // 植入Advice的触发条件
     public void pointcut() {
     }
 
-    @Around("pointcut()")
+    @Around("pointcut()") // 环绕增强
     public Object around(ProceedingJoinPoint point) throws Throwable {
         long beginTime = System.currentTimeMillis();
         Object proceed = point.proceed();
         long endTime = System.currentTimeMillis();
         // 执行时长(毫秒)
         long executeTime = endTime - beginTime;
-        log.info("执行[ {} ]毫秒", executeTime);
+        log.info("程序执行[ {} ]毫秒", executeTime);
         // 保存日志
         try {
             saveLog(point);
         } catch (Exception e) {
-            log.error("日志记录出错： [ {} ]", e.getMessage());
+            log.error("记录日志异常：[ {} ]", e.getMessage());
         }
         return proceed;
     }
@@ -88,10 +88,10 @@ public class LogAspect {
             operationLog.setParam(params);
         }
 
-        // 保存系统日志
+        // 保存操作日志
         if (type != null) {
             operationLog.setType(type.getCode());
-            LogManager.executeInsertLog(operationLog);
+            LogManager.executeOperationLog(operationLog);
         }
     }
 

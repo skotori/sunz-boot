@@ -19,18 +19,18 @@ public class SysDept {
     private String name;
     // 排序号
     private Integer num;
-    // 状态(1：启用  2：禁用  3：删除）
+    // 状态(1：启用  2：禁用）
     private Integer status;
     // 备注
     private String note;
     // 创建时间
     private Date createTime;
     // 创建人
-    private Integer createUser;
+    private String createUser;
     // 更新时间
     private Date updateTime;
     // 更新人
-    private Integer updateUser;
+    private String updateUser;
 
     public Integer getId() {
         return id;
@@ -96,11 +96,11 @@ public class SysDept {
         this.createTime = createTime;
     }
 
-    public Integer getCreateUser() {
+    public String getCreateUser() {
         return createUser;
     }
 
-    public void setCreateUser(Integer createUser) {
+    public void setCreateUser(String createUser) {
         this.createUser = createUser;
     }
 
@@ -112,11 +112,11 @@ public class SysDept {
         this.updateTime = updateTime;
     }
 
-    public Integer getUpdateUser() {
+    public String getUpdateUser() {
         return updateUser;
     }
 
-    public void setUpdateUser(Integer updateUser) {
+    public void setUpdateUser(String updateUser) {
         this.updateUser = updateUser;
     }
 

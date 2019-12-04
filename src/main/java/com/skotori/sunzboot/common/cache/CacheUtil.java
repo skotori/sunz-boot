@@ -3,7 +3,7 @@ package com.skotori.sunzboot.common.cache;
 import java.util.List;
 
 /**
- * 缓存工具类
+ * EhCache缓存工具类
  * @author skotori
  * @date 2019-11-29 17:18
  */

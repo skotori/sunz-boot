@@ -77,8 +77,7 @@ public class AuthController {
             LogManager.executeLoginSuccessLog(authRequest.getAccount(), ip);
             return Result.success(authResponse);
         } catch (Exception e) {
-            log.error(e.getMessage());
-            LogManager.executeLoginErrorLog(authRequest.getAccount(), e.getMessage(), ip);
+            log.error("管理员登录异常：[ {} ]", e.getMessage());
             return Result.error(e.getMessage());
         }
     }

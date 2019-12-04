@@ -7,7 +7,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 日志记录线程管理器
+ * 记录日志线程管理器
  * @author skotori
  * @date 2019-11-29 18:00
  */
@@ -43,12 +43,12 @@ public class LogManager {
         executor.schedule(task, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);
     }
 
-    public static void executeInsertLog(SysOperationLog operationLog) {
+    public static void executeOperationLog(SysOperationLog operationLog) {
         TimerTask task = new TimerTask() {
 
             @Override
             public void run() {
-                logFactory.insertLog(operationLog);
+                logFactory.operationLog(operationLog);
             }
         };
         executor.schedule(task, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);

@@ -1,19 +1,19 @@
 package com.skotori.sunzboot.module.sys.service;
 
-import com.skotori.sunzboot.module.sys.mapper.SysUserMapper;
+import com.skotori.sunzboot.module.sys.mapper.SysDeptMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
 /**
- * 管理员service
+ * 部门service
  * @author skotori
- * @date 2019/11/06 20:36
+ * @date 2019-12-04 10:37
  */
 @Service
-public class SysUserService {
+public class SysDeptService {
 
     @Resource
-    private SysUserMapper sysUserMapper;
+    private SysDeptMapper sysDeptMapper;
 
 }

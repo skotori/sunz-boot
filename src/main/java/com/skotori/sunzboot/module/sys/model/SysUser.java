@@ -39,11 +39,11 @@ public class SysUser {
     // 创建时间
     private Date createTime;
     // 创建人
-    private Integer createUser;
+    private String createUser;
     // 更新时间
     private Date updateTime;
     // 更新人
-    private Integer updateUser;
+    private String updateUser;
     // 角色列表
     private List<SysRole> roles;
 
@@ -159,11 +159,11 @@ public class SysUser {
         this.createTime = createTime;
     }
 
-    public Integer getCreateUser() {
+    public String getCreateUser() {
         return createUser;
     }
 
-    public void setCreateUser(Integer createUser) {
+    public void setCreateUser(String createUser) {
         this.createUser = createUser;
     }
 
@@ -175,11 +175,11 @@ public class SysUser {
         this.updateTime = updateTime;
     }
 
-    public Integer getUpdateUser() {
+    public String getUpdateUser() {
         return updateUser;
     }
 
-    public void setUpdateUser(Integer updateUser) {
+    public void setUpdateUser(String updateUser) {
         this.updateUser = updateUser;
     }
 

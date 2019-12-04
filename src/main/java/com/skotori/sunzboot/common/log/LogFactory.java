@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 import java.util.Date;
 
 /**
- * log所需要的数据接口
+ * 记录日志所需要的数据接口
  * @author skotori
  * @date 2019-11-27 17:46
  */
@@ -44,7 +44,7 @@ public class LogFactory {
             loginLog.setMsg("");
             sysLoginLogMapper.insertLoginLog(loginLog);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error("记录登录成功日志异常：[ {} ]", e.getMessage());
         }
     }
 
@@ -58,15 +58,15 @@ public class LogFactory {
             loginLog.setMsg(msg);
             sysLoginLogMapper.insertLoginLog(loginLog);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error("记录登录失败日志异常：[ {} ]", e.getMessage());
         }
     }
 
-    public void insertLog(SysOperationLog operationLog) {
+    public void operationLog(SysOperationLog operationLog) {
         try {
             sysOperationLogMapper.insertOperationLog(operationLog);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error("记录操作日志异常：[ {} ]", e.getMessage());
         }
     }
 

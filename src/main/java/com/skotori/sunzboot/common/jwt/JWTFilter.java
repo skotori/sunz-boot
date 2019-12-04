@@ -36,17 +36,28 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         // 判断请求是否需要认证
         if (!isLoginAttempt(request, response)) {
-            isLoginAttemptFail(request, response);
+            responseFail(response, "请求头必须携带Authorization字段");
             return false;
         }
 
         // 执行认证
         if (!executeLogin(request, response)) {
-            executeLoginFail(request, response);
+            responseFail(response, "认证失败");
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * 如果isAccessAllowed通过executeLogin返回false，会执行onAccessDenied，这里重写后直接返回false
+     * @param request
+     * @param response
+     * @return
+     */
+    @Override
+    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) {
+        return false;
     }
 
     /**
@@ -63,7 +74,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     }
 
     /**
-     * 执行认证
+     * 执行认证，交给ShiroRealm即可
      * @param request
      * @param response
      * @return
@@ -74,11 +85,11 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         String token = httpServletRequest.getHeader(ShiroUtil.TOKEN_HEADER).substring(7);
         JWTToken jwtToken = new JWTToken(token);
         try {
-            // 提交给ShiroRealm进行登录
+            // 提交给ShiroRealm进行认证
             getSubject(request, response).login(jwtToken);
             return true;
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error("认证异常：[ {} ]", e.getMessage());
             return false;
         }
     }
@@ -105,11 +116,11 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         return super.preHandle(request, response);
     }
 
-    private void isLoginAttemptFail(ServletRequest request, ServletResponse response) {
+    private void responseFail(ServletResponse response, String msg) {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         httpServletResponse.setContentType("application/json");
         httpServletResponse.setCharacterEncoding("UTF-8");
-        Result result = Result.error("请求头必须携带Authorization字段");
+        Result result = Result.error(msg);
         String jsonStr = JSON.toJSONString(result);
         try {
             PrintWriter writer = httpServletResponse.getWriter();
@@ -117,23 +128,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
             writer.flush();
             writer.close();
         } catch (IOException e) {
-            log.error(e.getMessage());
-        }
-    }
-
-    private void executeLoginFail(ServletRequest request, ServletResponse response) {
-        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        httpServletResponse.setContentType("application/json");
-        httpServletResponse.setCharacterEncoding("UTF-8");
-        Result result = Result.error("认证失败");
-        String jsonStr = JSON.toJSONString(result);
-        try {
-            PrintWriter writer = httpServletResponse.getWriter();
-            writer.write(jsonStr);
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            log.error(e.getMessage());
+            log.error("JWTFilter返回错误信息异常：[ {} ]", e.getMessage());
         }
     }
 

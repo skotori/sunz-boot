@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 自定义Authentication对象，使得Subject除了携带用户的登录名外还可以携带更多信息
+ * 自定义ShiroUser对象，可以携带更多信息
  * @author skotori
  * @date 2019-11-15 10:58
  */

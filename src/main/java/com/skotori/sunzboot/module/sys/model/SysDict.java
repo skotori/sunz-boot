@@ -1,35 +1,24 @@
 package com.skotori.sunzboot.module.sys.model;
 
 import java.util.Date;
-import java.util.List;
 
 /**
- * 权限实体类
+ * 字典实体类
  * @author skotori
- * @date 2019/11/06 20:39
+ * @date 2019-12-04 08:54
  */
-public class SysPower {
+public class SysDict {
 
     // 主键id
     private Integer id;
-    // 父权限id
+    // 父字典id
     private Integer pid;
-    // 父权限id列表
-    private String pids;
-    // 编码
-    private String code;
-    // 名称
-    private String name;
-    // url
-    private String url;
-    // 图标
-    private String icon;
     // 排序号
     private Integer num;
-    // 层级
-    private Integer level;
-    // 类型(1：菜单 2：页面元素 3：文件 4：功能操作)
-    private Integer type;
+    // 名称
+    private String name;
+    // 值
+    private String code;
     // 状态(1：启用  2：禁用）
     private Integer status;
     // 备注
@@ -42,8 +31,6 @@ public class SysPower {
     private Date updateTime;
     // 更新人
     private String updateUser;
-    // 角色列表
-    private List<SysRole> roles;
 
     public Integer getId() {
         return id;
@@ -61,20 +48,12 @@ public class SysPower {
         this.pid = pid;
     }
 
-    public String getPids() {
-        return pids;
+    public Integer getNum() {
+        return num;
     }
 
-    public void setPids(String pids) {
-        this.pids = pids;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
+    public void setNum(Integer num) {
+        this.num = num;
     }
 
     public String getName() {
@@ -85,44 +64,12 @@ public class SysPower {
         this.name = name;
     }
 
-    public String getUrl() {
-        return url;
+    public String getCode() {
+        return code;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public Integer getNum() {
-        return num;
-    }
-
-    public void setNum(Integer num) {
-        this.num = num;
-    }
-
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Integer getStatus() {
@@ -173,34 +120,20 @@ public class SysPower {
         this.updateUser = updateUser;
     }
 
-    public List<SysRole> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<SysRole> roles) {
-        this.roles = roles;
-    }
-
     @Override
     public String toString() {
-        return "SysPower{" +
+        return "SysDict{" +
                 "id=" + id +
                 ", pid=" + pid +
-                ", pids='" + pids + '\'' +
-                ", code='" + code + '\'' +
-                ", name='" + name + '\'' +
-                ", url='" + url + '\'' +
-                ", icon='" + icon + '\'' +
                 ", num=" + num +
-                ", level=" + level +
-                ", type=" + type +
+                ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
                 ", status=" + status +
                 ", note='" + note + '\'' +
                 ", createTime=" + createTime +
-                ", createUser=" + createUser +
+                ", createUser='" + createUser + '\'' +
                 ", updateTime=" + updateTime +
-                ", updateUser=" + updateUser +
-                ", roles=" + roles +
+                ", updateUser='" + updateUser + '\'' +
                 '}';
     }
 }
