@@ -50,7 +50,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     }
 
     /**
-     * 如果isAccessAllowed通过executeLogin返回false，会执行onAccessDenied，这里重写后直接返回false
+     * isAccessAllowed调用executeLogin后返回false，会执行onAccessDenied重新调用executeLogin，所以这里重写后直接返回false
      * @param request
      * @param response
      * @return

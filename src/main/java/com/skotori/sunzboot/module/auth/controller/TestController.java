@@ -50,21 +50,21 @@ public class TestController {
 
     @GetMapping("cacheA")
     @Cacheable(value = "local", key = "#a")
-    public Integer cacheA(Integer a) {
+    public Integer cacheA(@RequestParam("a") Integer a) {
         System.out.println(a);
         return a;
     }
 
     @GetMapping("cacheP")
     @CachePut(value = "local", key = "#b")
-    public Integer cacheP(Integer b) {
+    public Integer cacheP(@RequestParam("b") Integer b) {
         System.out.println(b);
         return b;
     }
 
     @GetMapping("cacheE")
     @CacheEvict(value = "local", key = "#c")
-    public Integer cacheE(Integer c) {
+    public Integer cacheE(@RequestParam("c") Integer c) {
         System.out.println(c);
         return c;
     }

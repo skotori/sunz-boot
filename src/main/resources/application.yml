@@ -17,6 +17,13 @@ logging:
     # mapper所在包
     com.skotori.sunzboot.module.sys.mapper: debug
 
+# pagehelper分页插件配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
 spring:
   profiles:
     #选择数据库配置
