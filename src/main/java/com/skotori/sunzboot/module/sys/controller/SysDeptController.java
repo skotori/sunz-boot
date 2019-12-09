@@ -84,4 +84,58 @@ public class SysDeptController {
         }
     }
 
+    /**
+     * 新增部门
+     * @param dept
+     * @return
+     */
+    @PostMapping("add")
+    public Result add(@RequestBody SysDept dept) {
+        log.info("新增部门，body参数dept：[ {} ]", dept);
+        try {
+            sysDeptService.add(dept);
+            log.info("新增部门成功");
+            return Result.success();
+        } catch (Exception e) {
+            log.error("新增部门异常：[ {} ]", e.getMessage());
+            return Result.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 删除部门
+     * @param id
+     * @return
+     */
+    @GetMapping("delete")
+    public Result delete(@RequestParam("id") Integer id) {
+        log.info("删除部门，param参数id：[ {} ]", id);
+        try {
+            sysDeptService.delete(id);
+            log.info("删除部门成功");
+            return Result.success();
+        } catch (Exception e) {
+            log.error("删除部门异常：[ {} ]", e.getMessage());
+            return Result.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 更新部门
+     * @param dept
+     * @return
+     */
+    @PostMapping("update")
+    public Result update(@RequestBody SysDept dept) {
+        log.info("更新部门，body参数dept：[ {} ]", dept);
+        try {
+            sysDeptService.update(dept);
+            log.info("更新部门成功");
+            return Result.success();
+        } catch (Exception e) {
+            log.error("更新部门异常：[ {} ]", e.getMessage());
+            return Result.error(e.getMessage());
+        }
+    }
+
 }

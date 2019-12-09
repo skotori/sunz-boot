@@ -1,9 +1,15 @@
 package com.skotori.sunzboot.module.sys.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.skotori.sunzboot.common.shiro.ShiroUtil;
 import com.skotori.sunzboot.module.sys.mapper.SysNoticeMapper;
+import com.skotori.sunzboot.module.sys.model.SysNotice;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 通知service
@@ -15,5 +21,57 @@ public class SysNoticeService {
 
     @Resource
     private SysNoticeMapper sysNoticeMapper;
+
+    /**
+     * 分页查询通知列表
+     * @param pageNum
+     * @param pageSize
+     * @param notice
+     * @return
+     */
+    public PageInfo<SysNotice> pageList(Integer pageNum, Integer pageSize, SysNotice notice) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<SysNotice> noticeList = sysNoticeMapper.selectNoticeList(notice);
+        return new PageInfo<>(noticeList);
+    }
+
+    /**
+     * 查询通知列表
+     * @param notice
+     * @return
+     */
+    public List<SysNotice> list(SysNotice notice) {
+        return sysNoticeMapper.selectNoticeList(notice);
+    }
+
+    /**
+     * 新增通知
+     * @param notice
+     * @return
+     */
+    public Integer add(SysNotice notice) {
+        notice.setCreateTime(new Date());
+        notice.setCreateUser(ShiroUtil.getAccount());
+        return sysNoticeMapper.insertNotice(notice);
+    }
+
+    /**
+     * 删除通知
+     * @param id
+     * @return
+     */
+    public Integer delete(Integer id) {
+        return sysNoticeMapper.deleteNoticeById(id);
+    }
+
+    /**
+     * 更新通知
+     * @param notice
+     * @return
+     */
+    public Integer update(SysNotice notice) {
+        notice.setUpdateUser(ShiroUtil.getAccount());
+        return sysNoticeMapper.updateNotice(notice);
+    }
 
 }

@@ -12,7 +12,7 @@
         select *
         from sys_dept
         where 1 = 1
-        <if test="pid != null and pid != ''">
+        <if test="id != null and id != ''">
             and pids like concat('%', #{id}, '%')
         </if>
         <if test="name != null and name != ''">
@@ -29,7 +29,7 @@
         `name` as label
         from sys_dept
         where 1 = 1
-        <if test="pid != null and pid != ''">
+        <if test="id != null and id != ''">
             and pids like concat('%', #{id}, '%')
         </if>
         <if test="name != null and name != ''">
@@ -45,8 +45,12 @@
             pid,
             pids,
             `name`,
-            num,
-            status,
+            <if test="num != null and num != ''">
+                num,
+            </if>
+            <if test="status != null and status != ''">
+                status,
+            </if>
             <if test="note != null and note != ''">
                 note,
             </if>
@@ -56,8 +60,12 @@
             #{pid},
             #{pids},
             #{name},
-            #{num},
-            #{status},
+            <if test="num != null and num != ''">
+                #{num},
+            </if>
+            <if test="status != null and status != ''">
+                #{status},
+            </if>
             <if test="note != null and note != ''">
                 #{note},
             </if>

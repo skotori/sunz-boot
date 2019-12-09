@@ -2,6 +2,59 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.skotori.sunzboot.module.sys.mapper.SysNoticeMapper">
 
+    <select id="selectNoticeList" parameterType="com.skotori.sunzboot.module.sys.model.SysNotice" resultType="com.skotori.sunzboot.module.sys.model.SysNotice">
+        select *
+        from sys_notice
+        where 1 = 1
+        <if test="title != null and title != ''">
+            and title like concat('%', #{title}, '%')
+        </if>
+        <if test="content != null and content != ''">
+            and content like concat('%', #{content}, '%')
+        </if>
+        <if test="status != null and status != ''">
+            and status = #{status}
+        </if>
+    </select>
 
+    <insert id="insertNotice" parameterType="com.skotori.sunzboot.module.sys.model.SysNotice">
+        insert into sys_notice (
+            title,
+            content,
+            <if test="status != null and status != ''">
+                status,
+            </if>
+            create_time,
+            create_user
+        ) values (
+            #{title},
+            #{content},
+            <if test="status != null and status != ''">
+                #{status},
+            </if>
+            #{createTime},
+            #{createUser}
+        )
+    </insert>
+
+    <delete id="deleteNoticeById" parameterType="java.lang.Integer">
+        delete from sys_notice
+        where id = #{id}
+    </delete>
+
+    <update id="updateNotice" parameterType="com.skotori.sunzboot.module.sys.model.SysNotice">
+        update sys_notice set
+        <if test="title != null and title != ''">
+            and title like concat('%', #{title}, '%')
+        </if>
+        <if test="content != null and content != ''">
+            and content like concat('%', #{content}, '%')
+        </if>
+        <if test="status != null and status != ''">
+            and status = #{status}
+        </if>
+        update_user = #{updateUser}
+        where id = #{id}
+    </update>
 
 </mapper>

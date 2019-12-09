@@ -3,6 +3,8 @@ package com.skotori.sunzboot.module.sys.mapper;
 import com.skotori.sunzboot.module.sys.model.SysLoginLog;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * 登录日志mapper
  * @author skotori
@@ -17,5 +19,12 @@ public interface SysLoginLogMapper {
      * @return
      */
     Integer insertLoginLog(SysLoginLog sysLoginLog);
+
+    /**
+     * 查询登录日志列表
+     * @param loginLog
+     * @return
+     */
+    List<SysLoginLog> selectLoginLogList(SysLoginLog loginLog);
 
 }

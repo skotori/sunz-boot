@@ -3,9 +3,31 @@
 <mapper namespace="com.skotori.sunzboot.module.sys.mapper.SysLoginLogMapper">
 
     <insert id="insertLoginLog" parameterType="com.skotori.sunzboot.module.sys.model.SysLoginLog">
-        insert into sys_login_log
-        (account, `type`, `time`, ip, msg)
-        values (#{account}, #{type}, #{time}, #{ip}, #{msg})
+        insert into sys_login_log (
+            account,
+            `type`,
+            `time`,
+            ip,
+            msg
+        ) values (
+            #{account},
+            #{type},
+            #{time},
+            #{ip},
+            #{msg}
+        )
     </insert>
+    
+    <select id="selectLoginLogList" parameterType="com.skotori.sunzboot.module.sys.model.SysLoginLog" resultType="com.skotori.sunzboot.module.sys.model.SysLoginLog">
+        select *
+        from sys_login_log
+        where 1 = 1
+        <if test="account != null and account != ''">
+            and account like concat('%', #{account}, '%')
+        </if>
+        <if test="type != null and type != ''">
+            and `type` = #{type}
+        </if>
+    </select>
 
 </mapper>

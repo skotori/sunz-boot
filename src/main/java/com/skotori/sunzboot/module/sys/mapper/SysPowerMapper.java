@@ -20,4 +20,11 @@ public interface SysPowerMapper {
      */
     List<SysPower> selectPowersByRoleIds(List<Integer> roleIds);
 
+    /**
+     * 查询权限列表
+     * @param power
+     * @return
+     */
+    List<SysPower> selectPowerList(SysPower power);
+
 }

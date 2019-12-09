@@ -9,9 +9,31 @@
             select power_id
             from sys_role_power
             where role_id in
-            <foreach item="item" index="index" collection="list" open="(" separator="," close=")">#{item}
+            <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                #{item}
             </foreach>
         )
+    </select>
+    
+    <select id="selectPowerList" parameterType="com.skotori.sunzboot.module.sys.model.SysPower" resultType="com.skotori.sunzboot.module.sys.model.SysPower">
+        select *
+        from sys_power
+        where 1 = 1
+        <if test="id != null and id != ''">
+            and pids like concat('%', #{id}, '%')
+        </if>
+        <if test="code != null and code != ''">
+            and code like concat('%', #{code}, '%')
+        </if>
+        <if test="name != null and name != ''">
+            and `name` like concat('%', #{name}, '%')
+        </if>
+        <if test="type != null and type != ''">
+            and `type` = #{type}
+        </if>
+        <if test="status != null and status != ''">
+            and status = #{status}
+        </if>
     </select>
 
 </mapper>

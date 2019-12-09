@@ -1,22 +1,21 @@
-package com.skotori.sunzboot.module.sys.model;
+package com.skotori.sunzboot.module.sys.dto;
+
+import com.skotori.sunzboot.util.TreeNode;
 
 import java.util.Date;
 
-/**
- * 通知实体类
- * @author skotori
- * @date 2019-12-04 08:50
- */
-public class SysNotice {
+public class DictTreeNode extends TreeNode {
 
-    // 主键id
-    private Integer id;
-    // 标题
-    private String title;
-    // 内容
-    private String content;
+    // 排序号
+    private Integer num;
+    // 名称
+    private String name;
+    // 值
+    private String code;
     // 状态(1：启用  2：禁用）
     private Integer status;
+    // 备注
+    private String note;
     // 创建时间
     private Date createTime;
     // 创建人
@@ -26,28 +25,28 @@ public class SysNotice {
     // 更新人
     private String updateUser;
 
-    public Integer getId() {
-        return id;
+    public Integer getNum() {
+        return num;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setNum(Integer num) {
+        this.num = num;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getContent() {
-        return content;
+    public String getCode() {
+        return code;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Integer getStatus() {
@@ -56,6 +55,14 @@ public class SysNotice {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public Date getCreateTime() {
@@ -92,11 +99,16 @@ public class SysNotice {
 
     @Override
     public String toString() {
-        return "SysNotice{" +
+        return "DictTreeNode{" +
                 "id=" + id +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
+                ", pid=" + pid +
+                ", label='" + label + '\'' +
+                ", children=" + children +
+                ", num=" + num +
+                ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
                 ", status=" + status +
+                ", note='" + note + '\'' +
                 ", createTime=" + createTime +
                 ", createUser='" + createUser + '\'' +
                 ", updateTime=" + updateTime +

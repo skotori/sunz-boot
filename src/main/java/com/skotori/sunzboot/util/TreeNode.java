@@ -10,13 +10,13 @@ import java.util.List;
 public class TreeNode {
 
     // 节点id
-    private Integer id;
+    public Integer id;
     // 父节点id
-    private Integer pid;
+    public Integer pid;
     // 节点名称
-    private String label;
+    public String label;
     // 子节点集合
-    private List<TreeNode> children;
+    public List<TreeNode> children;
 
     public Integer getId() {
         return id;

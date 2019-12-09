@@ -3,6 +3,8 @@ package com.skotori.sunzboot.module.sys.mapper;
 import com.skotori.sunzboot.module.sys.model.SysOperationLog;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * 操作日志mapper
  * @author skotori
@@ -17,5 +19,12 @@ public interface SysOperationLogMapper {
      * @return
      */
     Integer insertOperationLog(SysOperationLog sysOperationLog);
+
+    /**
+     * 查询操作日志列表
+     * @param operationLog
+     * @return
+     */
+    List<SysOperationLog> selectOperationLogList(SysOperationLog operationLog);
 
 }
