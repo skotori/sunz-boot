@@ -3,6 +3,8 @@ package com.skotori.sunzboot.module.sys.mapper;
 import com.skotori.sunzboot.module.sys.model.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * 管理员mapper
  * @author skotori
@@ -17,5 +19,19 @@ public interface SysUserMapper {
      * @return
      */
     SysUser selectUserByAccount(String account);
+
+    /**
+     * 查询用户列表
+     * @param user
+     * @return
+     */
+    List<SysUser> selectUserList(SysUser user);
+
+    /**
+     * 新增用户
+     * @param user
+     * @return
+     */
+    Integer insertUser(SysUser user);
 
 }

@@ -26,8 +26,6 @@ public class SysPower {
     private String icon;
     // 排序号
     private Integer num;
-    // 层级
-    private Integer level;
     // 类型(1：菜单 2：页面元素 3：文件 4：功能操作)
     private Integer type;
     // 状态(1：启用  2：禁用）
@@ -109,14 +107,6 @@ public class SysPower {
         this.num = num;
     }
 
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
-    }
-
     public Integer getType() {
         return type;
     }
@@ -192,7 +182,6 @@ public class SysPower {
                 ", url='" + url + '\'' +
                 ", icon='" + icon + '\'' +
                 ", num=" + num +
-                ", level=" + level +
                 ", type=" + type +
                 ", status=" + status +
                 ", note='" + note + '\'' +

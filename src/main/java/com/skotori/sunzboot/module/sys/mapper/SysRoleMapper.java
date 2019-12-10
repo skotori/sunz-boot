@@ -20,4 +20,32 @@ public interface SysRoleMapper {
      */
     List<SysRole> selectRolesByUserId(Integer userId);
 
+    /**
+     * 查询角色列表
+     * @param role
+     * @return
+     */
+    List<SysRole> selectRoleList(SysRole role);
+
+    /**
+     * 新增角色
+     * @param role
+     * @return
+     */
+    Integer insertRole(SysRole role);
+
+    /**
+     * 通过角色id删除角色
+     * @param id
+     * @return
+     */
+    Integer deleteRoleById(Integer id);
+
+    /**
+     * 更新角色
+     * @param role
+     * @return
+     */
+    Integer updateRole(SysRole role);
+
 }

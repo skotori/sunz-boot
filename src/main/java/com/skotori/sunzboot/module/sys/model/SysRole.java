@@ -12,8 +12,6 @@ public class SysRole {
 
     // 主键id
     private Integer id;
-    // 父角色id
-    private Integer pid;
     // 编码
     private String code;
     // 名称
@@ -45,14 +43,6 @@ public class SysRole {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getPid() {
-        return pid;
-    }
-
-    public void setPid(Integer pid) {
-        this.pid = pid;
     }
 
     public String getCode() {
@@ -155,7 +145,6 @@ public class SysRole {
     public String toString() {
         return "SysRole{" +
                 "id=" + id +
-                ", pid=" + pid +
                 ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", num=" + num +

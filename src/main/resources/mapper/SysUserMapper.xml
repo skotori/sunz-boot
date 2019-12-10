@@ -8,4 +8,105 @@
         where account = #{account}
     </select>
 
+    <select id="selectUserList" parameterType="com.skotori.sunzboot.module.sys.model.SysUser" resultType="com.skotori.sunzboot.module.sys.model.SysUser">
+        select id,
+        account,
+        `name`,
+        avatar,
+        sex,
+        birthday,
+        email,
+        phone,
+        dept_id,
+        status,
+        note,
+        create_time,
+        create_user,
+        update_time,
+        update_user
+        from sys_user
+        where 1 = 1
+        <if test="account != null and account != ''">
+            and account like concat('%', #{account}, '%')
+        </if>
+        <if test="name != null and name != ''">
+            and `name` like concat('%', #{name}, '%')
+        </if>
+        <if test="sex != null and sex != ''">
+            and sex = #{sex}
+        </if>
+        <if test="deptId != null and deptId != ''">
+            and dept_id = #{deptId}
+        </if>
+        <if test="status != null and status != ''">
+            and status = #{status}
+        </if>
+    </select>
+
+    <insert id="insertUser" parameterType="com.skotori.sunzboot.module.sys.model.SysUser">
+        insert into sys_user (
+            account,
+            password,
+            salt,
+            <if test="name != null and name != ''">
+                `name`,
+            </if>
+            <if test="avatar != null and avatar != ''">
+                avatar,
+            </if>
+            <if test="sex != null and sex != ''">
+                sex,
+            </if>
+            <if test="birthday != null and birthday != ''">
+                birthday,
+            </if>
+            <if test="email != null and email != ''">
+                email,
+            </if>
+            <if test="phone != null and phone != ''">
+                phone,
+            </if>
+            dept_id,
+            <if test="status != null and status != ''">
+                status,
+            </if>
+            <if test="note != null and note != ''">
+                note,
+            </if>
+            create_time,
+            create_user
+        ) values (
+            #{account},
+            #{password},
+            #{salt},
+            <if test="name != null and name != ''">
+                #{name},
+            </if>
+            <if test="avatar != null and avatar != ''">
+                #{avatar},
+            </if>
+            <if test="sex != null and sex != ''">
+                #{sex},
+            </if>
+            <if test="birthday != null and birthday != ''">
+                #{birthday},
+            </if>
+            <if test="email != null and email != ''">
+                #{email},
+            </if>
+            <if test="phone != null and phone != ''">
+                #{phone},
+            </if>
+            #{deptId},
+            <if test="status != null and status != ''">
+                #{status},
+            </if>
+            <if test="note != null and note != ''">
+                #{note},
+            </if>
+            create_time,
+            create_user
+        )
+    </insert>
+
 </mapper>
