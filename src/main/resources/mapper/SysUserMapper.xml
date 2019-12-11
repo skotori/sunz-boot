@@ -109,4 +109,48 @@
         )
     </insert>
 
+    <delete id="deleteUserById" parameterType="java.lang.Integer">
+        delete from sys_user
+        where id = #{id}
+    </delete>
+
+    <update id="updateUser" parameterType="com.skotori.sunzboot.module.sys.model.SysUser">
+        update sys_user set
+        <if test="password != null and password != ''">
+            password = #{password},
+        </if>
+        <if test="salt != null and salt != ''">
+            salt = #{salt},
+        </if>
+        <if test="name != null and name != ''">
+            `name` = #{name},
+        </if>
+        <if test="avatar != null and avatar != ''">
+            avatar = #{avatar},
+        </if>
+        <if test="sex != null and sex != ''">
+            sex = #{sex},
+        </if>
+        <if test="birthday != null and birthday != ''">
+            birthday = #{birthday},
+        </if>
+        <if test="email != null and email != ''">
+            email = #{email},
+        </if>
+        <if test="phone != null and phone != ''">
+            phone = #{phone},
+        </if>
+        <if test="deptId != null and deptId != ''">
+            dept_id = #{deptId},
+        </if>
+        <if test="status != null and status != ''">
+            status = #{status},
+        </if>
+        <if test="note != null and note != ''">
+            note = #{note},
+        </if>
+        update_user = #{updateUser}
+        where id = #{id}
+    </update>
+
 </mapper>

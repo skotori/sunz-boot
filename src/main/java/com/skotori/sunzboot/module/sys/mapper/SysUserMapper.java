@@ -34,4 +34,18 @@ public interface SysUserMapper {
      */
     Integer insertUser(SysUser user);
 
+    /**
+     * 通过用户id删除用户
+     * @param id
+     * @return
+     */
+    Integer deleteUserById(Integer id);
+
+    /**
+     * 更新用户
+     * @param user
+     * @return
+     */
+    Integer updateUser(SysUser user);
+
 }
