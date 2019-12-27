@@ -1,7 +1,7 @@
 package com.skotori.sunzboot.module.sys.mapper;
 
+import com.skotori.sunzboot.common.tree.treeNode.DeptTreeNode;
 import com.skotori.sunzboot.module.sys.model.SysDept;
-import com.skotori.sunzboot.util.TreeNode;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -33,7 +33,7 @@ public interface SysDeptMapper {
      * @param dept
      * @return
      */
-    List<TreeNode> selectNodeList(SysDept dept);
+    List<DeptTreeNode> selectNodeList(SysDept dept);
 
     /**
      * 新增部门

@@ -50,6 +50,7 @@ public class ShiroFactory {
         shiroUser.setId(user.getId());
         shiroUser.setAccount(user.getAccount());
         shiroUser.setName(user.getName());
+        shiroUser.setAvatar(user.getAvatar());
         shiroUser.setDeptId(user.getDeptId());
         SysDept dept = sysDeptMapper.selectDeptById(user.getDeptId());
         shiroUser.setDeptName(dept.getName());

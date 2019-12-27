@@ -2,9 +2,9 @@ package com.skotori.sunzboot.module.sys.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.skotori.sunzboot.common.result.Result;
+import com.skotori.sunzboot.common.tree.treeNode.DeptTreeNode;
 import com.skotori.sunzboot.module.sys.model.SysDept;
 import com.skotori.sunzboot.module.sys.service.SysDeptService;
-import com.skotori.sunzboot.util.TreeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +75,7 @@ public class SysDeptController {
     public Result treeList(@RequestBody SysDept dept) {
         log.info("查询部门树形，body参数dept：[ {} ]", dept);
         try {
-            List<TreeNode> treeList = sysDeptService.treeList(dept);
+            List<DeptTreeNode> treeList = sysDeptService.treeList(dept);
             log.info("查询部门树形成功");
             return Result.success(treeList);
         } catch (Exception e) {

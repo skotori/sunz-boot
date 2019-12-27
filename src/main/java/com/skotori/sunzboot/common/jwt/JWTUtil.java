@@ -19,7 +19,7 @@ public class JWTUtil {
     private static Logger log = LoggerFactory.getLogger(JWTUtil.class);
 
     // token有效时间，单位秒
-    private static final Integer EXPIRE_TIME = 60 * 60 * 1000; // 一小时
+    private static final Integer EXPIRE_TIME = 24 * 60 * 60 * 1000; // 一天
 
     /**
      * 校验token

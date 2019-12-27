@@ -1,33 +1,37 @@
-package com.skotori.sunzboot.module.sys.model;
+package com.skotori.sunzboot.common.tree.treeNode;
+
+import com.skotori.sunzboot.module.sys.model.SysRole;
 
 import java.util.Date;
 import java.util.List;
 
 /**
- * 权限实体类
+ * 权限树形节点类
  * @author skotori
- * @date 2019/11/06 20:39
+ * @date 2019-12-19 19:04
  */
-public class SysPower {
+public class PowerTreeNode {
 
-    // 主键id
+    // 节点id
     private Integer id;
-    // 父权限id
+    // 父节点id
     private Integer pid;
-    // 父权限id列表
+    // 父节点id列表
     private String pids;
-    // 编码
-    private String code;
-    // 名称
+    // 节点名称
+    public String label;
+    // 节点名称
     private String name;
-    // 路径
-    private String path;
-    // 组件
-    private String component;
-    // 图标
-    private String icon;
     // 排序号
     private Integer num;
+    // 子节点集合
+    private List<PowerTreeNode> children;
+    // 编码
+    private String code;
+    // 路径
+    private String path;
+    // 图标
+    private String icon;
     // 类型(1：菜单 2：页面元素 3：文件 4：功能操作)
     private Integer type;
     // 状态(1：启用  2：禁用）
@@ -69,12 +73,12 @@ public class SysPower {
         this.pids = pids;
     }
 
-    public String getCode() {
-        return code;
+    public String getLabel() {
+        return label;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public String getName() {
@@ -85,6 +89,30 @@ public class SysPower {
         this.name = name;
     }
 
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
+    }
+
+    public List<PowerTreeNode> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<PowerTreeNode> children) {
+        this.children = children;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public String getPath() {
         return path;
     }
@@ -93,28 +121,12 @@ public class SysPower {
         this.path = path;
     }
 
-    public String getComponent() {
-        return component;
-    }
-
-    public void setComponent(String component) {
-        this.component = component;
-    }
-
     public String getIcon() {
         return icon;
     }
 
     public void setIcon(String icon) {
         this.icon = icon;
-    }
-
-    public Integer getNum() {
-        return num;
-    }
-
-    public void setNum(Integer num) {
-        this.num = num;
     }
 
     public Integer getType() {
@@ -183,16 +195,17 @@ public class SysPower {
 
     @Override
     public String toString() {
-        return "SysPower{" +
+        return "PowerTreeNode{" +
                 "id=" + id +
                 ", pid=" + pid +
                 ", pids='" + pids + '\'' +
-                ", code='" + code + '\'' +
+                ", label='" + label + '\'' +
                 ", name='" + name + '\'' +
-                ", path='" + path + '\'' +
-                ", component='" + component + '\'' +
-                ", icon='" + icon + '\'' +
                 ", num=" + num +
+                ", children=" + children +
+                ", code='" + code + '\'' +
+                ", path='" + path + '\'' +
+                ", icon='" + icon + '\'' +
                 ", type=" + type +
                 ", status=" + status +
                 ", note='" + note + '\'' +

@@ -23,7 +23,7 @@
         </if>
     </select>
 
-    <select id="selectNodeList" parameterType="com.skotori.sunzboot.module.sys.model.SysDept" resultType="com.skotori.sunzboot.util.TreeNode">
+    <select id="selectNodeList" parameterType="com.skotori.sunzboot.module.sys.model.SysDept" resultType="com.skotori.sunzboot.common.tree.treeNode.DeptTreeNode">
         select id,
         pid,
         `name` as label

@@ -2,7 +2,7 @@ package com.skotori.sunzboot.module.sys.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.skotori.sunzboot.common.result.Result;
-import com.skotori.sunzboot.module.sys.dto.DictTreeNode;
+import com.skotori.sunzboot.common.tree.treeNode.DictTreeNode;
 import com.skotori.sunzboot.module.sys.model.SysDict;
 import com.skotori.sunzboot.module.sys.service.SysDictService;
 import org.slf4j.Logger;
@@ -67,7 +67,7 @@ public class SysDictController {
     }
 
     /**
-     * 查询字典表格树形
+     * 查询字典树形
      * @param dict
      * @return
      */

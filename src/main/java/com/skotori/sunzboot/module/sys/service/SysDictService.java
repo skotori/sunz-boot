@@ -3,14 +3,13 @@ package com.skotori.sunzboot.module.sys.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.skotori.sunzboot.common.shiro.ShiroUtil;
-import com.skotori.sunzboot.module.sys.dto.DictTreeNode;
+import com.skotori.sunzboot.common.tree.TreeUtil;
+import com.skotori.sunzboot.common.tree.treeNode.DictTreeNode;
 import com.skotori.sunzboot.module.sys.mapper.SysDictMapper;
 import com.skotori.sunzboot.module.sys.model.SysDict;
-import com.skotori.sunzboot.util.TreeUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -48,27 +47,13 @@ public class SysDictService {
     }
 
     /**
-     * 查询字典表格树形
+     * 查询字典树形
      * @param dict
      * @return
      */
     public List<DictTreeNode> treeList(SysDict dict) {
         List<DictTreeNode> nodeList = sysDictMapper.selectNodeList(dict);
-        List<DictTreeNode> tree = new ArrayList<>();
-        for (DictTreeNode node: nodeList) {
-            if (node.getPid().equals(0)) {
-                tree.add(node);
-            }
-            for (DictTreeNode node2: nodeList) {
-                if (node2.getPid().equals(node.getId())) {
-                    if (node.getChildren() == null) {
-                        node.setChildren(new ArrayList<>());
-                    }
-                    node.getChildren().add(node2);
-                }
-            }
-        }
-        return tree;
+        return TreeUtil.dictListToTree(nodeList);
     }
 
     /**

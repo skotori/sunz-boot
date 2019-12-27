@@ -1,6 +1,6 @@
 package com.skotori.sunzboot.module.sys.mapper;
 
-import com.skotori.sunzboot.module.sys.dto.DictTreeNode;
+import com.skotori.sunzboot.common.tree.treeNode.DictTreeNode;
 import com.skotori.sunzboot.module.sys.model.SysDict;
 import org.apache.ibatis.annotations.Mapper;
 

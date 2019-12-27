@@ -3,10 +3,11 @@ package com.skotori.sunzboot.module.sys.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.skotori.sunzboot.common.shiro.ShiroUtil;
+import com.skotori.sunzboot.common.tree.treeNode.MenuTreeNode;
+import com.skotori.sunzboot.common.tree.treeNode.PowerTreeNode;
 import com.skotori.sunzboot.module.sys.mapper.SysPowerMapper;
 import com.skotori.sunzboot.module.sys.model.SysPower;
-import com.skotori.sunzboot.util.TreeNode;
-import com.skotori.sunzboot.util.TreeUtil;
+import com.skotori.sunzboot.common.tree.TreeUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,11 +26,12 @@ public class SysPowerService {
     private SysPowerMapper sysPowerMapper;
 
     /**
-     * 查询菜单列表
+     * 查询菜单树形
      * @return
      */
-    public List<SysPower> menuList() {
-        return sysPowerMapper.selectMenuList(ShiroUtil.getAccount());
+    public List<MenuTreeNode> menuTree() {
+        List<MenuTreeNode> nodeList = sysPowerMapper.selectMenuNodeList(ShiroUtil.getAccount());
+        return TreeUtil.menuListToTree(nodeList);
     }
 
     /**
@@ -59,9 +61,9 @@ public class SysPowerService {
      * @param power
      * @return
      */
-    public List<TreeNode> treeList(SysPower power) {
-        List<TreeNode> nodeList = sysPowerMapper.selectNodeList(power);
-        return TreeUtil.listToTree(nodeList);
+    public List<PowerTreeNode> powerTree(SysPower power) {
+        List<PowerTreeNode> nodeList = sysPowerMapper.selectPowerNodeList(power);
+        return TreeUtil.powerListToTree(nodeList);
     }
 
     /**

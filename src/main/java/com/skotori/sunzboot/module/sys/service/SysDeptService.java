@@ -3,10 +3,10 @@ package com.skotori.sunzboot.module.sys.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.skotori.sunzboot.common.shiro.ShiroUtil;
+import com.skotori.sunzboot.common.tree.treeNode.DeptTreeNode;
 import com.skotori.sunzboot.module.sys.mapper.SysDeptMapper;
 import com.skotori.sunzboot.module.sys.model.SysDept;
-import com.skotori.sunzboot.util.TreeNode;
-import com.skotori.sunzboot.util.TreeUtil;
+import com.skotori.sunzboot.common.tree.TreeUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -51,9 +51,9 @@ public class SysDeptService {
      * @param dept
      * @return
      */
-    public List<TreeNode> treeList(SysDept dept) {
-        List<TreeNode> nodeList = sysDeptMapper.selectNodeList(dept);
-        return TreeUtil.listToTree(nodeList);
+    public List<DeptTreeNode> treeList(SysDept dept) {
+        List<DeptTreeNode> nodeList = sysDeptMapper.selectNodeList(dept);
+        return TreeUtil.deptListToTree(nodeList);
     }
 
     /**

@@ -12,7 +12,7 @@
         </foreach>
     </select>
 
-    <select id="selectMenuList" parameterType="java.lang.String" resultType="com.skotori.sunzboot.module.sys.model.SysPower">
+    <select id="selectMenuNodeList" parameterType="java.lang.String" resultType="com.skotori.sunzboot.common.tree.treeNode.MenuTreeNode">
         select *
         from sys_power as p
         left join sys_role_power as rp on p.id = rp.power_id
@@ -21,6 +21,7 @@
         left join sys_user as u on ur.user_id = u.id
         where p.type = 1
         and u.account = #{account}
+        order by p.num
     </select>
     
     <select id="selectPowerList" parameterType="com.skotori.sunzboot.module.sys.model.SysPower" resultType="com.skotori.sunzboot.module.sys.model.SysPower">
@@ -44,7 +45,7 @@
         </if>
     </select>
 
-    <select id="selectNodeList" parameterType="com.skotori.sunzboot.module.sys.model.SysPower" resultType="com.skotori.sunzboot.util.TreeNode">
+    <select id="selectPowerNodeList" parameterType="com.skotori.sunzboot.module.sys.model.SysPower" resultType="com.skotori.sunzboot.common.tree.treeNode.PowerTreeNode">
         select id,
         pid,
         `name` as label
@@ -73,8 +74,11 @@
             pids,
             code,
             `name`,
-            <if test="url != null and url != ''">
-                url,
+            <if test="path != null and path != ''">
+                path,
+            </if>
+            <if test="component != null and component != ''">
+                component,
             </if>
             <if test="icon != null and icon != ''">
                 icon,
@@ -98,8 +102,11 @@
             #{pids},
             #{code},
             #{name},
-            <if test="url != null and url != ''">
-                #{url},
+            <if test="path != null and path != ''">
+                #{path},
+            </if>
+            <if test="component != null and component != ''">
+                #{component},
             </if>
             <if test="icon != null and icon != ''">
                 #{icon}
@@ -140,8 +147,11 @@
         <if test="name != null and name != ''">
             `name` = #{name},
         </if>
-        <if test="url != null and url != ''">
-            url = #{url},
+        <if test="path != null and path != ''">
+            path = #{path},
+        </if>
+        <if test="component != null and component != ''">
+            component = #{component},
         </if>
         <if test="icon != null and icon != ''">
             icon = #{icon}

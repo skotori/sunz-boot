@@ -18,6 +18,8 @@ public class ShiroUser implements Serializable {
     private String account;
     // 名称
     private String name;
+    // 头像
+    private String avatar;
     // 部门id
     private Integer deptId;
     // 部门名称
@@ -53,6 +55,14 @@ public class ShiroUser implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public Integer getDeptId() {
@@ -93,6 +103,7 @@ public class ShiroUser implements Serializable {
                 "id=" + id +
                 ", account='" + account + '\'' +
                 ", name='" + name + '\'' +
+                ", avatar='" + avatar + '\'' +
                 ", deptId=" + deptId +
                 ", deptName='" + deptName + '\'' +
                 ", roleCodes=" + roleCodes +

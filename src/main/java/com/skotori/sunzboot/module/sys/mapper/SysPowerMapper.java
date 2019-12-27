@@ -1,7 +1,8 @@
 package com.skotori.sunzboot.module.sys.mapper;
 
+import com.skotori.sunzboot.common.tree.treeNode.MenuTreeNode;
+import com.skotori.sunzboot.common.tree.treeNode.PowerTreeNode;
 import com.skotori.sunzboot.module.sys.model.SysPower;
-import com.skotori.sunzboot.util.TreeNode;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -22,11 +23,11 @@ public interface SysPowerMapper {
     List<SysPower> selectPowersByRoleIds(List<Integer> roleIds);
 
     /**
-     * 通过账号查询菜单列表
+     * 通过账号查询菜单树形节点列表
      * @param account
      * @return
      */
-    List<SysPower> selectMenuList(String account);
+    List<MenuTreeNode> selectMenuNodeList(String account);
 
     /**
      * 查询权限列表
@@ -40,7 +41,7 @@ public interface SysPowerMapper {
      * @param power
      * @return
      */
-    List<TreeNode> selectNodeList(SysPower power);
+    List<PowerTreeNode> selectPowerNodeList(SysPower power);
 
     /**
      * 新增权限

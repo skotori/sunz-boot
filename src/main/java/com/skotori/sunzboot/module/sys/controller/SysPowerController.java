@@ -2,9 +2,10 @@ package com.skotori.sunzboot.module.sys.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.skotori.sunzboot.common.result.Result;
+import com.skotori.sunzboot.common.tree.treeNode.MenuTreeNode;
+import com.skotori.sunzboot.common.tree.treeNode.PowerTreeNode;
 import com.skotori.sunzboot.module.sys.model.SysPower;
 import com.skotori.sunzboot.module.sys.service.SysPowerService;
-import com.skotori.sunzboot.util.TreeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,18 +28,18 @@ public class SysPowerController {
     private SysPowerService sysPowerService;
 
     /**
-     * 查询菜单列表
+     * 查询菜单树形
      * @return
      */
-    @GetMapping("menuList")
-    public Result menuList() {
-        log.info("查询菜单列表");
+    @GetMapping("menuTree")
+    public Result menuTree() {
+        log.info("查询菜单树形");
         try {
-            List<SysPower> menuList = sysPowerService.menuList();
-            log.info("查询菜单列表成功");
-            return Result.success(menuList);
+            List<MenuTreeNode> menuTree = sysPowerService.menuTree();
+            log.info("查询菜单树形成功");
+            return Result.success(menuTree);
         } catch (Exception e) {
-            log.error("查询菜单列表异常：[ {} ]", e.getMessage());
+            log.error("查询菜单树形异常：[ {} ]", e.getMessage());
             return Result.error(e.getMessage());
         }
     }
@@ -88,13 +89,13 @@ public class SysPowerController {
      * @param power
      * @return
      */
-    @PostMapping("treeList")
-    public Result treeList(@RequestBody SysPower power) {
+    @PostMapping("powerTree")
+    public Result powerTree(@RequestBody SysPower power) {
         log.info("查询权限树形，body参数power：[ {} ]", power);
         try {
-            List<TreeNode> treeList = sysPowerService.treeList(power);
+            List<PowerTreeNode> powerTree = sysPowerService.powerTree(power);
             log.info("查询权限树形成功");
-            return Result.success(treeList);
+            return Result.success(powerTree);
         } catch (Exception e) {
             log.error("查询权限树形异常：[ {} ]", e.getMessage());
             return Result.error(e.getMessage());

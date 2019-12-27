@@ -1,17 +1,29 @@
-package com.skotori.sunzboot.module.sys.dto;
-
-import com.skotori.sunzboot.util.TreeNode;
+package com.skotori.sunzboot.common.tree.treeNode;
 
 import java.util.Date;
+import java.util.List;
 
-public class DictTreeNode extends TreeNode {
+/**
+ * 部门树心节点类
+ * @author skotori
+ * @date 2019-12-19 19:27
+ */
+public class DeptTreeNode {
 
+    // 节点id
+    private Integer id;
+    // 父节点id
+    private Integer pid;
+    // 父节点id列表
+    private String pids;
+    // 节点名称
+    public String label;
+    // 节点名称
+    private String name;
     // 排序号
     private Integer num;
-    // 名称
-    private String name;
-    // 值
-    private String code;
+    // 子节点集合
+    private List<DeptTreeNode> children;
     // 状态(1：启用  2：禁用）
     private Integer status;
     // 备注
@@ -25,12 +37,36 @@ public class DictTreeNode extends TreeNode {
     // 更新人
     private String updateUser;
 
-    public Integer getNum() {
-        return num;
+    public Integer getId() {
+        return id;
     }
 
-    public void setNum(Integer num) {
-        this.num = num;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getPid() {
+        return pid;
+    }
+
+    public void setPid(Integer pid) {
+        this.pid = pid;
+    }
+
+    public String getPids() {
+        return pids;
+    }
+
+    public void setPids(String pids) {
+        this.pids = pids;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public String getName() {
@@ -41,12 +77,20 @@ public class DictTreeNode extends TreeNode {
         this.name = name;
     }
 
-    public String getCode() {
-        return code;
+    public Integer getNum() {
+        return num;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setNum(Integer num) {
+        this.num = num;
+    }
+
+    public List<DeptTreeNode> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<DeptTreeNode> children) {
+        this.children = children;
     }
 
     public Integer getStatus() {
@@ -99,14 +143,14 @@ public class DictTreeNode extends TreeNode {
 
     @Override
     public String toString() {
-        return "DictTreeNode{" +
+        return "DeptTreeNode{" +
                 "id=" + id +
                 ", pid=" + pid +
+                ", pids='" + pids + '\'' +
                 ", label='" + label + '\'' +
-                ", children=" + children +
-                ", num=" + num +
                 ", name='" + name + '\'' +
-                ", code='" + code + '\'' +
+                ", num=" + num +
+                ", children=" + children +
                 ", status=" + status +
                 ", note='" + note + '\'' +
                 ", createTime=" + createTime +

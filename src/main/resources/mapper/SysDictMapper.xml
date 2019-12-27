@@ -20,7 +20,7 @@
         </if>
     </select>
 
-    <select id="selectNodeList" parameterType="com.skotori.sunzboot.module.sys.model.SysDict" resultType="com.skotori.sunzboot.module.sys.dto.DictTreeNode">
+    <select id="selectNodeList" parameterType="com.skotori.sunzboot.module.sys.model.SysDict" resultType="com.skotori.sunzboot.common.tree.treeNode.DictTreeNode">
         select *
         from sys_dict
         where 1 = 1
