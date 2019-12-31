@@ -2,6 +2,9 @@ package com.skotori.sunzboot.module.sys.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.skotori.sunzboot.common.result.Result;
+import com.skotori.sunzboot.common.shiro.ShiroFactory;
+import com.skotori.sunzboot.common.shiro.ShiroUser;
+import com.skotori.sunzboot.common.shiro.ShiroUtil;
 import com.skotori.sunzboot.module.sys.model.SysUser;
 import com.skotori.sunzboot.module.sys.service.SysUserService;
 import org.slf4j.Logger;
@@ -24,6 +27,25 @@ public class SysUserController {
 
     @Autowired
     private SysUserService sysUserService;
+
+    /**
+     * 查询登录用户信息
+     * @return
+     */
+    @GetMapping("userInfo")
+    public Result userInfo() {
+        log.info("查询登录用户信息");
+        try {
+            ShiroFactory shiroFactory = ShiroFactory.getShiroFactory();
+            SysUser user = shiroFactory.getUser(ShiroUtil.getAccount());
+            ShiroUser shiroUser = shiroFactory.getShiroUser(user);
+            log.info("查询登录用户信息成功");
+            return Result.success(shiroUser);
+        } catch (Exception e) {
+            log.error("查询登录用户信息异常：[ {} ]", e.getMessage());
+            return Result.error(e.getMessage());
+        }
+    }
 
     /**
      * 分页查询用户列表
