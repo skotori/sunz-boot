@@ -26,6 +26,24 @@ public class SysRoleController {
     private SysRoleService sysRoleService;
 
     /**
+     * 查询角色列表
+     * @param role
+     * @return
+     */
+    @PostMapping("list")
+    public Result list(@RequestBody SysRole role) {
+        log.info("查询角色列表，body参数role：[ {} ]", role);
+        try {
+            List<SysRole> roleList = sysRoleService.list(role);
+            log.info("查询角色列表成功");
+            return Result.success(roleList);
+        } catch (Exception e) {
+            log.error("查询角色列表异常：[ {} ]", e.getMessage());
+            return Result.error(e.getMessage());
+        }
+    }
+
+    /**
      * 分页查询角色列表
      * @param pageNum
      * @param pageSize
@@ -43,24 +61,6 @@ public class SysRoleController {
             return Result.success(pageInfo);
         } catch (Exception e) {
             log.error("分页查询角色列表异常：[ {} ]", e.getMessage());
-            return Result.error(e.getMessage());
-        }
-    }
-
-    /**
-     * 查询角色列表
-     * @param role
-     * @return
-     */
-    @PostMapping("list")
-    public Result list(@RequestBody SysRole role) {
-        log.info("查询角色列表，body参数role：[ {} ]", role);
-        try {
-            List<SysRole> roleList = sysRoleService.list(role);
-            log.info("查询角色列表成功");
-            return Result.success(roleList);
-        } catch (Exception e) {
-            log.error("查询角色列表异常：[ {} ]", e.getMessage());
             return Result.error(e.getMessage());
         }
     }

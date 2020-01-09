@@ -2,14 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.skotori.sunzboot.module.sys.mapper.SysDeptMapper">
 
-    <select id="selectDeptById" parameterType="java.lang.Integer" resultType="com.skotori.sunzboot.module.sys.model.SysDept">
-        select *
-        from sys_dept
-        where id = #{id}
-    </select>
-
     <select id="selectDeptList" parameterType="com.skotori.sunzboot.module.sys.model.SysDept" resultType="com.skotori.sunzboot.module.sys.model.SysDept">
-        select *
+        select id,
+        `name`
         from sys_dept
         where 1 = 1
         <if test="id != null and id != ''">

@@ -25,6 +25,15 @@ public class SysDeptService {
     private SysDeptMapper sysDeptMapper;
 
     /**
+     * 查询部门列表
+     * @param dept
+     * @return
+     */
+    public List<SysDept> list(SysDept dept) {
+        return sysDeptMapper.selectDeptList(dept);
+    }
+
+    /**
      * 分页查询部门列表
      * @param pageNum
      * @param pageSize
@@ -35,15 +44,6 @@ public class SysDeptService {
         PageHelper.startPage(pageNum, pageSize);
         List<SysDept> deptList = sysDeptMapper.selectDeptList(dept);
         return new PageInfo<>(deptList);
-    }
-
-    /**
-     * 查询部门列表
-     * @param dept
-     * @return
-     */
-    public List<SysDept> list(SysDept dept) {
-        return sysDeptMapper.selectDeptList(dept);
     }
 
     /**

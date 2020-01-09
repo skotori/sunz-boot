@@ -27,6 +27,24 @@ public class SysDeptController {
     private SysDeptService sysDeptService;
 
     /**
+     * 查询部门列表
+     * @param dept
+     * @return
+     */
+    @PostMapping("list")
+    public Result list(@RequestBody SysDept dept) {
+        log.info("查询部门列表，body参数dept：[ {} ]", dept);
+        try {
+            List<SysDept> deptList = sysDeptService.list(dept);
+            log.info("查询部门列表成功");
+            return Result.success(deptList);
+        } catch (Exception e) {
+            log.error("查询部门列表异常：[ {} ]", e.getMessage());
+            return Result.error(e.getMessage());
+        }
+    }
+
+    /**
      * 分页查询部门列表
      * @param pageNum
      * @param pageSize
@@ -44,24 +62,6 @@ public class SysDeptController {
             return Result.success(pageInfo);
         } catch (Exception e) {
             log.error("分页查询部门列表异常：[ {} ]", e.getMessage());
-            return Result.error(e.getMessage());
-        }
-    }
-
-    /**
-     * 查询部门列表
-     * @param dept
-     * @return
-     */
-    @PostMapping("list")
-    public Result list(@RequestBody SysDept dept) {
-        log.info("查询部门列表，body参数dept：[ {} ]", dept);
-        try {
-            List<SysDept> deptList = sysDeptService.list(dept);
-            log.info("查询部门列表成功");
-            return Result.success(deptList);
-        } catch (Exception e) {
-            log.error("查询部门列表异常：[ {} ]", e.getMessage());
             return Result.error(e.getMessage());
         }
     }

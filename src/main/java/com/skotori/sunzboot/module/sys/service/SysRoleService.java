@@ -23,6 +23,15 @@ public class SysRoleService {
     private SysRoleMapper sysRoleMapper;
 
     /**
+     * 查询角色列表
+     * @param role
+     * @return
+     */
+    public List<SysRole> list(SysRole role) {
+        return sysRoleMapper.selectRoleList(role);
+    }
+
+    /**
      * 分页查询角色列表
      * @param pageNum
      * @param pageSize
@@ -33,15 +42,6 @@ public class SysRoleService {
         PageHelper.startPage(pageNum, pageSize);
         List<SysRole> roleList = sysRoleMapper.selectRoleList(role);
         return new PageInfo<>(roleList);
-    }
-
-    /**
-     * 查询角色列表
-     * @param role
-     * @return
-     */
-    public List<SysRole> list(SysRole role) {
-        return sysRoleMapper.selectRoleList(role);
     }
 
     /**

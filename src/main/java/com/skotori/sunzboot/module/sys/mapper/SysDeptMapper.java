@@ -15,13 +15,6 @@ import java.util.List;
 public interface SysDeptMapper {
 
     /**
-     * 通过部门id查询部门信息
-     * @param id
-     * @return
-     */
-    SysDept selectDeptById(Integer id);
-
-    /**
      * 查询部门列表
      * @param dept
      * @return

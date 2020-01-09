@@ -2,6 +2,7 @@ package com.skotori.sunzboot.module.sys.mapper;
 
 import com.skotori.sunzboot.module.sys.model.SysUser;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -28,11 +29,33 @@ public interface SysUserMapper {
     List<SysUser> selectUserList(SysUser user);
 
     /**
+     * 通过id查询用户信息
+     * @param id
+     * @return
+     */
+    SysUser selectUserById(Integer id);
+
+    /**
      * 新增用户
      * @param user
      * @return
      */
     Integer insertUser(SysUser user);
+
+    /**
+     * 新增用户权限关联
+     * @param userId
+     * @param roleIds
+     * @return
+     */
+    Integer insertUserRole(@Param("userId") Integer userId, @Param("roleIds") List<Integer> roleIds);
+
+    /**
+     * 删除用户权限关联
+     * @param id
+     * @return
+     */
+    Integer deleteUserRole(Integer id);
 
     /**
      * 通过用户id删除用户

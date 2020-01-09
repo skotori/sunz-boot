@@ -1,6 +1,7 @@
 package com.skotori.sunzboot.common.shiro;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,6 +21,14 @@ public class ShiroUser implements Serializable {
     private String name;
     // 头像
     private String avatar;
+    // 性别（1：男 2：女）
+    private Integer sex;
+    // 生日
+    private Date birthday;
+    // 邮箱
+    private String email;
+    // 电话
+    private String phone;
     // 部门id
     private Integer deptId;
     // 部门名称
@@ -65,6 +74,38 @@ public class ShiroUser implements Serializable {
         this.avatar = avatar;
     }
 
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public Integer getDeptId() {
         return deptId;
     }
@@ -104,6 +145,10 @@ public class ShiroUser implements Serializable {
                 ", account='" + account + '\'' +
                 ", name='" + name + '\'' +
                 ", avatar='" + avatar + '\'' +
+                ", sex=" + sex +
+                ", birthday=" + birthday +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
                 ", deptId=" + deptId +
                 ", deptName='" + deptName + '\'' +
                 ", roleCodes=" + roleCodes +

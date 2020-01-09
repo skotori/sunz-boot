@@ -1,10 +1,8 @@
 package com.skotori.sunzboot.common.shiro;
 
-import com.skotori.sunzboot.module.sys.mapper.SysDeptMapper;
 import com.skotori.sunzboot.module.sys.mapper.SysPowerMapper;
 import com.skotori.sunzboot.module.sys.mapper.SysRoleMapper;
 import com.skotori.sunzboot.module.sys.mapper.SysUserMapper;
-import com.skotori.sunzboot.module.sys.model.SysDept;
 import com.skotori.sunzboot.module.sys.model.SysPower;
 import com.skotori.sunzboot.module.sys.model.SysRole;
 import com.skotori.sunzboot.module.sys.model.SysUser;
@@ -34,9 +32,6 @@ public class ShiroFactory {
     @Resource
     private SysPowerMapper sysPowerMapper;
 
-    @Resource
-    private SysDeptMapper sysDeptMapper;
-
     public static ShiroFactory getShiroFactory() {
         return SpringContextUtil.getBean(ShiroFactory.class);
     }
@@ -51,9 +46,12 @@ public class ShiroFactory {
         shiroUser.setAccount(user.getAccount());
         shiroUser.setName(user.getName());
         shiroUser.setAvatar(user.getAvatar());
+        shiroUser.setSex(user.getSex());
+        shiroUser.setBirthday(user.getBirthday());
+        shiroUser.setEmail(user.getEmail());
+        shiroUser.setPhone(user.getPhone());
         shiroUser.setDeptId(user.getDeptId());
-        SysDept dept = sysDeptMapper.selectDeptById(user.getDeptId());
-        shiroUser.setDeptName(dept.getName());
+        shiroUser.setDeptName(user.getDeptName());
         List<SysRole> roles = sysRoleMapper.selectRolesByUserId(user.getId());
         List<String> roleCodes = new ArrayList<>();
         List<Integer> roleIds = new ArrayList<>();

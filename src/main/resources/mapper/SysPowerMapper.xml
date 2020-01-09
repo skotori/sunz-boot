@@ -3,7 +3,9 @@
 <mapper namespace="com.skotori.sunzboot.module.sys.mapper.SysPowerMapper">
 
     <select id="selectPowersByRoleIds" resultType="com.skotori.sunzboot.module.sys.model.SysPower">
-        select *
+        select p.id,
+        p.code,
+        p.name
         from sys_power as p
         left join sys_role_power as rp on p.id = rp.power_id
         where rp.role_id in
@@ -13,7 +15,14 @@
     </select>
 
     <select id="selectMenuNodeList" parameterType="java.lang.String" resultType="com.skotori.sunzboot.common.tree.treeNode.MenuTreeNode">
-        select *
+        select distinct p.id,
+        p.pid,
+        p.name,
+        p.path,
+        p.component,
+        p.icon,
+        p.code,
+        p.status
         from sys_power as p
         left join sys_role_power as rp on p.id = rp.power_id
         left join sys_role as r on rp.role_id = r.id

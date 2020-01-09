@@ -3,14 +3,18 @@
 <mapper namespace="com.skotori.sunzboot.module.sys.mapper.SysRoleMapper">
 
     <select id="selectRolesByUserId" parameterType="java.lang.Integer" resultType="com.skotori.sunzboot.module.sys.model.SysRole">
-        select *
+        select r.id,
+        r.code,
+        r.name
         from sys_role as r
         left join sys_user_role as ur on r.id = ur.role_id
         where ur.user_id = #{userId}
     </select>
 
     <select id="selectRoleList" parameterType="com.skotori.sunzboot.module.sys.model.SysRole" resultType="com.skotori.sunzboot.module.sys.model.SysRole">
-        select *
+        select id,
+        code,
+        `name`
         from sys_role
         where 1 = 1
         <if test="code != null and code != ''">

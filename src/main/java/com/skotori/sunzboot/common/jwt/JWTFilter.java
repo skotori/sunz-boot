@@ -2,6 +2,7 @@ package com.skotori.sunzboot.common.jwt;
 
 import com.alibaba.fastjson.JSON;
 import com.skotori.sunzboot.common.result.Result;
+import com.skotori.sunzboot.common.result.ResultCode;
 import com.skotori.sunzboot.common.shiro.ShiroUtil;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
@@ -34,13 +35,13 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         // 判断请求是否需要认证
         if (!isLoginAttempt(request, response)) {
-            responseFail(response, "请求头必须携带Authorization字段");
+            responseFail(response, ResultCode.NOT_FOUND_AUTHORIZATION);
             return false;
         }
 
         // 执行认证
         if (!executeLogin(request, response)) {
-            responseFail(response, "认证失败");
+            responseFail(response, ResultCode.AUTHENTICATION_NO_ACCESS);
             return false;
         }
 
@@ -92,11 +93,11 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         }
     }
 
-    private void responseFail(ServletResponse response, String msg) {
+    private void responseFail(ServletResponse response, ResultCode resultCode) {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         httpServletResponse.setContentType("application/json");
         httpServletResponse.setCharacterEncoding("UTF-8");
-        Result result = Result.error(msg);
+        Result result = Result.error(resultCode);
         String jsonStr = JSON.toJSONString(result);
         try {
             PrintWriter writer = httpServletResponse.getWriter();

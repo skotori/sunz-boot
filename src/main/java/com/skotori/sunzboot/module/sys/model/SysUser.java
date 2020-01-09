@@ -1,5 +1,7 @@
 package com.skotori.sunzboot.module.sys.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class SysUser {
     // 性别（1：男 2：女）
     private Integer sex;
     // 生日
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date birthday;
     // 邮箱
     private String email;
@@ -32,6 +35,8 @@ public class SysUser {
     private String phone;
     // 部门id
     private Integer deptId;
+    // 部门名称
+    private String deptName;
     // 状态(1：启用  2：禁用  3：删除）
     private Integer status;
     // 备注
@@ -46,6 +51,8 @@ public class SysUser {
     private String updateUser;
     // 角色列表
     private List<SysRole> roles;
+    // 关键词搜索
+    private String keyword;
 
     public Integer getId() {
         return id;
@@ -135,6 +142,14 @@ public class SysUser {
         this.deptId = deptId;
     }
 
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
     public Integer getStatus() {
         return status;
     }
@@ -191,6 +206,14 @@ public class SysUser {
         this.roles = roles;
     }
 
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
     @Override
     public String toString() {
         return "SysUser{" +
@@ -205,12 +228,13 @@ public class SysUser {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", deptId=" + deptId +
+                ", deptName='" + deptName + '\'' +
                 ", status=" + status +
                 ", note='" + note + '\'' +
                 ", createTime=" + createTime +
-                ", createUser=" + createUser +
+                ", createUser='" + createUser + '\'' +
                 ", updateTime=" + updateTime +
-                ", updateUser=" + updateUser +
+                ", updateUser='" + updateUser + '\'' +
                 ", roles=" + roles +
                 '}';
     }
@@ -220,6 +244,10 @@ public class SysUser {
      * @return
      */
     public String getCredentialsSalt(){
-        return this.account + this.salt;
+        if (this.salt != null && !"".equals(this.salt)) {
+            return this.account + this.salt;
+        } else {
+            return null;
+        }
     }
 }

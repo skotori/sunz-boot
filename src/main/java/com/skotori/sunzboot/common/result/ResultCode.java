@@ -18,13 +18,11 @@ public enum ResultCode {
     PARAM_TYPE_BIND_ERROR(10003, "参数类型错误"),
     PARAM_NOT_COMPLETE(10004, "参数缺失"),
 
-    /* 用户错误：20001-29999*/
-    USER_NOT_LOGGED_IN(20001, "用户未登录"),
-    USER_LOGIN_ERROR(20002, "账号或密码错误"),
-    USER_NOT_EXIST(20003, "账户不存在"),
-    USER_ACCOUNT_FORBIDDEN(20004, "账号已禁用"),
-    USER_ACCOUNT_DELETE(20005, "账号已删除"),
-    USER_HAS_EXISTED(20006, "用户已存在"),
+    /* 账户错误：20001-29999*/
+    USER_NOT_EXIST(20001, "账户不存在"),
+    USER_ACCOUNT_FORBIDDEN(20002, "账号已禁用"),
+    USER_ACCOUNT_DELETE(20003, "账号已删除"),
+    USER_LOGIN_ERROR(20004, "账号或密码错误"),
 
     /* 业务错误：30001-39999 */
     SPECIFIED_QUESTIONED_USER_NOT_EXIST(30001, "某业务出现问题"),
@@ -46,7 +44,9 @@ public enum ResultCode {
     INTERFACE_EXCEED_LOAD(60006, "接口负载过高"),
 
     /* 权限错误：70001-79999 */
-    PERMISSION_NO_ACCESS(70001, "无访问权限");
+    NOT_FOUND_AUTHORIZATION(70001, "请求头必须携带Authorization字段"),
+    AUTHENTICATION_NO_ACCESS(70002, "认证失败"),
+    PERMISSION_NO_ACCESS(70003, "权限不足");
 
     private Integer code;
 

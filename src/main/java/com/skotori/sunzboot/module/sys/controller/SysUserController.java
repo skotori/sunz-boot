@@ -70,19 +70,37 @@ public class SysUserController {
     }
 
     /**
-     * 查询用户列表
-     * @param user
+     * 通过用户id查询用户信息
+     * @param id
      * @return
      */
-    @PostMapping("list")
-    public Result list(@RequestBody SysUser user) {
-        log.info("查询用户列表，body参数user：[ {} ]", user);
+    @GetMapping("userInfoById")
+    public Result userInfoById(@RequestParam Integer id) {
+        log.info("通过用户id查询用户信息");
         try {
-            List<SysUser> userList = sysUserService.list(user);
-            log.info("查询用户列表成功");
-            return Result.success(userList);
+            SysUser user = sysUserService.userInfoById(id);
+            log.info("通过用户id查询用户信息成功");
+            return Result.success(user);
         } catch (Exception e) {
-            log.error("查询用户列表异常：[ {} ]", e.getMessage());
+            log.error("通过用户id查询用户信息异常：[ {} ]", e.getMessage());
+            return Result.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 重复账号检查
+     * @param account
+     * @return
+     */
+    @GetMapping("accountCheck")
+    public Result accountCheck(@RequestParam String account) {
+        log.info("重复账号检查");
+        try {
+            Integer i = sysUserService.accountCheck(account);
+            log.info("重复账号检查成功");
+            return Result.success(i);
+        } catch (Exception e) {
+            log.error("重复账号检查异常：[ {} ]", e.getMessage());
             return Result.error(e.getMessage());
         }
     }
