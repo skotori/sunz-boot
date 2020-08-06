@@ -3,18 +3,28 @@ package com.skotori.sunzboot.common.tree.treeNode;
 import java.util.Date;
 
 /**
- * 部门树心节点类
+ * 权限树形节点类
  * @author skotori
- * @date 2019-12-19 19:27
+ * @date 2019-12-19 19:04
  */
-public class DeptTreeNode extends TreeNode {
+public class PermissionTreeNode extends TreeNode {
 
     // 父父级id数组字符串(以","为间隔)
     private String parentIds;
+    // 图标
+    private String icon;
     // 名称
     private String name;
+    // 编码
+    private String code;
+    // 路径
+    private String path;
+    // 组件
+    private String component;
     // 排序号
     private Integer sortNum;
+    // 权限类型(1：菜单 2：按钮 3：接口)
+    private Integer permissionType;
     // 备注
     private String remark;
     // 创建时间
@@ -42,6 +52,14 @@ public class DeptTreeNode extends TreeNode {
         this.parentIds = parentIds;
     }
 
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
     public String getName() {
         return name;
     }
@@ -50,12 +68,44 @@ public class DeptTreeNode extends TreeNode {
         this.name = name;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getComponent() {
+        return component;
+    }
+
+    public void setComponent(String component) {
+        this.component = component;
+    }
+
     public Integer getSortNum() {
         return sortNum;
     }
 
     public void setSortNum(Integer sortNum) {
         this.sortNum = sortNum;
+    }
+
+    public Integer getPermissionType() {
+        return permissionType;
+    }
+
+    public void setPermissionType(Integer permissionType) {
+        this.permissionType = permissionType;
     }
 
     public String getRemark() {

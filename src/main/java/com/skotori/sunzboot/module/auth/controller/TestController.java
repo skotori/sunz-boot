@@ -1,10 +1,10 @@
 package com.skotori.sunzboot.module.auth.controller;
 
-import com.skotori.sunzboot.common.annotation.Log;
-import com.skotori.sunzboot.common.annotation.LogType;
+import com.skotori.sunzboot.common.jwt.JWTUtil;
+import com.skotori.sunzboot.common.log.Log;
 import com.skotori.sunzboot.common.cache.CacheUtil;
 import com.skotori.sunzboot.common.result.Result;
-import com.skotori.sunzboot.common.shiro.ShiroUtil;
+import com.skotori.sunzboot.common.utils.HttpUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.cache.annotation.CacheEvict;
@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.skotori.sunzboot.common.log.LogTypeEnum.OPERATE_LOG;
+
 /**
- * 测试控制器
+ * 测试controller
  * @author skotori
  * @date 2019-11-28 15:16
  */
@@ -38,7 +40,7 @@ public class TestController {
 
     @GetMapping("cache")
     public Result cache() {
-        String account = ShiroUtil.getAccount();
+        String account = JWTUtil.getAccount(HttpUtil.getToken());
         CacheUtil.put("local", account, account);
         Object local = CacheUtil.get("local", account);
         System.out.println(local);
@@ -70,7 +72,7 @@ public class TestController {
     }
 
     @GetMapping("log")
-    @Log(name = "测试", type = LogType.INSERT_LOG)
+    @Log(msg = "测试", type = OPERATE_LOG)
     public Result log(@RequestParam("d") Integer d, @RequestParam("e") Integer e) {
         System.out.println(d + e);
         return Result.success();

@@ -1,4 +1,4 @@
-package com.skotori.sunzboot.common.annotation;
+package com.skotori.sunzboot.common.log;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME) // 表示需要在什么级别保存该注释信息，用于描述注解的生命周期
 public @interface Log {
 
-    String name() default "";
-    LogType type() default LogType.INSERT_LOG;
+    String msg() default "";
+    LogTypeEnum type() default LogTypeEnum.OPERATE_LOG;
 
 }

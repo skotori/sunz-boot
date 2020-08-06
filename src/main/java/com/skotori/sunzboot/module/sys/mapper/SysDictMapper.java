@@ -1,13 +1,13 @@
 package com.skotori.sunzboot.module.sys.mapper;
 
 import com.skotori.sunzboot.common.tree.treeNode.DictTreeNode;
-import com.skotori.sunzboot.module.sys.model.SysDict;
+import com.skotori.sunzboot.module.sys.entity.SysDict;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
- * 字典mapper
+ * 系统字典mapper
  * @author skotori
  * @date 201-12-04 09:45
  */
@@ -19,10 +19,10 @@ public interface SysDictMapper {
      * @param dict
      * @return
      */
-    List<SysDict> selectDictList(SysDict dict);
+    List<SysDict> selectList(SysDict dict);
 
     /**
-     * 查询字典表格树形节点列表
+     * 查询树型字典列表
      * @param dict
      * @return
      */
@@ -33,20 +33,20 @@ public interface SysDictMapper {
      * @param dict
      * @return
      */
-    Integer insertDict(SysDict dict);
+    Integer insert(SysDict dict);
 
     /**
-     * 通过字典id删除字典
+     * 删除字典
      * @param id
      * @return
      */
-    Integer deleteDictById(Integer id);
+    Integer delete(Integer id);
 
     /**
      * 更新字典
      * @param dict
      * @return
      */
-    Integer updateDict(SysDict dict);
+    Integer update(SysDict dict);
 
 }

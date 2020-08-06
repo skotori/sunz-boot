@@ -2,8 +2,8 @@ package com.skotori.sunzboot.common.jwt;
 
 import com.alibaba.fastjson.JSON;
 import com.skotori.sunzboot.common.result.Result;
-import com.skotori.sunzboot.common.result.ResultCode;
-import com.skotori.sunzboot.common.shiro.ShiroUtil;
+import com.skotori.sunzboot.common.result.ResultEnum;
+import com.skotori.sunzboot.common.utils.HttpUtil;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ import java.io.PrintWriter;
  */
 public class JWTFilter extends BasicHttpAuthenticationFilter {
 
-    private Logger log = LoggerFactory.getLogger(JWTFilter.class);
+    private static final Logger log = LoggerFactory.getLogger(JWTFilter.class);
 
     /**
      * 判断请求是否允许访问
@@ -35,13 +35,13 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         // 判断请求是否需要认证
         if (!isLoginAttempt(request, response)) {
-            responseFail(response, ResultCode.NOT_FOUND_AUTHORIZATION);
+            returnError(response, ResultEnum.NOT_FOUND_AUTHORIZATION);
             return false;
         }
 
         // 执行认证
         if (!executeLogin(request, response)) {
-            responseFail(response, ResultCode.AUTHENTICATION_NO_ACCESS);
+            returnError(response, ResultEnum.AUTHENTICATION_NO_ACCESS);
             return false;
         }
 
@@ -68,7 +68,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     @Override
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String bearerToken = httpServletRequest.getHeader(ShiroUtil.TOKEN_HEADER);
+        String bearerToken = httpServletRequest.getHeader(HttpUtil.TOKEN_HEADER);
         return bearerToken != null;
     }
 
@@ -81,7 +81,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String token = httpServletRequest.getHeader(ShiroUtil.TOKEN_HEADER).substring(7);
+        String token = httpServletRequest.getHeader(HttpUtil.TOKEN_HEADER).substring(7);
         JWTToken jwtToken = new JWTToken(token);
         try {
             // 提交给ShiroRealm进行认证
@@ -93,19 +93,23 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         }
     }
 
-    private void responseFail(ServletResponse response, ResultCode resultCode) {
+    private void returnError(ServletResponse response, ResultEnum resultEnum) {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         httpServletResponse.setContentType("application/json");
         httpServletResponse.setCharacterEncoding("UTF-8");
-        Result result = Result.error(resultCode);
+        Result result = Result.error(resultEnum);
         String jsonStr = JSON.toJSONString(result);
+        PrintWriter writer = null;
         try {
-            PrintWriter writer = httpServletResponse.getWriter();
+            writer = httpServletResponse.getWriter();
             writer.write(jsonStr);
-            writer.flush();
-            writer.close();
         } catch (IOException e) {
             log.error("JWTFilter返回错误信息异常：[ {} ]", e.getMessage());
+        } finally {
+            if (writer != null) {
+                writer.flush();
+                writer.close();
+            }
         }
     }
 

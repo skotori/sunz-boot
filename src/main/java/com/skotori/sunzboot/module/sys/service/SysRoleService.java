@@ -2,9 +2,9 @@ package com.skotori.sunzboot.module.sys.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.skotori.sunzboot.common.shiro.ShiroUtil;
+import com.skotori.sunzboot.common.utils.HttpUtil;
 import com.skotori.sunzboot.module.sys.mapper.SysRoleMapper;
-import com.skotori.sunzboot.module.sys.model.SysRole;
+import com.skotori.sunzboot.module.sys.entity.SysRole;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 角色service
+ * 系统角色service
  * @author skotori
  * @date 2019-12-04 10:37
  */
@@ -23,15 +23,6 @@ public class SysRoleService {
     private SysRoleMapper sysRoleMapper;
 
     /**
-     * 查询角色列表
-     * @param role
-     * @return
-     */
-    public List<SysRole> list(SysRole role) {
-        return sysRoleMapper.selectRoleList(role);
-    }
-
-    /**
      * 分页查询角色列表
      * @param pageNum
      * @param pageSize
@@ -40,7 +31,7 @@ public class SysRoleService {
      */
     public PageInfo<SysRole> pageList(Integer pageNum, Integer pageSize, SysRole role) {
         PageHelper.startPage(pageNum, pageSize);
-        List<SysRole> roleList = sysRoleMapper.selectRoleList(role);
+        List<SysRole> roleList = sysRoleMapper.selectList(role);
         return new PageInfo<>(roleList);
     }
 
@@ -51,8 +42,8 @@ public class SysRoleService {
      */
     public Integer add(SysRole role) {
         role.setCreateTime(new Date());
-        role.setCreateUser(ShiroUtil.getAccount());
-        return sysRoleMapper.insertRole(role);
+        role.setCreateUser(HttpUtil.getAccount());
+        return sysRoleMapper.insert(role);
     }
 
     /**
@@ -61,7 +52,7 @@ public class SysRoleService {
      * @return
      */
     public Integer delete(Integer id) {
-        return sysRoleMapper.deleteRoleById(id);
+        return sysRoleMapper.delete(id);
     }
 
     /**
@@ -70,8 +61,8 @@ public class SysRoleService {
      * @return
      */
     public Integer update(SysRole role) {
-        role.setUpdateUser(ShiroUtil.getAccount());
-        return sysRoleMapper.updateRole(role);
+        role.setUpdateUser(HttpUtil.getAccount());
+        return sysRoleMapper.update(role);
     }
 
 }

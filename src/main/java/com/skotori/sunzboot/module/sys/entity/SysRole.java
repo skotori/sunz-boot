@@ -1,18 +1,23 @@
-package com.skotori.sunzboot.common.tree.treeNode;
+package com.skotori.sunzboot.module.sys.entity;
 
 import java.util.Date;
+import java.util.List;
 
 /**
- * 部门树心节点类
+ * 系统角色实体类
  * @author skotori
- * @date 2019-12-19 19:27
+ * @date 2019/11/06 20:39
  */
-public class DeptTreeNode extends TreeNode {
+public class SysRole {
 
-    // 父父级id数组字符串(以","为间隔)
-    private String parentIds;
+    // 主键id
+    private Integer id;
     // 名称
     private String name;
+    // 编码
+    private String code;
+    // 部门id
+    private Integer deptId;
     // 排序号
     private Integer sortNum;
     // 备注
@@ -34,12 +39,17 @@ public class DeptTreeNode extends TreeNode {
     // 禁用状态(0：未禁用 1：已禁用)
     private Integer disabledState;
 
-    public String getParentIds() {
-        return parentIds;
+    // 用户列表
+    private List<SysUser> users;
+    // 权限列表
+    private List<SysPermission> permissions;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setParentIds(String parentIds) {
-        this.parentIds = parentIds;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -48,6 +58,22 @@ public class DeptTreeNode extends TreeNode {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Integer getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(Integer deptId) {
+        this.deptId = deptId;
     }
 
     public Integer getSortNum() {
@@ -98,6 +124,22 @@ public class DeptTreeNode extends TreeNode {
         this.updateUser = updateUser;
     }
 
+    public List<SysUser> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<SysUser> users) {
+        this.users = users;
+    }
+
+    public List<SysPermission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<SysPermission> permissions) {
+        this.permissions = permissions;
+    }
+
     public Date getDeleteTime() {
         return deleteTime;
     }
@@ -130,4 +172,25 @@ public class DeptTreeNode extends TreeNode {
         this.disabledState = disabledState;
     }
 
+    @Override
+    public String toString() {
+        return "SysRole{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                ", deptId=" + deptId +
+                ", sortNum=" + sortNum +
+                ", remark='" + remark + '\'' +
+                ", createTime=" + createTime +
+                ", createUser='" + createUser + '\'' +
+                ", updateTime=" + updateTime +
+                ", updateUser='" + updateUser + '\'' +
+                ", deleteTime=" + deleteTime +
+                ", deleteUser='" + deleteUser + '\'' +
+                ", deletedState=" + deletedState +
+                ", disabledState=" + disabledState +
+                ", users=" + users +
+                ", permissions=" + permissions +
+                '}';
+    }
 }

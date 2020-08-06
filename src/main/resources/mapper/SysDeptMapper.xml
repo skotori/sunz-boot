@@ -2,97 +2,103 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.skotori.sunzboot.module.sys.mapper.SysDeptMapper">
 
-    <select id="selectDeptList" parameterType="com.skotori.sunzboot.module.sys.model.SysDept" resultType="com.skotori.sunzboot.module.sys.model.SysDept">
-        select id,
-        `name`
+    <select id="selectList" parameterType="com.skotori.sunzboot.module.sys.entity.SysDept" resultType="com.skotori.sunzboot.module.sys.entity.SysDept">
+        select *
         from sys_dept
-        where 1 = 1
+        where deleted_state = 0
         <if test="id != null and id != ''">
-            and pids like concat('%', #{id}, '%')
+            and parent_ids like concat('%', #{id}, '%')
         </if>
         <if test="name != null and name != ''">
             and `name` like concat('%', #{name}, '%')
         </if>
-        <if test="status != null and status != ''">
-            and status = #{status}
+        <if test="disabledState != null and disabledState != ''">
+            and disabled_state = #{disabledState}
         </if>
     </select>
 
-    <select id="selectNodeList" parameterType="com.skotori.sunzboot.module.sys.model.SysDept" resultType="com.skotori.sunzboot.common.tree.treeNode.DeptTreeNode">
-        select id,
-        pid,
-        `name` as label
+    <select id="selectNodeList" parameterType="com.skotori.sunzboot.module.sys.entity.SysDept" resultType="com.skotori.sunzboot.common.tree.treeNode.DeptTreeNode">
+        select *, `name` as label
         from sys_dept
-        where 1 = 1
+        where deleted_state = 0
         <if test="id != null and id != ''">
-            and pids like concat('%', #{id}, '%')
+            and parent_ids like concat('%', #{id}, '%')
         </if>
         <if test="name != null and name != ''">
             and `name` like concat('%', #{name}, '%')
         </if>
-        <if test="status != null and status != ''">
-            and status = #{status}
+        <if test="disabledState != null and disabledState != ''">
+            and disabled_state = #{disabledState}
         </if>
     </select>
 
-    <insert id="insertDept" parameterType="com.skotori.sunzboot.module.sys.model.SysDept">
+    <insert id="insert" parameterType="com.skotori.sunzboot.module.sys.entity.SysDept">
         insert into sys_dept (
-            pid,
-            pids,
+            parent_id,
+            parent_ids,
             `name`,
-            <if test="num != null and num != ''">
-                num,
+            <if test="sortNum != null and sortNum != ''">
+                sort_num,
             </if>
-            <if test="status != null and status != ''">
-                status,
-            </if>
-            <if test="note != null and note != ''">
-                note,
+            <if test="remark != null and remark != ''">
+                remark,
             </if>
             create_time,
-            create_user
+            create_user,
+            <if test="disabledState != null and disabledState != ''">
+                disabled_state,
+            </if>
+            deleted_state
         ) values (
-            #{pid},
-            #{pids},
+            #{parentId},
+            #{parentIds},
             #{name},
-            <if test="num != null and num != ''">
-                #{num},
+            <if test="sortNum != null and sortNum != ''">
+                #{sortNum},
             </if>
-            <if test="status != null and status != ''">
-                #{status},
-            </if>
-            <if test="note != null and note != ''">
-                #{note},
+            <if test="remark != null and remark != ''">
+                #{remark},
             </if>
             #{createTime},
-            #{createUser}
+            #{createUser},
+            <if test="disabledState != null and disabledState != ''">
+                #{disabledState},
+            </if>
+            0
         )
     </insert>
 
-    <delete id="deleteDeptById" parameterType="java.lang.Integer">
-        delete from sys_dept
+    <update id="delete" parameterType="java.lang.Integer">
+        update sys_dept
+        set deleted_state = 1
         where id = #{id}
-    </delete>
+    </update>
 
-    <update id="updateDept" parameterType="com.skotori.sunzboot.module.sys.model.SysDept">
+    <update id="update" parameterType="com.skotori.sunzboot.module.sys.entity.SysDept">
         update sys_dept set
-        <if test="pid != null and pid != ''">
-            pid = #{pid},
+        <if test="parentId != null and parentId != ''">
+            parent_id = #{parentId},
         </if>
-        <if test="pids != null and pids != ''">
-            pids = #{pids},
+        <if test="parentIds != null and parentIds != ''">
+            parent_ids = #{parentIds},
         </if>
         <if test="name != null and name != ''">
             `name` = #{name},
         </if>
-        <if test="num != null and num != ''">
-            num = #{num},
+        <if test="sortNum != null and sortNum != ''">
+            sort_num = #{sortNum},
         </if>
-        <if test="status != null and status != ''">
-            status = #{status},
+        <if test="state != null and state != ''">
+            state = #{state},
         </if>
-        <if test="note != null and note != ''">
-            note = #{note},
+        <if test="remark != null and remark != ''">
+            remark = #{remark},
+        </if>
+        <if test="updateTime != null and updateTime != ''">
+            update_time = #{updateTime},
+        </if>
+        <if test="disabledState != null and disabledState != ''">
+            disabled_state = #{disabledState},
         </if>
         update_user = #{updateUser}
         where id = #{id}

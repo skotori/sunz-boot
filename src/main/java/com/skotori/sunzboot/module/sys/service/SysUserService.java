@@ -2,11 +2,12 @@ package com.skotori.sunzboot.module.sys.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.skotori.sunzboot.common.shiro.ShiroUtil;
+import com.skotori.sunzboot.common.utils.HttpUtil;
+import com.skotori.sunzboot.common.utils.Md5Util;
 import com.skotori.sunzboot.module.sys.mapper.SysRoleMapper;
 import com.skotori.sunzboot.module.sys.mapper.SysUserMapper;
-import com.skotori.sunzboot.module.sys.model.SysRole;
-import com.skotori.sunzboot.module.sys.model.SysUser;
+import com.skotori.sunzboot.module.sys.entity.SysRole;
+import com.skotori.sunzboot.module.sys.entity.SysUser;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 管理员service
+ * 系统用户service
  * @author skotori
  * @date 2019/11/06 20:36
  */
@@ -37,12 +38,65 @@ public class SysUserService {
      */
     public PageInfo<SysUser> pageList(Integer pageNum, Integer pageSize, SysUser user) {
         PageHelper.startPage(pageNum, pageSize);
-        List<SysUser> userList = sysUserMapper.selectUserList(user);
+        List<SysUser> userList = sysUserMapper.selectList(user);
         for (SysUser userItem: userList) {
             List<SysRole> roleList = sysRoleMapper.selectRolesByUserId(userItem.getId());
             userItem.setRoles(roleList);
         }
         return new PageInfo<>(userList);
+    }
+
+    /**
+     * 新增用户
+     * @param user
+     * @return
+     */
+    public Integer add(SysUser user) {
+        user.setSalt(Md5Util.getRandomSalt());
+        String password = Md5Util.md5(user.getPassword(), user.getCredentialsSalt());
+        user.setPassword(password);
+        user.setCreateTime(new Date());
+        user.setCreateUser(HttpUtil.getAccount());
+        Integer i = sysUserMapper.insert(user);
+        if (i == 1) {
+            SysUser sysUser = sysUserMapper.selectUserByAccount(user.getAccount());
+            List<SysRole> roles = user.getRoles();
+            List<Integer> roleIds = new ArrayList<>();
+            for (SysRole role: roles) {
+                roleIds.add(role.getId());
+            }
+            sysUserMapper.insertUserRole(sysUser.getId(), roleIds);
+        }
+        return i;
+    }
+
+    /**
+     * 删除用户
+     * @param id
+     * @return
+     */
+    public Integer delete(Integer id) {
+        return sysUserMapper.delete(id);
+    }
+
+    /**
+     * 更新用户
+     * @param user
+     * @return
+     */
+    public Integer update(SysUser user) {
+        user.setUpdateUser(HttpUtil.getAccount());
+        Integer i = sysUserMapper.update(user);
+        if (i == 1) {
+            List<SysRole> roles = user.getRoles();
+            List<Integer> roleIds = new ArrayList<>();
+            for (SysRole role: roles) {
+                roleIds.add(role.getId());
+            }
+            sysUserMapper.deleteUserRole(user.getId());
+            sysUserMapper.insertUserRole(user.getId(), roleIds);
+        }
+        return i;
     }
 
     /**
@@ -69,59 +123,6 @@ public class SysUserService {
         } else {
             return 0;
         }
-    }
-
-    /**
-     * 新增用户
-     * @param user
-     * @return
-     */
-    public Integer add(SysUser user) {
-        user.setSalt(ShiroUtil.getRandomSalt());
-        String password = ShiroUtil.md5(user.getPassword(), user.getCredentialsSalt());
-        user.setPassword(password);
-        user.setCreateTime(new Date());
-        user.setCreateUser(ShiroUtil.getAccount());
-        Integer i = sysUserMapper.insertUser(user);
-        if (i == 1) {
-            SysUser sysUser = sysUserMapper.selectUserByAccount(user.getAccount());
-            List<SysRole> roles = user.getRoles();
-            List<Integer> roleIds = new ArrayList<>();
-            for (SysRole role: roles) {
-                roleIds.add(role.getId());
-            }
-            sysUserMapper.insertUserRole(sysUser.getId(), roleIds);
-        }
-        return i;
-    }
-
-    /**
-     * 删除用户
-     * @param id
-     * @return
-     */
-    public Integer delete(Integer id) {
-        return sysUserMapper.deleteUserById(id);
-    }
-
-    /**
-     * 更新用户
-     * @param user
-     * @return
-     */
-    public Integer update(SysUser user) {
-        user.setUpdateUser(ShiroUtil.getAccount());
-        Integer i = sysUserMapper.updateUser(user);
-        if (i == 1) {
-            List<SysRole> roles = user.getRoles();
-            List<Integer> roleIds = new ArrayList<>();
-            for (SysRole role: roles) {
-                roleIds.add(role.getId());
-            }
-            sysUserMapper.deleteUserRole(user.getId());
-            sysUserMapper.insertUserRole(user.getId(), roleIds);
-        }
-        return i;
     }
 
 }

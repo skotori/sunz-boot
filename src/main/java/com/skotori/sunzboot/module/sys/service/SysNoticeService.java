@@ -2,9 +2,9 @@ package com.skotori.sunzboot.module.sys.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.skotori.sunzboot.common.shiro.ShiroUtil;
+import com.skotori.sunzboot.common.utils.HttpUtil;
 import com.skotori.sunzboot.module.sys.mapper.SysNoticeMapper;
-import com.skotori.sunzboot.module.sys.model.SysNotice;
+import com.skotori.sunzboot.module.sys.entity.SysNotice;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 通知service
+ * 系统通知service
  * @author skotori
  * @date 2019-12-04 10:37
  */
@@ -31,17 +31,8 @@ public class SysNoticeService {
      */
     public PageInfo<SysNotice> pageList(Integer pageNum, Integer pageSize, SysNotice notice) {
         PageHelper.startPage(pageNum, pageSize);
-        List<SysNotice> noticeList = sysNoticeMapper.selectNoticeList(notice);
+        List<SysNotice> noticeList = sysNoticeMapper.selectList(notice);
         return new PageInfo<>(noticeList);
-    }
-
-    /**
-     * 查询通知列表
-     * @param notice
-     * @return
-     */
-    public List<SysNotice> list(SysNotice notice) {
-        return sysNoticeMapper.selectNoticeList(notice);
     }
 
     /**
@@ -51,8 +42,8 @@ public class SysNoticeService {
      */
     public Integer add(SysNotice notice) {
         notice.setCreateTime(new Date());
-        notice.setCreateUser(ShiroUtil.getAccount());
-        return sysNoticeMapper.insertNotice(notice);
+        notice.setCreateUser(HttpUtil.getAccount());
+        return sysNoticeMapper.insert(notice);
     }
 
     /**
@@ -61,7 +52,7 @@ public class SysNoticeService {
      * @return
      */
     public Integer delete(Integer id) {
-        return sysNoticeMapper.deleteNoticeById(id);
+        return sysNoticeMapper.delete(id);
     }
 
     /**
@@ -70,8 +61,8 @@ public class SysNoticeService {
      * @return
      */
     public Integer update(SysNotice notice) {
-        notice.setUpdateUser(ShiroUtil.getAccount());
-        return sysNoticeMapper.updateNotice(notice);
+        notice.setUpdateUser(HttpUtil.getAccount());
+        return sysNoticeMapper.update(notice);
     }
 
 }

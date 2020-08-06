@@ -1,18 +1,21 @@
 package com.skotori.sunzboot.module.sys.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.skotori.sunzboot.common.log.Log;
 import com.skotori.sunzboot.common.result.Result;
-import com.skotori.sunzboot.module.sys.model.SysRole;
+import com.skotori.sunzboot.module.sys.entity.SysRole;
 import com.skotori.sunzboot.module.sys.service.SysRoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
+import static com.skotori.sunzboot.common.log.LogTypeEnum.OPERATE_LOG;
+
 /**
- * 角色控制器
+ * 系统角色controller
  * @author skotori
  * @date 2019-12-04 10:48
  */
@@ -20,28 +23,10 @@ import java.util.List;
 @RequestMapping("sysRole")
 public class SysRoleController {
 
-    private Logger log = LoggerFactory.getLogger(SysRoleController.class);
+    private static final Logger log = LoggerFactory.getLogger(SysRoleController.class);
 
-    @Autowired
+    @Resource
     private SysRoleService sysRoleService;
-
-    /**
-     * 查询角色列表
-     * @param role
-     * @return
-     */
-    @PostMapping("list")
-    public Result list(@RequestBody SysRole role) {
-        log.info("查询角色列表，body参数role：[ {} ]", role);
-        try {
-            List<SysRole> roleList = sysRoleService.list(role);
-            log.info("查询角色列表成功");
-            return Result.success(roleList);
-        } catch (Exception e) {
-            log.error("查询角色列表异常：[ {} ]", e.getMessage());
-            return Result.error(e.getMessage());
-        }
-    }
 
     /**
      * 分页查询角色列表
@@ -51,18 +36,14 @@ public class SysRoleController {
      * @return
      */
     @PostMapping("pageList")
+    @Log(msg = "分页查询角色列表", type = OPERATE_LOG)
     public Result pageList(@RequestParam("pageNum") Integer pageNum,
                            @RequestParam("pageSize") Integer pageSize,
                            @RequestBody SysRole role) {
         log.info("分页查询角色列表，param参数pageNum：[ {} ]，param参数pageSize：[ {} ]，body参数role：[ {} ]", pageNum, pageSize, role);
-        try {
-            PageInfo<SysRole> pageInfo = sysRoleService.pageList(pageNum, pageSize, role);
-            log.info("分页查询角色列表成功");
-            return Result.success(pageInfo);
-        } catch (Exception e) {
-            log.error("分页查询角色列表异常：[ {} ]", e.getMessage());
-            return Result.error(e.getMessage());
-        }
+        PageInfo<SysRole> pageInfo = sysRoleService.pageList(pageNum, pageSize, role);
+        log.info("分页查询角色列表成功");
+        return Result.success(pageInfo);
     }
 
     /**
@@ -71,16 +52,12 @@ public class SysRoleController {
      * @return
      */
     @PostMapping("add")
+    @Log(msg = "新增角色", type = OPERATE_LOG)
     public Result add(@RequestBody SysRole role) {
         log.info("新增角色，body参数role：[ {} ]", role);
-        try {
-            sysRoleService.add(role);
-            log.info("新增角色成功");
-            return Result.success();
-        } catch (Exception e) {
-            log.error("新增角色异常：[ {} ]", e.getMessage());
-            return Result.error(e.getMessage());
-        }
+        sysRoleService.add(role);
+        log.info("新增角色成功");
+        return Result.success();
     }
 
     /**
@@ -89,16 +66,12 @@ public class SysRoleController {
      * @return
      */
     @GetMapping("delete")
+    @Log(msg = "删除角色", type = OPERATE_LOG)
     public Result delete(@RequestParam("id") Integer id) {
         log.info("删除角色，param参数id：[ {} ]", id);
-        try {
-            sysRoleService.delete(id);
-            log.info("删除角色成功");
-            return Result.success();
-        } catch (Exception e) {
-            log.error("删除角色异常：[ {} ]", e.getMessage());
-            return Result.error(e.getMessage());
-        }
+        sysRoleService.delete(id);
+        log.info("删除角色成功");
+        return Result.success();
     }
 
     /**
@@ -107,16 +80,12 @@ public class SysRoleController {
      * @return
      */
     @PostMapping("update")
+    @Log(msg = "更新角色", type = OPERATE_LOG)
     public Result update(@RequestBody SysRole role) {
         log.info("更新角色，body参数role：[ {} ]", role);
-        try {
-            sysRoleService.update(role);
-            log.info("更新角色成功");
-            return Result.success();
-        } catch (Exception e) {
-            log.error("更新角色异常：[ {} ]", e.getMessage());
-            return Result.error(e.getMessage());
-        }
+        sysRoleService.update(role);
+        log.info("更新角色成功");
+        return Result.success();
     }
 
 }

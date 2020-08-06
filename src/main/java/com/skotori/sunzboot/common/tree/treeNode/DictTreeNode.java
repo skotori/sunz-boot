@@ -1,55 +1,38 @@
 package com.skotori.sunzboot.common.tree.treeNode;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * 字典树行节点类
  * @author skotori
  * @date 2019-12-19 18:00
  */
-public class DictTreeNode {
+public class DictTreeNode extends TreeNode {
 
-    // 节点id
-    private Integer id;
-    // 父节点id
-    private Integer pid;
-    // 节点名称
+    // 名称
     private String name;
-    // 排序号
-    private Integer num;
-    // 子节点集合
-    private List<DictTreeNode> children;
-    // 值
+    // 编码
     private String code;
-    // 状态(1：启用  2：禁用）
-    private Integer status;
+    // 排序号
+    private Integer sortNum;
     // 备注
-    private String note;
+    private String remark;
     // 创建时间
     private Date createTime;
-    // 创建人
+    // 创建用户
     private String createUser;
     // 更新时间
     private Date updateTime;
-    // 更新人
+    // 更新用户
     private String updateUser;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getPid() {
-        return pid;
-    }
-
-    public void setPid(Integer pid) {
-        this.pid = pid;
-    }
+    // 删除时间
+    private Date deleteTime;
+    // 删除用户
+    private String deleteUser;
+    // 删除状态(0：未删除 1：已删除)
+    private Integer deletedState;
+    // 禁用状态(0：未禁用 1：已禁用)
+    private Integer disabledState;
 
     public String getName() {
         return name;
@@ -57,22 +40,6 @@ public class DictTreeNode {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getNum() {
-        return num;
-    }
-
-    public void setNum(Integer num) {
-        this.num = num;
-    }
-
-    public List<DictTreeNode> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<DictTreeNode> children) {
-        this.children = children;
     }
 
     public String getCode() {
@@ -83,20 +50,20 @@ public class DictTreeNode {
         this.code = code;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Integer getSortNum() {
+        return sortNum;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setSortNum(Integer sortNum) {
+        this.sortNum = sortNum;
     }
 
-    public String getNote() {
-        return note;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public Date getCreateTime() {
@@ -131,21 +98,36 @@ public class DictTreeNode {
         this.updateUser = updateUser;
     }
 
-    @Override
-    public String toString() {
-        return "DictTreeNode{" +
-                "id=" + id +
-                ", pid=" + pid +
-                ", name='" + name + '\'' +
-                ", num=" + num +
-                ", children=" + children +
-                ", code='" + code + '\'' +
-                ", status=" + status +
-                ", note='" + note + '\'' +
-                ", createTime=" + createTime +
-                ", createUser='" + createUser + '\'' +
-                ", updateTime=" + updateTime +
-                ", updateUser='" + updateUser + '\'' +
-                '}';
+    public Date getDeleteTime() {
+        return deleteTime;
     }
+
+    public void setDeleteTime(Date deleteTime) {
+        this.deleteTime = deleteTime;
+    }
+
+    public String getDeleteUser() {
+        return deleteUser;
+    }
+
+    public void setDeleteUser(String deleteUser) {
+        this.deleteUser = deleteUser;
+    }
+
+    public Integer getDeletedState() {
+        return deletedState;
+    }
+
+    public void setDeletedState(Integer deletedState) {
+        this.deletedState = deletedState;
+    }
+
+    public Integer getDisabledState() {
+        return disabledState;
+    }
+
+    public void setDisabledState(Integer disabledState) {
+        this.disabledState = disabledState;
+    }
+
 }

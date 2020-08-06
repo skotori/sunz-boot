@@ -1,20 +1,17 @@
 package com.skotori.sunzboot.common.log;
 
-import com.skotori.sunzboot.module.sys.mapper.SysLoginLogMapper;
-import com.skotori.sunzboot.module.sys.mapper.SysOperationLogMapper;
-import com.skotori.sunzboot.module.sys.model.SysLoginLog;
-import com.skotori.sunzboot.module.sys.model.SysOperationLog;
-import com.skotori.sunzboot.util.SpringContextUtil;
+import com.skotori.sunzboot.module.sys.mapper.SysLogMapper;
+import com.skotori.sunzboot.module.sys.entity.SysLog;
+import com.skotori.sunzboot.common.utils.SpringContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
 
 /**
- * 记录日志所需要的数据接口
+ * 记录日志工厂类
  * @author skotori
  * @date 2019-11-27 17:46
  */
@@ -22,51 +19,20 @@ import java.util.Date;
 @DependsOn("springContextUtil")
 public class LogFactory {
 
-    private Logger log = LoggerFactory.getLogger(LogFactory.class);
+    private static final Logger log = LoggerFactory.getLogger(LogFactory.class);
 
     @Resource
-    private SysLoginLogMapper sysLoginLogMapper;
-
-    @Resource
-    private SysOperationLogMapper sysOperationLogMapper;
+    private SysLogMapper sysLogMapper;
 
     public static LogFactory getLogFactory() {
         return SpringContextUtil.getBean(LogFactory.class);
     }
 
-    public void loginSuccessLog(String account, String ip) {
+    public void log(SysLog sysLog) {
         try {
-            SysLoginLog loginLog = new SysLoginLog();
-            loginLog.setAccount(account);
-            loginLog.setType(1);
-            loginLog.setTime(new Date());
-            loginLog.setIp(ip);
-            loginLog.setMsg("");
-            sysLoginLogMapper.insertLoginLog(loginLog);
+            sysLogMapper.insertLog(sysLog);
         } catch (Exception e) {
-            log.error("记录登录成功日志异常：[ {} ]", e.getMessage());
-        }
-    }
-
-    public void loginErrorLog(String account, String msg, String ip) {
-        try {
-            SysLoginLog loginLog = new SysLoginLog();
-            loginLog.setAccount(account);
-            loginLog.setType(2);
-            loginLog.setTime(new Date());
-            loginLog.setIp(ip);
-            loginLog.setMsg(msg);
-            sysLoginLogMapper.insertLoginLog(loginLog);
-        } catch (Exception e) {
-            log.error("记录登录失败日志异常：[ {} ]", e.getMessage());
-        }
-    }
-
-    public void operationLog(SysOperationLog operationLog) {
-        try {
-            sysOperationLogMapper.insertOperationLog(operationLog);
-        } catch (Exception e) {
-            log.error("记录操作日志异常：[ {} ]", e.getMessage());
+            log.error("记录日志异常：[ {} ]", e.getMessage());
         }
     }
 

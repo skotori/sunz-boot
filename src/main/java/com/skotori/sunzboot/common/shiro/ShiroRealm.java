@@ -2,7 +2,7 @@ package com.skotori.sunzboot.common.shiro;
 
 import com.skotori.sunzboot.common.jwt.JWTToken;
 import com.skotori.sunzboot.common.jwt.JWTUtil;
-import com.skotori.sunzboot.module.sys.model.SysUser;
+import com.skotori.sunzboot.module.sys.entity.SysUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -52,8 +52,8 @@ public class ShiroRealm extends AuthorizingRealm {
         simpleAuthorizationInfo.setRoles(roleCodeSet);
 
         // 获取用户权限集
-        Set<String> powerCodeSet = new HashSet<>(shiroUser.getPowerCodes());
-        simpleAuthorizationInfo.setStringPermissions(powerCodeSet);
+        Set<String> permissionCodeSet = new HashSet<>(shiroUser.getPermissionCodes());
+        simpleAuthorizationInfo.setStringPermissions(permissionCodeSet);
 
         return simpleAuthorizationInfo;
     }
@@ -80,9 +80,9 @@ public class ShiroRealm extends AuthorizingRealm {
         SysUser user = shiroFactory.getUser(account);
         if (user == null) {
             throw new AuthenticationException("账户不存在");
-        } else if (user.getStatus() == 2) {
+        } else if (user.getDisabledState() == 1) {
             throw new AuthenticationException("账户已禁用");
-        } else if (user.getStatus() == 3) {
+        } else if (user.getDeletedState() == 1) {
             throw new AuthenticationException("账户已删除");
         }
 

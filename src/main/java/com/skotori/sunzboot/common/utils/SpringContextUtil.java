@@ -1,4 +1,4 @@
-package com.skotori.sunzboot.util;
+package com.skotori.sunzboot.common.utils;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

@@ -2,93 +2,96 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.skotori.sunzboot.module.sys.mapper.SysRoleMapper">
 
-    <select id="selectRolesByUserId" parameterType="java.lang.Integer" resultType="com.skotori.sunzboot.module.sys.model.SysRole">
-        select r.id,
-        r.code,
-        r.name
+    <select id="selectRolesByUserId" parameterType="java.lang.Integer" resultType="com.skotori.sunzboot.module.sys.entity.SysRole">
+        select r.id, r.code, r.name
         from sys_role as r
         left join sys_user_role as ur on r.id = ur.role_id
         where ur.user_id = #{userId}
     </select>
 
-    <select id="selectRoleList" parameterType="com.skotori.sunzboot.module.sys.model.SysRole" resultType="com.skotori.sunzboot.module.sys.model.SysRole">
-        select id,
-        code,
-        `name`
+
+    <select id="selectList" parameterType="com.skotori.sunzboot.module.sys.entity.SysRole" resultType="com.skotori.sunzboot.module.sys.entity.SysRole">
+        select *
         from sys_role
-        where 1 = 1
-        <if test="code != null and code != ''">
-            and code like concat('%', #{code}, '%')
-        </if>
+        where deleted_state = 0
         <if test="name != null and name != ''">
             and `name` like concat('%', #{name}, '%')
+        </if>
+        <if test="code != null and code != ''">
+            and code like concat('%', #{code}, '%')
         </if>
         <if test="deptId != null and deptId != ''">
             and dept_id = #{deptId}
         </if>
-        <if test="status != null and status != ''">
-            and status = #{status}
+        <if test="disabledState != null and disabledState != ''">
+            and disabled_state = #{disabledState}
         </if>
     </select>
 
-    <insert id="insertRole" parameterType="com.skotori.sunzboot.module.sys.model.SysRole">
+    <insert id="insert" parameterType="com.skotori.sunzboot.module.sys.entity.SysRole">
         insert into sys_role (
-            code,
             `name`,
-            <if test="num != null and num != ''">
-                num,
-            </if>
+            code,
             dept_id,
-            <if test="status != null and status != ''">
-                status,
+            <if test="sortNum != null and sortNum != ''">
+                sort_num,
             </if>
-            <if test="note != null and note != ''">
-                note,
+            <if test="remark != null and remark != ''">
+                remark,
             </if>
             create_time,
-            create_user
+            create_user,
+            <if test="disabledState != null and disabledState != ''">
+                disabled_state,
+            </if>
+            deleted_state
         ) values (
-            #{code},
             #{name},
-            <if test="num != null and num != ''">
-                #{num},
-            </if>
+            #{code},
             #{deptId},
-            <if test="status != null and status != ''">
-                #{status},
+            <if test="sortNum != null and sortNum != ''">
+                #{sortNum},
             </if>
-            <if test="note != null and note != ''">
-                #{note},
+            <if test="remark != null and remark != ''">
+                #{remark},
             </if>
-            create_time,
-            create_user
+            #{create_time},
+            #{create_user},
+            <if test="disabledState != null and disabledState != ''">
+                #{disabledState},
+            </if>
+            0
         )
     </insert>
 
-    <delete id="deleteRoleById" parameterType="java.lang.Integer">
-        delete from sys_role
+    <update id="delete" parameterType="java.lang.Integer">
+        update sys_role
+        set deleted_state = 1
         where id = #{id}
-    </delete>
+    </update>
 
-    <update id="updateRole" parameterType="com.skotori.sunzboot.module.sys.model.SysRole">
+    <update id="update" parameterType="com.skotori.sunzboot.module.sys.entity.SysRole">
         update sys_role set
-        <if test="code != null and code != ''">
-            code = #{code},
-        </if>
         <if test="name != null and name != ''">
             `name` = #{name},
         </if>
-        <if test="num != null and num != ''">
-            num = #{num},
+        <if test="code != null and code != ''">
+            code = #{code},
         </if>
         <if test="deptId != null and deptId != ''">
             dept_id = #{deptId},
         </if>
-        <if test="status != null and status != ''">
-            status = #{status},
+        <if test="sortNum != null and sortNum != ''">
+            sort_num = #{sortNum},
         </if>
-        <if test="note != null and note != ''">
-            note = #{note},
+        <if test="remark != null and remark != ''">
+            remark = #{remark},
+        </if>
+        <if test="updateTime != null and updateTime != ''">
+            update_time = #{updateTime},
+        </if>
+        <if test="disabledState != null and disabledState != ''">
+            disabled_state = #{disabledState},
         </if>
         update_user = #{updateUser}
         where id = #{id}

@@ -2,56 +2,71 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.skotori.sunzboot.module.sys.mapper.SysNoticeMapper">
 
-    <select id="selectNoticeList" parameterType="com.skotori.sunzboot.module.sys.model.SysNotice" resultType="com.skotori.sunzboot.module.sys.model.SysNotice">
+    <select id="selectList" parameterType="com.skotori.sunzboot.module.sys.entity.SysNotice" resultType="com.skotori.sunzboot.module.sys.entity.SysNotice">
         select *
         from sys_notice
-        where 1 = 1
+        where deleted_state = 0
         <if test="title != null and title != ''">
             and title like concat('%', #{title}, '%')
         </if>
         <if test="content != null and content != ''">
             and content like concat('%', #{content}, '%')
         </if>
-        <if test="status != null and status != ''">
-            and status = #{status}
+        <if test="disabledState != null and disabledState != ''">
+            and disabled_state = #{disabledState}
         </if>
     </select>
 
-    <insert id="insertNotice" parameterType="com.skotori.sunzboot.module.sys.model.SysNotice">
+    <insert id="insert" parameterType="com.skotori.sunzboot.module.sys.entity.SysNotice">
         insert into sys_notice (
             title,
             content,
-            <if test="status != null and status != ''">
-                status,
+            <if test="remark != null and remark != ''">
+                remark,
             </if>
             create_time,
-            create_user
+            create_user,
+            <if test="disabledState != null and disabledState != ''">
+                disabled_state,
+            </if>
+            deleted_state
         ) values (
             #{title},
             #{content},
-            <if test="status != null and status != ''">
-                #{status},
+            <if test="remark != null and remark != ''">
+                #{remark},
             </if>
             #{createTime},
-            #{createUser}
+            #{createUser},
+            <if test="disabledState != null and disabledState != ''">
+                #{disabledState},
+            </if>
+            0
         )
     </insert>
 
-    <delete id="deleteNoticeById" parameterType="java.lang.Integer">
-        delete from sys_notice
+    <update id="delete" parameterType="java.lang.Integer">
+        update sys_notice
+        set deleted_state = 1
         where id = #{id}
-    </delete>
+    </update>
 
-    <update id="updateNotice" parameterType="com.skotori.sunzboot.module.sys.model.SysNotice">
+    <update id="update" parameterType="com.skotori.sunzboot.module.sys.entity.SysNotice">
         update sys_notice set
         <if test="title != null and title != ''">
-            and title like concat('%', #{title}, '%')
+            title = #{title},
         </if>
         <if test="content != null and content != ''">
-            and content like concat('%', #{content}, '%')
+            content = #{content},
         </if>
-        <if test="status != null and status != ''">
-            and status = #{status}
+        <if test="remark != null and remark != ''">
+            remark = #{remark},
+        </if>
+        <if test="updateTime != null and updateTime != ''">
+            update_time = #{updateTime},
+        </if>
+        <if test="disabledState != null and disabledState != ''">
+            disabled_state = #{disabledState},
         </if>
         update_user = #{updateUser}
         where id = #{id}

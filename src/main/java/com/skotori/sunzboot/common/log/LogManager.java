@@ -1,54 +1,32 @@
 package com.skotori.sunzboot.common.log;
 
-import com.skotori.sunzboot.module.sys.model.SysOperationLog;
+import com.skotori.sunzboot.module.sys.entity.SysLog;
 
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 记录日志线程管理器
+ * 记录日志多线程管理器
  * @author skotori
  * @date 2019-11-29 18:00
  */
 public class LogManager {
 
     // 日志记录操作延时
-    private static Integer OPERATE_DELAY_TIME = 10;
+    private static final Integer OPERATE_DELAY_TIME = 10;
 
     // 日志记录异步操作的线程池
-    private static ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(10);
+    private static final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(10);
 
-    private static LogFactory logFactory = LogFactory.getLogFactory();
+    private static final LogFactory logFactory = LogFactory.getLogFactory();
 
-    public static void executeLoginSuccessLog(String account, String ip) {
+    public static void executeLog(SysLog sysLog) {
         TimerTask task = new TimerTask() {
 
             @Override
             public void run() {
-                logFactory.loginSuccessLog(account, ip);
-            }
-        };
-        executor.schedule(task, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);
-    }
-
-    public static void executeLoginErrorLog(String account, String msg, String ip) {
-        TimerTask task = new TimerTask() {
-
-            @Override
-            public void run() {
-                logFactory.loginErrorLog(account, msg, ip);
-            }
-        };
-        executor.schedule(task, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);
-    }
-
-    public static void executeOperationLog(SysOperationLog operationLog) {
-        TimerTask task = new TimerTask() {
-
-            @Override
-            public void run() {
-                logFactory.operationLog(operationLog);
+                logFactory.log(sysLog);
             }
         };
         executor.schedule(task, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);

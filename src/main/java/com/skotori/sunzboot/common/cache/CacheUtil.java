@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class CacheUtil {
 
-    private static CacheFactory cacheFactory = new CacheFactory();
+    private static final CacheFactory cacheFactory = new CacheFactory();
 
     public static void put(String cacheName, Object key, Object value) {
         cacheFactory.put(cacheName, key, value);

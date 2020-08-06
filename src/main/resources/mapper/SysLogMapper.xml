@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skotori.sunzboot.module.sys.mapper.SysLogMapper">
+
+    <insert id="insertLog" parameterType="com.skotori.sunzboot.module.sys.entity.SysLog">
+        insert into sys_log (
+            source_ip,
+            source_browser,
+            request_url,
+            request_method,
+            request_data,
+            request_time,
+            request_user,
+            response_state,
+            response_data,
+            execute_method,
+            execute_msg,
+            execute_time,
+            exception_msg,
+            log_type
+        ) values (
+            #{sourceIp},
+            #{sourceBrowser},
+            #{requestUrl},
+            #{requestMethod},
+            #{requestData},
+            #{requestTime},
+            #{requestUser},
+            #{responseState},
+            #{responseData},
+            #{executeMethod},
+            #{executeMsg},
+            #{executeTime},
+            #{exceptionMsg},
+            #{logType}
+        )
+    </insert>
+
+
+    <select id="selectList" parameterType="com.skotori.sunzboot.module.sys.entity.SysLog" resultType="com.skotori.sunzboot.module.sys.entity.SysLog">
+        select *
+        from sys_log
+        where 1 = 1
+        <if test="requestUser != null and requestUser != ''">
+            and request_user like concat('%', #{requestUser}, '%')
+        </if>
+        <if test="executeMsg != null and executeMsg != ''">
+            and execute_msg like concat('%', #{executeMsg}, '%')
+        </if>
+        <if test="logType != null and logType != ''">
+            and log_type = #{logType}
+        </if>
+    </select>
+
+</mapper>

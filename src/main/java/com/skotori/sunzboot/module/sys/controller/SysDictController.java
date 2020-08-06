@@ -1,19 +1,22 @@
 package com.skotori.sunzboot.module.sys.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.skotori.sunzboot.common.log.Log;
 import com.skotori.sunzboot.common.result.Result;
 import com.skotori.sunzboot.common.tree.treeNode.DictTreeNode;
-import com.skotori.sunzboot.module.sys.model.SysDict;
+import com.skotori.sunzboot.module.sys.entity.SysDict;
 import com.skotori.sunzboot.module.sys.service.SysDictService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
+import static com.skotori.sunzboot.common.log.LogTypeEnum.OPERATE_LOG;
+
 /**
- * 字典控制器
+ * 系统字典controller
  * @author skotori
  * @date 2019-12-04 10:48
  */
@@ -21,9 +24,9 @@ import java.util.List;
 @RequestMapping("sysDict")
 public class SysDictController {
 
-    private Logger log = LoggerFactory.getLogger(SysDictController.class);
+    private static final Logger log = LoggerFactory.getLogger(SysDictController.class);
 
-    @Autowired
+    @Resource
     private SysDictService sysDictService;
 
     /**
@@ -34,54 +37,28 @@ public class SysDictController {
      * @return
      */
     @PostMapping("pageList")
+    @Log(msg = "分页查询字典列表", type = OPERATE_LOG)
     public Result pageList(@RequestParam("pageNum") Integer pageNum,
                            @RequestParam("pageSize") Integer pageSize,
                            @RequestBody SysDict dict) {
         log.info("分页查询字典列表，param参数pageNum：[ {} ]，param参数pageSize：[ {} ]，body参数dict：[ {} ]", pageNum, pageSize, dict);
-        try {
-            PageInfo<SysDict> pageInfo = sysDictService.pageList(pageNum, pageSize, dict);
-            log.info("分页查询字典列表成功");
-            return Result.success(pageInfo);
-        } catch (Exception e) {
-            log.error("分页查询字典列表异常：[ {} ]", e.getMessage());
-            return Result.error(e.getMessage());
-        }
+        PageInfo<SysDict> pageInfo = sysDictService.pageList(pageNum, pageSize, dict);
+        log.info("分页查询字典列表成功");
+        return Result.success(pageInfo);
     }
 
     /**
-     * 查询字典列表
-     * @param dict
-     * @return
-     */
-    @PostMapping("list")
-    public Result list(@RequestBody SysDict dict) {
-        log.info("查询字典列表，body参数dict：[ {} ]", dict);
-        try {
-            List<SysDict> dictList = sysDictService.list(dict);
-            log.info("查询字典列表成功");
-            return Result.success(dictList);
-        } catch (Exception e) {
-            log.error("查询字典列表异常：[ {} ]", e.getMessage());
-            return Result.error(e.getMessage());
-        }
-    }
-
-    /**
-     * 查询字典树形
+     * 查询树型字典列表
      * @param dict
      * @return
      */
     @PostMapping("treeList")
+    @Log(msg = "查询树型字典列表", type = OPERATE_LOG)
     public Result treeList(@RequestBody SysDict dict) {
-        log.info("查询字典表格树形，body参数dict：[ {} ]", dict);
-        try {
-            List<DictTreeNode> treeList = sysDictService.treeList(dict);
-            log.info("查询字典表格树形成功");
-            return Result.success(treeList);
-        } catch (Exception e) {
-            log.error("查询字典表格树形异常：[ {} ]", e.getMessage());
-            return Result.error(e.getMessage());
-        }
+        log.info("查询树型字典列表，body参数dict：[ {} ]", dict);
+        List<DictTreeNode> treeList = sysDictService.treeList(dict);
+        log.info("查询树型字典列表成功");
+        return Result.success(treeList);
     }
 
     /**
@@ -90,16 +67,12 @@ public class SysDictController {
      * @return
      */
     @PostMapping("add")
+    @Log(msg = "新增字典", type = OPERATE_LOG)
     public Result add(@RequestBody SysDict dict) {
         log.info("新增字典，body参数dict：[ {} ]", dict);
-        try {
-            sysDictService.add(dict);
-            log.info("新增字典成功");
-            return Result.success();
-        } catch (Exception e) {
-            log.error("新增字典异常：[ {} ]", e.getMessage());
-            return Result.error(e.getMessage());
-        }
+        sysDictService.add(dict);
+        log.info("新增字典成功");
+        return Result.success();
     }
 
     /**
@@ -108,16 +81,12 @@ public class SysDictController {
      * @return
      */
     @GetMapping("delete")
+    @Log(msg = "删除字典", type = OPERATE_LOG)
     public Result delete(@RequestParam("id") Integer id) {
         log.info("删除字典，param参数id：[ {} ]", id);
-        try {
-            sysDictService.delete(id);
-            log.info("删除字典成功");
-            return Result.success();
-        } catch (Exception e) {
-            log.error("删除字典异常：[ {} ]", e.getMessage());
-            return Result.error(e.getMessage());
-        }
+        sysDictService.delete(id);
+        log.info("删除字典成功");
+        return Result.success();
     }
 
     /**
@@ -126,16 +95,12 @@ public class SysDictController {
      * @return
      */
     @PostMapping("update")
+    @Log(msg = "更新字典", type = OPERATE_LOG)
     public Result update(@RequestBody SysDict dict) {
         log.info("更新字典，body参数dict：[ {} ]", dict);
-        try {
-            sysDictService.update(dict);
-            log.info("更新字典成功");
-            return Result.success();
-        } catch (Exception e) {
-            log.error("更新字典异常：[ {} ]", e.getMessage());
-            return Result.error(e.getMessage());
-        }
+        sysDictService.update(dict);
+        log.info("更新字典成功");
+        return Result.success();
     }
 
 }

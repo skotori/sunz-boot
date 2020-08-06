@@ -20,7 +20,7 @@ public class ShiroUser implements Serializable {
     // 名称
     private String name;
     // 头像
-    private String avatar;
+    private String icon;
     // 性别（1：男 2：女）
     private Integer sex;
     // 生日
@@ -28,15 +28,16 @@ public class ShiroUser implements Serializable {
     // 邮箱
     private String email;
     // 电话
-    private String phone;
+    private String tell;
     // 部门id
     private Integer deptId;
+
     // 部门名称
     private String deptName;
     // 角色编码集
     private List<String> roleCodes;
     // 权限编码集
-    private List<String> powerCodes;
+    private List<String> permissionCodes;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -66,12 +67,12 @@ public class ShiroUser implements Serializable {
         this.name = name;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public Integer getSex() {
@@ -98,12 +99,12 @@ public class ShiroUser implements Serializable {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getTell() {
+        return tell;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setTell(String tell) {
+        this.tell = tell;
     }
 
     public Integer getDeptId() {
@@ -130,12 +131,12 @@ public class ShiroUser implements Serializable {
         this.roleCodes = roleCodes;
     }
 
-    public List<String> getPowerCodes() {
-        return powerCodes;
+    public List<String> getPermissionCodes() {
+        return permissionCodes;
     }
 
-    public void setPowerCodes(List<String> powerCodes) {
-        this.powerCodes = powerCodes;
+    public void setPermissionCodes(List<String> permissionCodes) {
+        this.permissionCodes = permissionCodes;
     }
 
     @Override
@@ -144,15 +145,15 @@ public class ShiroUser implements Serializable {
                 "id=" + id +
                 ", account='" + account + '\'' +
                 ", name='" + name + '\'' +
-                ", avatar='" + avatar + '\'' +
+                ", icon='" + icon + '\'' +
                 ", sex=" + sex +
                 ", birthday=" + birthday +
                 ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
+                ", tell='" + tell + '\'' +
                 ", deptId=" + deptId +
                 ", deptName='" + deptName + '\'' +
                 ", roleCodes=" + roleCodes +
-                ", powerCodes=" + powerCodes +
+                ", permissionCodes=" + permissionCodes +
                 '}';
     }
 }

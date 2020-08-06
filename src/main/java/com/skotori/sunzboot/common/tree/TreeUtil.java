@@ -1,9 +1,6 @@
 package com.skotori.sunzboot.common.tree;
 
-import com.skotori.sunzboot.common.tree.treeNode.DeptTreeNode;
-import com.skotori.sunzboot.common.tree.treeNode.DictTreeNode;
-import com.skotori.sunzboot.common.tree.treeNode.MenuTreeNode;
-import com.skotori.sunzboot.common.tree.treeNode.PowerTreeNode;
+import com.skotori.sunzboot.common.tree.treeNode.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,135 +10,36 @@ import java.util.List;
  * @author skotori
  * @date 2019-12-05 16:21
  */
-public class TreeUtil {
+public class TreeUtil<T extends TreeNode> {
 
     /**
-     * 菜单节点list转tree
-     * @param list
+     * 权限nodeList转treeList
+     * @param nodeList
      * @return
      */
-    public static List<MenuTreeNode> menuListToTree(List<MenuTreeNode> list) {
-        List<MenuTreeNode> tree = new ArrayList<>();
-        for (MenuTreeNode node: list) {
-            if (node.getPid().equals(0)) {
-                tree.add(findChildren(node, list));
+    public List<T> listToTree(List<T> nodeList) {
+        List<T> treeList = new ArrayList<>();
+        for (T node: nodeList) {
+            if (node.getParentId().equals(0)) {
+                treeList.add(findChildren(node, nodeList));
             }
         }
-        return tree;
-    }
-
-    /**
-     * 使用递归法查找菜单子节点
-     * @param node
-     * @param list
-     * @return
-     */
-    private static MenuTreeNode findChildren(MenuTreeNode node, List<MenuTreeNode> list) {
-        for (MenuTreeNode childrenNode: list) {
-            if (childrenNode.getPid().equals(node.getId())) {
-                if (node.getChildren() == null) {
-                    node.setChildren(new ArrayList<>());
-                }
-                node.getChildren().add(findChildren(childrenNode, list));
-            }
-        }
-        return node;
-    }
-
-    /**
-     * 部门节点list转tree
-     * @param list
-     * @return
-     */
-    public static List<DeptTreeNode> deptListToTree(List<DeptTreeNode> list) {
-        List<DeptTreeNode> tree = new ArrayList<>();
-        for (DeptTreeNode node: list) {
-            if (node.getPid().equals(0)) {
-                tree.add(findChildren(node, list));
-            }
-        }
-        return tree;
-    }
-
-    /**
-     * 使用递归法查找部门子节点
-     * @param node
-     * @param list
-     * @return
-     */
-    private static DeptTreeNode findChildren(DeptTreeNode node, List<DeptTreeNode> list) {
-        for (DeptTreeNode childrenNode: list) {
-            if (childrenNode.getPid().equals(node.getId())) {
-                if (node.getChildren() == null) {
-                    node.setChildren(new ArrayList<>());
-                }
-                node.getChildren().add(findChildren(childrenNode, list));
-            }
-        }
-        return node;
-    }
-
-    /**
-     * 字典节点list转tree
-     * @param list
-     * @return
-     */
-    public static List<DictTreeNode> dictListToTree(List<DictTreeNode> list) {
-        List<DictTreeNode> tree = new ArrayList<>();
-        for (DictTreeNode node: list) {
-            if (node.getPid().equals(0)) {
-                tree.add(findChildren(node, list));
-            }
-        }
-        return tree;
-    }
-
-    /**
-     * 使用递归法查找字典子节点
-     * @param node
-     * @param list
-     * @return
-     */
-    private static DictTreeNode findChildren(DictTreeNode node, List<DictTreeNode> list) {
-        for (DictTreeNode childrenNode: list) {
-            if (childrenNode.getPid().equals(node.getId())) {
-                if (node.getChildren() == null) {
-                    node.setChildren(new ArrayList<>());
-                }
-                node.getChildren().add(findChildren(childrenNode, list));
-            }
-        }
-        return node;
-    }
-
-    /**
-     * 权限节点list转tree
-     * @param list
-     * @return
-     */
-    public static List<PowerTreeNode> powerListToTree(List<PowerTreeNode> list) {
-        List<PowerTreeNode> tree = new ArrayList<>();
-        for (PowerTreeNode node: list) {
-            if (node.getPid().equals(0)) {
-                tree.add(findChildren(node, list));
-            }
-        }
-        return tree;
+        return treeList;
     }
 
     /**
      * 使用递归法查找权限子节点
      * @param node
-     * @param list
+     * @param nodeList
      * @return
      */
-    private static PowerTreeNode findChildren(PowerTreeNode node, List<PowerTreeNode> list) {
-        for (PowerTreeNode childrenNode: list) {
-            if (childrenNode.getPid().equals(node.getId())) {
+    private T findChildren(T node, List<T> nodeList) {
+        for (T childrenNode: nodeList) {
+            if (childrenNode.getParentId().equals(node.getId())) {
                 if (node.getChildren() == null) {
                     node.setChildren(new ArrayList<>());
                 }
-                node.getChildren().add(findChildren(childrenNode, list));
+                node.getChildren().add(findChildren(childrenNode, nodeList));
             }
         }
         return node;

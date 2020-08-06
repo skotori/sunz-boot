@@ -1,14 +1,18 @@
-package com.skotori.sunzboot.common.tree.treeNode;
+package com.skotori.sunzboot.module.sys.entity;
 
 import java.util.Date;
 
 /**
- * 部门树心节点类
+ * 系统部门实体类
  * @author skotori
- * @date 2019-12-19 19:27
+ * @date 2019-11-15 11:47
  */
-public class DeptTreeNode extends TreeNode {
+public class SysDept {
 
+    // 主键id
+    private Integer id;
+    // 父级id
+    private Integer parentId;
     // 父父级id数组字符串(以","为间隔)
     private String parentIds;
     // 名称
@@ -33,6 +37,22 @@ public class DeptTreeNode extends TreeNode {
     private Integer deletedState;
     // 禁用状态(0：未禁用 1：已禁用)
     private Integer disabledState;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
 
     public String getParentIds() {
         return parentIds;
@@ -130,4 +150,23 @@ public class DeptTreeNode extends TreeNode {
         this.disabledState = disabledState;
     }
 
+    @Override
+    public String toString() {
+        return "SysDept{" +
+                "id=" + id +
+                ", parentId=" + parentId +
+                ", parentIds='" + parentIds + '\'' +
+                ", name='" + name + '\'' +
+                ", sortNum=" + sortNum +
+                ", remark='" + remark + '\'' +
+                ", createTime=" + createTime +
+                ", createUser='" + createUser + '\'' +
+                ", updateTime=" + updateTime +
+                ", updateUser='" + updateUser + '\'' +
+                ", deleteTime=" + deleteTime +
+                ", deleteUser='" + deleteUser + '\'' +
+                ", deletedState=" + deletedState +
+                ", disabledState=" + disabledState +
+                '}';
+    }
 }

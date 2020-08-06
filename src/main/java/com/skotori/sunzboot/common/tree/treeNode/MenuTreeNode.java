@@ -1,47 +1,33 @@
 package com.skotori.sunzboot.common.tree.treeNode;
 
-import java.util.List;
-
 /**
  * 菜单树形节点类
  * @author skotori
  * @date 2019-12-19 18:01
  */
-public class MenuTreeNode {
+public class MenuTreeNode extends TreeNode {
 
-    // 节点id
-    private Integer id;
-    // 父节点id
-    private Integer pid;
-    // 节点名称
+    // 图标
+    private String icon;
+    // 名称
     private String name;
+    // 编码
+    private String code;
     // 路径
     private String path;
     // 组件
     private String component;
-    // 图标
-    private String icon;
-    // 子节点集合
-    private List<MenuTreeNode> children;
-    // 编码
-    private String code;
-    // 状态(1：启用  2：禁用）
-    private Integer status;
+    // 排序号
+    private Integer sortNum;
+    // 禁用状态(0：未禁用 1：已禁用)
+    private Integer disabledState;
 
-    public Integer getId() {
-        return id;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getPid() {
-        return pid;
-    }
-
-    public void setPid(Integer pid) {
-        this.pid = pid;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getName() {
@@ -50,6 +36,14 @@ public class MenuTreeNode {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getPath() {
@@ -68,50 +62,20 @@ public class MenuTreeNode {
         this.component = component;
     }
 
-    public String getIcon() {
-        return icon;
+    public Integer getSortNum() {
+        return sortNum;
     }
 
-    public void setIcon(String icon) {
-        this.icon = icon;
+    public void setSortNum(Integer sortNum) {
+        this.sortNum = sortNum;
     }
 
-    public List<MenuTreeNode> getChildren() {
-        return children;
+    public Integer getDisabledState() {
+        return disabledState;
     }
 
-    public void setChildren(List<MenuTreeNode> children) {
-        this.children = children;
+    public void setDisabledState(Integer disabledState) {
+        this.disabledState = disabledState;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "MenuTreeNode{" +
-                "id=" + id +
-                ", pid=" + pid +
-                ", name='" + name + '\'' +
-                ", path='" + path + '\'' +
-                ", component='" + component + '\'' +
-                ", icon='" + icon + '\'' +
-                ", children=" + children +
-                ", code='" + code + '\'' +
-                ", status=" + status +
-                '}';
-    }
 }

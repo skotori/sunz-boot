@@ -1,18 +1,21 @@
 package com.skotori.sunzboot.module.sys.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.skotori.sunzboot.common.log.Log;
 import com.skotori.sunzboot.common.result.Result;
-import com.skotori.sunzboot.module.sys.model.SysNotice;
+import com.skotori.sunzboot.module.sys.entity.SysNotice;
 import com.skotori.sunzboot.module.sys.service.SysNoticeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
+import static com.skotori.sunzboot.common.log.LogTypeEnum.OPERATE_LOG;
+
 /**
- * 通知控制器
+ * 系统通知controller
  * @author skotori
  * @date 2019-12-04 10:48
  */
@@ -20,9 +23,9 @@ import java.util.List;
 @RequestMapping("sysNotice")
 public class SysNoticeController {
 
-    private Logger log = LoggerFactory.getLogger(SysNoticeController.class);
+    private static final Logger log = LoggerFactory.getLogger(SysNoticeController.class);
 
-    @Autowired
+    @Resource
     private SysNoticeService sysNoticeService;
 
     /**
@@ -33,36 +36,14 @@ public class SysNoticeController {
      * @return
      */
     @PostMapping("pageList")
+    @Log(msg = "分页查询通知列表", type = OPERATE_LOG)
     public Result pageList(@RequestParam("pageNum") Integer pageNum,
                            @RequestParam("pageSize") Integer pageSize,
                            @RequestBody SysNotice notice) {
         log.info("分页查询通知列表，param参数pageNum：[ {} ]，param参数pageSize：[ {} ]，body参数notice：[ {} ]", pageNum, pageSize, notice);
-        try {
-            PageInfo<SysNotice> pageInfo = sysNoticeService.pageList(pageNum, pageSize, notice);
-            log.info("分页查询通知列表成功");
-            return Result.success(pageInfo);
-        } catch (Exception e) {
-            log.error("分页查询通知列表异常：[ {} ]", e.getMessage());
-            return Result.error(e.getMessage());
-        }
-    }
-
-    /**
-     * 查询通知列表
-     * @param notice
-     * @return
-     */
-    @PostMapping("list")
-    public Result list(@RequestBody SysNotice notice) {
-        log.info("查询通知列表，body参数notice：[ {} ]", notice);
-        try {
-            List<SysNotice> noticeList = sysNoticeService.list(notice);
-            log.info("查询通知列表成功");
-            return Result.success(noticeList);
-        } catch (Exception e) {
-            log.error("查询通知列表异常：[ {} ]", e.getMessage());
-            return Result.error(e.getMessage());
-        }
+        PageInfo<SysNotice> pageInfo = sysNoticeService.pageList(pageNum, pageSize, notice);
+        log.info("分页查询通知列表成功");
+        return Result.success(pageInfo);
     }
 
     /**
@@ -71,16 +52,12 @@ public class SysNoticeController {
      * @return
      */
     @PostMapping("add")
+    @Log(msg = "新增通知", type = OPERATE_LOG)
     public Result add(@RequestBody SysNotice notice) {
         log.info("新增通知，body参数notice：[ {} ]", notice);
-        try {
-            sysNoticeService.add(notice);
-            log.info("新增通知成功");
-            return Result.success();
-        } catch (Exception e) {
-            log.error("新增通知异常：[ {} ]", e.getMessage());
-            return Result.error(e.getMessage());
-        }
+        sysNoticeService.add(notice);
+        log.info("新增通知成功");
+        return Result.success();
     }
 
     /**
@@ -89,16 +66,12 @@ public class SysNoticeController {
      * @return
      */
     @GetMapping("delete")
+    @Log(msg = "删除通知", type = OPERATE_LOG)
     public Result delete(@RequestParam("id") Integer id) {
         log.info("删除通知，param参数id：[ {} ]", id);
-        try {
-            sysNoticeService.delete(id);
-            log.info("删除通知成功");
-            return Result.success();
-        } catch (Exception e) {
-            log.error("删除通知异常：[ {} ]", e.getMessage());
-            return Result.error(e.getMessage());
-        }
+        sysNoticeService.delete(id);
+        log.info("删除通知成功");
+        return Result.success();
     }
 
     /**
@@ -107,16 +80,12 @@ public class SysNoticeController {
      * @return
      */
     @PostMapping("update")
+    @Log(msg = "更新通知", type = OPERATE_LOG)
     public Result update(@RequestBody SysNotice notice) {
         log.info("更新通知，body参数notice：[ {} ]", notice);
-        try {
-            sysNoticeService.update(notice);
-            log.info("更新通知成功");
-            return Result.success();
-        } catch (Exception e) {
-            log.error("更新通知异常：[ {} ]", e.getMessage());
-            return Result.error(e.getMessage());
-        }
+        sysNoticeService.update(notice);
+        log.info("更新通知成功");
+        return Result.success();
     }
 
 }

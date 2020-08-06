@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skotori.sunzboot.module.sys.mapper.SysPermissionMapper">
+
+    <select id="selectPermissionsByRoleIds" resultType="com.skotori.sunzboot.module.sys.entity.SysPermission">
+        select p.id, p.code, p.name
+        from sys_permission as p
+        left join sys_role_permission as rp on p.id = rp.permission_id
+        where rp.role_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+
+    <select id="selectMenuNodeList" parameterType="java.lang.String" resultType="com.skotori.sunzboot.common.tree.treeNode.MenuTreeNode">
+        select distinct p.id, p.parent_id, p.name as label, p.icon, p.name, p.code, p.path, p.component, p.sort_num, p.disabled_state
+        from sys_permission as p
+        left join sys_role_permission as rp on p.id = rp.permission_id
+        left join sys_role as r on rp.role_id = r.id
+        left join sys_user_role as ur on r.id = ur.role_id
+        left join sys_user as u on ur.user_id = u.id
+        where p.deleted_state = 0
+        and p.permission_type = 1
+        and u.account = #{account}
+        order by p.sort_num
+    </select>
+    
+    <select id="selectList" parameterType="com.skotori.sunzboot.module.sys.entity.SysPermission" resultType="com.skotori.sunzboot.module.sys.entity.SysPermission">
+        select *
+        from sys_permission
+        where deleted_state = 0
+        <if test="id != null and id != ''">
+            and parent_ids like concat('%', #{id}, '%')
+        </if>
+        <if test="name != null and name != ''">
+            and `name` like concat('%', #{name}, '%')
+        </if>
+        <if test="code != null and code != ''">
+            and code like concat('%', #{code}, '%')
+        </if>
+        <if test="permissionType != null and permissionType != ''">
+            and permission_type = #{permissionType}
+        </if>
+        <if test="disabledState != null and disabledState != ''">
+            and disabled_state = #{disabledState}
+        </if>
+    </select>
+
+    <select id="selectNodeList" parameterType="com.skotori.sunzboot.module.sys.entity.SysPermission" resultType="com.skotori.sunzboot.common.tree.treeNode.PermissionTreeNode">
+        select *, `name` as label
+        from sys_permission
+        where deleted_state = 0
+        <if test="id != null and id != ''">
+            and parent_ids like concat('%', #{id}, '%')
+        </if>
+        <if test="name != null and name != ''">
+            and `name` like concat('%', #{name}, '%')
+        </if>
+        <if test="code != null and code != ''">
+            and code like concat('%', #{code}, '%')
+        </if>
+        <if test="permissionType != null and permissionType != ''">
+            and permission_type = #{permissionType}
+        </if>
+        <if test="disabledState != null and disabledState != ''">
+            and disabled_state = #{disabledState}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="com.skotori.sunzboot.module.sys.entity.SysPermission">
+        insert into sys_permission (
+            parent_id,
+            parent_ids,
+            <if test="icon != null and icon != ''">
+                icon,
+            </if>
+            `name`,
+            code,
+            <if test="path != null and path != ''">
+                path,
+            </if>
+            <if test="component != null and component != ''">
+                component,
+            </if>
+            <if test="sortNum != null and sortNum != ''">
+                sort_num,
+            </if>
+            <if test="permissionType != null and permissionType != ''">
+                permission_type,
+            </if>
+            <if test="remark != null and remark != ''">
+                remark,
+            </if>
+            create_time,
+            create_user,
+            <if test="disabledState != null and disabledState != ''">
+                disabled_state,
+            </if>
+            deleted_state
+        ) values (
+            #{parentId},
+            #{parentIds},
+            <if test="icon != null and icon != ''">
+                #{icon}
+            </if>
+            #{name},
+            #{code},
+            <if test="path != null and path != ''">
+                #{path},
+            </if>
+            <if test="component != null and component != ''">
+                #{component},
+            </if>
+            <if test="sortNum != null and sortNum != ''">
+                #{sortNum},
+            </if>
+            <if test="permissionType != null and permissionType != ''">
+                #{permissionType},
+            </if>
+            <if test="remark != null and remark != ''">
+                #{remark},
+            </if>
+            #{create_time},
+            #{create_user},
+            <if test="disabledState != null and disabledState != ''">
+                #{disabledState},
+            </if>
+            0
+        )
+    </insert>
+
+    <update id="delete" parameterType="java.lang.Integer">
+        update sys_permission
+        set deleted_state = 1
+        where id = #{id}
+    </update>
+
+    <update id="update" parameterType="com.skotori.sunzboot.module.sys.entity.SysPermission">
+        update sys_permission set
+        <if test="parentId != null and parentId != ''">
+            parent_id = #{parentId},
+        </if>
+        <if test="parentIds != null and parentIds != ''">
+            parent_ids = #{parentIds},
+        </if>
+        <if test="icon != null and icon != ''">
+            icon = #{icon}
+        </if>
+        <if test="name != null and name != ''">
+            `name` = #{name},
+        </if>
+        <if test="code != null and code != ''">
+            code = #{code},
+        </if>
+        <if test="path != null and path != ''">
+            path = #{path},
+        </if>
+        <if test="component != null and component != ''">
+            component = #{component},
+        </if>
+        <if test="sortNum != null and sortNum != ''">
+            sort_num = #{sortNum},
+        </if>
+        <if test="permissionType != null and permissionType != ''">
+            permission_type = #{permissionType},
+        </if>
+        <if test="remark != null and remark != ''">
+            remark = #{remark},
+        </if>
+        <if test="updateTime != null and updateTime != ''">
+            update_time = #{updateTime},
+        </if>
+        <if test="disabledState != null and disabledState != ''">
+            disabled_state = #{disabledState},
+        </if>
+        update_user = #{updateUser}
+        where id = #{id}
+    </update>
+
+</mapper>

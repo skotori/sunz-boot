@@ -1,18 +1,22 @@
-package com.skotori.sunzboot.common.tree.treeNode;
+package com.skotori.sunzboot.module.sys.entity;
 
 import java.util.Date;
 
 /**
- * 部门树心节点类
+ * 系统字典实体类
  * @author skotori
- * @date 2019-12-19 19:27
+ * @date 2019-12-04 08:54
  */
-public class DeptTreeNode extends TreeNode {
+public class SysDict {
 
-    // 父父级id数组字符串(以","为间隔)
-    private String parentIds;
+    // 主键id
+    private Integer id;
+    // 父级id
+    private Integer parentId;
     // 名称
     private String name;
+    // 编码
+    private String code;
     // 排序号
     private Integer sortNum;
     // 备注
@@ -34,12 +38,20 @@ public class DeptTreeNode extends TreeNode {
     // 禁用状态(0：未禁用 1：已禁用)
     private Integer disabledState;
 
-    public String getParentIds() {
-        return parentIds;
+    public Integer getId() {
+        return id;
     }
 
-    public void setParentIds(String parentIds) {
-        this.parentIds = parentIds;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 
     public String getName() {
@@ -48,6 +60,14 @@ public class DeptTreeNode extends TreeNode {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Integer getSortNum() {
@@ -130,4 +150,23 @@ public class DeptTreeNode extends TreeNode {
         this.disabledState = disabledState;
     }
 
+    @Override
+    public String toString() {
+        return "SysDict{" +
+                "id=" + id +
+                ", parentId=" + parentId +
+                ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                ", sortNum=" + sortNum +
+                ", remark='" + remark + '\'' +
+                ", createTime=" + createTime +
+                ", createUser='" + createUser + '\'' +
+                ", updateTime=" + updateTime +
+                ", updateUser='" + updateUser + '\'' +
+                ", deleteTime=" + deleteTime +
+                ", deleteUser='" + deleteUser + '\'' +
+                ", deletedState=" + deletedState +
+                ", disabledState=" + disabledState +
+                '}';
+    }
 }

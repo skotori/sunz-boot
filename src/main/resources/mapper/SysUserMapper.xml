@@ -2,82 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.skotori.sunzboot.module.sys.mapper.SysUserMapper">
 
-    <select id="selectUserByAccount" parameterType="java.lang.String" resultType="com.skotori.sunzboot.module.sys.model.SysUser">
-        select u.id,
-        u.account,
-        u.password,
-        u.salt,
-        u.name,
-        u.avatar,
-        u.sex,
-        u.birthday,
-        u.email,
-        u.phone,
-        u.dept_id,
-        d.name as deptName,
-        u.status
+    <select id="selectUserByAccount" parameterType="java.lang.String" resultType="com.skotori.sunzboot.module.sys.entity.SysUser">
+        select u.id, u.account, u.password, u.salt, u.name, u.icon, u.sex, u.birthday, u.email, u.tell, u.dept_id, d.name as deptName, u.remark, u.deleted_state, u.disabled_state
         from sys_user as u
         left join sys_dept as d on u.dept_id = d.id
-        where u.status != 3
-        and u.account = #{account}
+        where u.account = #{account}
     </select>
 
-    <select id="selectUserList" parameterType="com.skotori.sunzboot.module.sys.model.SysUser" resultType="com.skotori.sunzboot.module.sys.model.SysUser">
-        select u.id,
-        u.account,
-        u.name,
-        u.avatar,
-        u.sex,
-        u.birthday,
-        u.email,
-        u.phone,
-        u.dept_id,
-        d.name as deptName,
-        u.status,
-        u.note,
-        u.create_time,
-        u.create_user,
-        u.update_time,
-        u.update_user
+
+    <select id="selectList" parameterType="com.skotori.sunzboot.module.sys.entity.SysUser" resultType="com.skotori.sunzboot.module.sys.entity.SysUser">
+        select u.*, d.name as deptName
         from sys_user as u
         left join sys_dept as d on u.dept_id = d.id
-        where u.status != 3
+        where u.deleted_state == 0
         <if test="keyword != null and keyword != ''">
             and ( u.account like concat('%', #{keyword}, '%') or u.name like concat('%', #{keyword}, '%') )
         </if>
         <if test="deptId != null and deptId != ''">
             and u.dept_id = #{deptId}
         </if>
-        <if test="status != null and status != ''">
-            and u.status = #{status}
+        <if test="disabledState != null and disabledState != ''">
+            and u.disabled_state = #{disabledState}
         </if>
-        order by u.id
+        order by u.create_time
     </select>
 
-    <select id="selectUserById" parameterType="java.lang.Integer" resultType="com.skotori.sunzboot.module.sys.model.SysUser">
-        select u.id,
-        u.account,
-        u.name,
-        u.avatar,
-        u.sex,
-        u.birthday,
-        u.email,
-        u.phone,
-        u.dept_id,
-        d.name as deptName,
-        u.status,
-        u.note,
-        u.create_time,
-        u.create_user,
-        u.update_time,
-        u.update_user
-        from sys_user as u
-        left join sys_dept as d on u.dept_id = d.id
-        where u.status != 3
-        and u.id = #{id}
-    </select>
-
-    <insert id="insertUser" parameterType="com.skotori.sunzboot.module.sys.model.SysUser">
+    <insert id="insert" parameterType="com.skotori.sunzboot.module.sys.entity.SysUser">
         insert into sys_user (
             account,
             password,
@@ -85,8 +35,8 @@
             <if test="name != null and name != ''">
                 `name`,
             </if>
-            <if test="avatar != null and avatar != ''">
-                avatar,
+            <if test="icon != null and icon != ''">
+                icon,
             </if>
             <if test="sex != null and sex != ''">
                 sex,
@@ -97,16 +47,19 @@
             <if test="email != null and email != ''">
                 email,
             </if>
-            <if test="phone != null and phone != ''">
-                phone,
+            <if test="tell != null and tell != ''">
+                tell,
             </if>
             dept_id,
-            status,
-            <if test="note != null and note != ''">
-                note,
+            <if test="remark != null and remark != ''">
+                remark,
             </if>
             create_time,
-            create_user
+            create_user,
+            <if test="disabledState != null and disabledState != ''">
+                disabled_state,
+            </if>
+            deleted_state
         ) values (
             #{account},
             #{password},
@@ -114,8 +67,8 @@
             <if test="name != null and name != ''">
                 #{name},
             </if>
-            <if test="avatar != null and avatar != ''">
-                #{avatar},
+            <if test="icon != null and icon != ''">
+                #{icon},
             </if>
             <if test="sex != null and sex != ''">
                 #{sex},
@@ -126,18 +79,78 @@
             <if test="email != null and email != ''">
                 #{email},
             </if>
-            <if test="phone != null and phone != ''">
-                #{phone},
+            <if test="tell != null and tell != ''">
+                #{tell},
             </if>
             #{deptId},
-            #{status},
-            <if test="note != null and note != ''">
-                #{note},
+            <if test="remark != null and remark != ''">
+                #{remark},
             </if>
-            #{createTime},
-            #{createUser}
+            #{create_time},
+            #{create_user},
+            <if test="disabledState != null and disabledState != ''">
+                #{disabledState},
+            </if>
+            0
         )
     </insert>
+
+    <update id="delete" parameterType="java.lang.Integer">
+        update sys_user
+        set deleted_state = 1
+        where id = #{id}
+    </update>
+
+    <update id="update" parameterType="com.skotori.sunzboot.module.sys.entity.SysUser">
+        update sys_user set
+        <if test="password != null and password != ''">
+            password = #{password},
+        </if>
+        <if test="salt != null and salt != ''">
+            salt = #{salt},
+        </if>
+        <if test="name != null and name != ''">
+            `name` = #{name},
+        </if>
+        <if test="icon != null and icon != ''">
+            icon = #{icon},
+        </if>
+        <if test="sex != null and sex != ''">
+            sex = #{sex},
+        </if>
+        <if test="birthday != null">
+            birthday = #{birthday},
+        </if>
+        <if test="email != null and email != ''">
+            email = #{email},
+        </if>
+        <if test="tell != null and tell != ''">
+            tell = #{tell},
+        </if>
+        <if test="deptId != null and deptId != ''">
+            dept_id = #{deptId},
+        </if>
+        <if test="remark != null and remark != ''">
+            remark = #{remark},
+        </if>
+        <if test="updateTime != null and updateTime != ''">
+            update_time = #{updateTime},
+        </if>
+        <if test="disabledState != null and disabledState != ''">
+            disabled_state = #{disabledState},
+        </if>
+        update_user = #{updateUser}
+        where id = #{id}
+    </update>
+
+
+    <select id="selectUserById" parameterType="java.lang.Integer" resultType="com.skotori.sunzboot.module.sys.entity.SysUser">
+        select u.id, u.account, u.name, u.icon, u.sex, u.birthday, u.email, u.tell, u.dept_id, d.name as deptName, u.remark, u.create_time, u.create_user, u.update_time, u.update_user, u.disabled_state
+        from sys_user as u
+        left join sys_dept as d on u.dept_id = d.id
+        where u.deleted_state == 0
+        and u.id = #{id}
+    </select>
 
     <insert id="insertUserRole">
         insert into sys_user_role (
@@ -156,50 +169,5 @@
         delete from sys_user_role
         where user_id = #{id}
     </delete>
-
-    <update id="deleteUserById" parameterType="java.lang.Integer">
-        update sys_user
-        set status = 3
-        where id = #{id}
-    </update>
-
-    <update id="updateUser" parameterType="com.skotori.sunzboot.module.sys.model.SysUser">
-        update sys_user set
-        <if test="password != null and password != ''">
-            password = #{password},
-        </if>
-        <if test="salt != null and salt != ''">
-            salt = #{salt},
-        </if>
-        <if test="name != null and name != ''">
-            `name` = #{name},
-        </if>
-        <if test="avatar != null and avatar != ''">
-            avatar = #{avatar},
-        </if>
-        <if test="sex != null and sex != ''">
-            sex = #{sex},
-        </if>
-        <if test="birthday != null">
-            birthday = #{birthday},
-        </if>
-        <if test="email != null and email != ''">
-            email = #{email},
-        </if>
-        <if test="phone != null and phone != ''">
-            phone = #{phone},
-        </if>
-        <if test="deptId != null and deptId != ''">
-            dept_id = #{deptId},
-        </if>
-        <if test="status != null and status != ''">
-            status = #{status},
-        </if>
-        <if test="note != null and note != ''">
-            note = #{note},
-        </if>
-        update_user = #{updateUser}
-        where id = #{id}
-    </update>
 
 </mapper>

@@ -2,10 +2,10 @@ package com.skotori.sunzboot.module.sys.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.skotori.sunzboot.common.shiro.ShiroUtil;
 import com.skotori.sunzboot.common.tree.treeNode.DeptTreeNode;
+import com.skotori.sunzboot.common.utils.HttpUtil;
 import com.skotori.sunzboot.module.sys.mapper.SysDeptMapper;
-import com.skotori.sunzboot.module.sys.model.SysDept;
+import com.skotori.sunzboot.module.sys.entity.SysDept;
 import com.skotori.sunzboot.common.tree.TreeUtil;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 部门service
+ * 系统部门service
  * @author skotori
  * @date 2019-12-04 10:37
  */
@@ -25,15 +25,6 @@ public class SysDeptService {
     private SysDeptMapper sysDeptMapper;
 
     /**
-     * 查询部门列表
-     * @param dept
-     * @return
-     */
-    public List<SysDept> list(SysDept dept) {
-        return sysDeptMapper.selectDeptList(dept);
-    }
-
-    /**
      * 分页查询部门列表
      * @param pageNum
      * @param pageSize
@@ -42,18 +33,19 @@ public class SysDeptService {
      */
     public PageInfo<SysDept> pageList(Integer pageNum, Integer pageSize, SysDept dept) {
         PageHelper.startPage(pageNum, pageSize);
-        List<SysDept> deptList = sysDeptMapper.selectDeptList(dept);
+        List<SysDept> deptList = sysDeptMapper.selectList(dept);
         return new PageInfo<>(deptList);
     }
 
     /**
-     * 查询部门树形
+     * 查询树型部门列表
      * @param dept
      * @return
      */
     public List<DeptTreeNode> treeList(SysDept dept) {
         List<DeptTreeNode> nodeList = sysDeptMapper.selectNodeList(dept);
-        return TreeUtil.deptListToTree(nodeList);
+        TreeUtil<DeptTreeNode> treeUtil = new TreeUtil<>();
+        return treeUtil.listToTree(nodeList);
     }
 
     /**
@@ -63,8 +55,8 @@ public class SysDeptService {
      */
     public Integer add(SysDept dept) {
         dept.setCreateTime(new Date());
-        dept.setCreateUser(ShiroUtil.getAccount());
-        return sysDeptMapper.insertDept(dept);
+        dept.setCreateUser(HttpUtil.getAccount());
+        return sysDeptMapper.insert(dept);
     }
 
     /**
@@ -73,7 +65,7 @@ public class SysDeptService {
      * @return
      */
     public Integer delete(Integer id) {
-        return sysDeptMapper.deleteDeptById(id);
+        return sysDeptMapper.delete(id);
     }
 
     /**
@@ -82,8 +74,8 @@ public class SysDeptService {
      * @return
      */
     public Integer update(SysDept dept) {
-        dept.setUpdateUser(ShiroUtil.getAccount());
-        return sysDeptMapper.updateDept(dept);
+        dept.setUpdateUser(HttpUtil.getAccount());
+        return sysDeptMapper.update(dept);
     }
 
 }

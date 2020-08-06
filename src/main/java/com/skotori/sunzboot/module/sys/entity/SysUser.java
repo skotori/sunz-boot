@@ -1,4 +1,4 @@
-package com.skotori.sunzboot.module.sys.model;
+package com.skotori.sunzboot.module.sys.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 管理员实体类
+ * 系统用户实体类
  * @author skotori
  * @date 2019/11/06 20:38
  */
@@ -18,13 +18,13 @@ public class SysUser {
     private String account;
     // 密码
     private String password;
-    // md5密码盐
+    // md5加密盐
     private String salt;
     // 名称
     private String name;
     // 头像
-    private String avatar;
-    // 性别（1：男 2：女）
+    private String icon;
+    // 性别（0：女 1：男）
     private Integer sex;
     // 生日
     @JsonFormat(pattern="yyyy-MM-dd")
@@ -32,25 +32,32 @@ public class SysUser {
     // 邮箱
     private String email;
     // 电话
-    private String phone;
+    private String tell;
     // 部门id
     private Integer deptId;
-    // 部门名称
-    private String deptName;
-    // 状态(1：启用  2：禁用  3：删除）
-    private Integer status;
     // 备注
-    private String note;
+    private String remark;
     // 创建时间
     private Date createTime;
-    // 创建人
+    // 创建用户
     private String createUser;
     // 更新时间
     private Date updateTime;
-    // 更新人
+    // 更新用户
     private String updateUser;
+    // 删除时间
+    private Date deleteTime;
+    // 删除用户
+    private String deleteUser;
+    // 删除状态(0：未删除 1：已删除)
+    private Integer deletedState;
+    // 禁用状态(0：未禁用 1：已禁用)
+    private Integer disabledState;
+
     // 角色列表
     private List<SysRole> roles;
+    // 部门名称
+    private String deptName;
     // 关键词搜索
     private String keyword;
 
@@ -94,12 +101,12 @@ public class SysUser {
         this.name = name;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public Integer getSex() {
@@ -126,12 +133,12 @@ public class SysUser {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getTell() {
+        return tell;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setTell(String tell) {
+        this.tell = tell;
     }
 
     public Integer getDeptId() {
@@ -142,28 +149,12 @@ public class SysUser {
         this.deptId = deptId;
     }
 
-    public String getDeptName() {
-        return deptName;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public Date getCreateTime() {
@@ -206,12 +197,52 @@ public class SysUser {
         this.roles = roles;
     }
 
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
     public String getKeyword() {
         return keyword;
     }
 
     public void setKeyword(String keyword) {
         this.keyword = keyword;
+    }
+
+    public Date getDeleteTime() {
+        return deleteTime;
+    }
+
+    public void setDeleteTime(Date deleteTime) {
+        this.deleteTime = deleteTime;
+    }
+
+    public String getDeleteUser() {
+        return deleteUser;
+    }
+
+    public void setDeleteUser(String deleteUser) {
+        this.deleteUser = deleteUser;
+    }
+
+    public Integer getDeletedState() {
+        return deletedState;
+    }
+
+    public void setDeletedState(Integer deletedState) {
+        this.deletedState = deletedState;
+    }
+
+    public Integer getDisabledState() {
+        return disabledState;
+    }
+
+    public void setDisabledState(Integer disabledState) {
+        this.disabledState = disabledState;
     }
 
     @Override
@@ -222,25 +253,29 @@ public class SysUser {
                 ", password='" + password + '\'' +
                 ", salt='" + salt + '\'' +
                 ", name='" + name + '\'' +
-                ", avatar='" + avatar + '\'' +
+                ", icon='" + icon + '\'' +
                 ", sex=" + sex +
                 ", birthday=" + birthday +
                 ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
+                ", tell='" + tell + '\'' +
                 ", deptId=" + deptId +
-                ", deptName='" + deptName + '\'' +
-                ", status=" + status +
-                ", note='" + note + '\'' +
+                ", remark='" + remark + '\'' +
                 ", createTime=" + createTime +
                 ", createUser='" + createUser + '\'' +
                 ", updateTime=" + updateTime +
                 ", updateUser='" + updateUser + '\'' +
+                ", deleteTime=" + deleteTime +
+                ", deleteUser='" + deleteUser + '\'' +
+                ", deletedState=" + deletedState +
+                ", disabledState=" + disabledState +
                 ", roles=" + roles +
+                ", deptName='" + deptName + '\'' +
+                ", keyword='" + keyword + '\'' +
                 '}';
     }
 
     /**
-     * 密码盐. 重新对盐重新进行了定义，account + salt
+     * 加密盐：重新定义盐(account + salt)
      * @return
      */
     public String getCredentialsSalt(){

@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.skotori.sunzboot.module.sys.mapper.SysDictMapper">
 
-    <select id="selectDictList" parameterType="com.skotori.sunzboot.module.sys.model.SysDict" resultType="com.skotori.sunzboot.module.sys.model.SysDict">
+    <select id="selectList" parameterType="com.skotori.sunzboot.module.sys.entity.SysDict" resultType="com.skotori.sunzboot.module.sys.entity.SysDict">
         select *
         from sys_dict
-        where 1 = 1
+        where deleted_state = 0
         <if test="id != null and id != ''">
-            and pid = #{id}
+            and parent_id = #{id}
         </if>
         <if test="name != null and name != ''">
             and `name` like concat('%', #{name}, '%')
@@ -15,17 +15,17 @@
         <if test="code != null and code != ''">
             and code like concat('%', #{code}, '%')
         </if>
-        <if test="status != null and status != ''">
-            and status = #{status}
+        <if test="disabledState != null and disabledState != ''">
+            and disabled_state = #{disabledState}
         </if>
     </select>
 
-    <select id="selectNodeList" parameterType="com.skotori.sunzboot.module.sys.model.SysDict" resultType="com.skotori.sunzboot.common.tree.treeNode.DictTreeNode">
-        select *
+    <select id="selectNodeList" parameterType="com.skotori.sunzboot.module.sys.entity.SysDict" resultType="com.skotori.sunzboot.common.tree.treeNode.DictTreeNode">
+        select *, `name` as label
         from sys_dict
-        where 1 = 1
+        where deleted_state = 0
         <if test="id != null and id != ''">
-            and pid = #{id}
+            and parent_id = #{id}
         </if>
         <if test="name != null and name != ''">
             and `name` like concat('%', #{name}, '%')
@@ -33,57 +33,57 @@
         <if test="code != null and code != ''">
             and code like concat('%', #{code}, '%')
         </if>
-        <if test="status != null and status != ''">
-            and status = #{status}
+        <if test="disabledState != null and disabledState != ''">
+            and disabled_state = #{disabledState}
         </if>
     </select>
 
-    <insert id="insertDict" parameterType="com.skotori.sunzboot.module.sys.model.SysDict">
+    <insert id="insert" parameterType="com.skotori.sunzboot.module.sys.entity.SysDict">
         insert into sys_dict (
-            pid,
-            <if test="num != null and num != ''">
-                num,
-            </if>
+            parent_id,
             `name`,
             code,
-            <if test="status != null and status != ''">
-                status,
+            <if test="sortNum != null and sortNum != ''">
+                sort_num,
             </if>
-            <if test="note != null and note != ''">
-                note,
+            <if test="remark != null and remark != ''">
+                remark,
             </if>
             create_time,
-            create_user
-        ) values (
-            #{pid},
-            <if test="num != null and num != ''">
-                #{num},
+            create_user,
+            <if test="disabledState != null and disabledState != ''">
+                disabled_state,
             </if>
+            deleted_state
+        ) values (
+            #{parentId},
             #{name},
             #{code},
-            <if test="status != null and status != ''">
-                #{status},
+            <if test="sortNum != null and sortNum != ''">
+                #{sortNum},
             </if>
-            <if test="note != null and note != ''">
-                #{note},
+            <if test="remark != null and remark != ''">
+                #{remark},
             </if>
             #{createTime},
-            #{createUser}
+            #{createUser},
+            <if test="disabledState != null and disabledState != ''">
+                #{disabledState},
+            </if>
+            0
         )
     </insert>
 
-    <delete id="deleteDictById" parameterType="java.lang.Integer">
-        delete from sys_dict
+    <update id="delete" parameterType="java.lang.Integer">
+        update sys_dict
+        set deleted_state = 1
         where id = #{id}
-    </delete>
+    </update>
 
-    <update id="updateDict" parameterType="com.skotori.sunzboot.module.sys.model.SysDict">
+    <update id="update" parameterType="com.skotori.sunzboot.module.sys.entity.SysDict">
         update sys_dict set
-        <if test="pid != null and pid != ''">
-            pid = #{pid},
-        </if>
-        <if test="num != null and num != ''">
-            num = #{num},
+        <if test="parentId != null and parentId != ''">
+            parent_id = #{parentId},
         </if>
         <if test="name != null and name != ''">
             `name` = #{name},
@@ -91,11 +91,17 @@
         <if test="code != null and code != ''">
             code = #{code},
         </if>
-        <if test="status != null and status != ''">
-            status = #{status},
+        <if test="sortNum != null and sortNum != ''">
+            sort_num = #{sortNum},
         </if>
-        <if test="note != null and note != ''">
-            note = #{note},
+        <if test="remark != null and remark != ''">
+            remark = #{remark},
+        </if>
+        <if test="updateTime != null and updateTime != ''">
+            update_time = #{updateTime},
+        </if>
+        <if test="disabledState != null and disabledState != ''">
+            disabled_state = #{disabledState},
         </if>
         update_user = #{updateUser}
         where id = #{id}
