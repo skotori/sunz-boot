@@ -1,6 +1,6 @@
 package com.skotori.sunzboot.common.shiro;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
 
 /**
  * shiro工具类
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class ShiroUtil {
 
-    @Autowired
+    @Resource
     private static ShiroRealm shiroRealm;
 
     /**

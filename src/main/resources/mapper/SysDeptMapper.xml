@@ -88,9 +88,6 @@
         <if test="sortNum != null and sortNum != ''">
             sort_num = #{sortNum},
         </if>
-        <if test="state != null and state != ''">
-            state = #{state},
-        </if>
         <if test="remark != null and remark != ''">
             remark = #{remark},
         </if>
