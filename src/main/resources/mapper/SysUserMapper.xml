@@ -11,10 +11,10 @@
 
 
     <select id="selectList" parameterType="com.skotori.sunzboot.module.sys.entity.SysUser" resultType="com.skotori.sunzboot.module.sys.entity.SysUser">
-        select u.*, d.name as deptName
+        select u.id, u.account, u.name, u.icon, u.sex, u.birthday, u.email, u.tell, u.dept_id, d.name as deptName, u.remark, u.create_time, u.create_user, u.update_time, u.update_user, u.disabled_state
         from sys_user as u
         left join sys_dept as d on u.dept_id = d.id
-        where u.deleted_state == 0
+        where u.deleted_state = 0
         <if test="keyword != null and keyword != ''">
             and ( u.account like concat('%', #{keyword}, '%') or u.name like concat('%', #{keyword}, '%') )
         </if>
@@ -148,7 +148,7 @@
         select u.id, u.account, u.name, u.icon, u.sex, u.birthday, u.email, u.tell, u.dept_id, d.name as deptName, u.remark, u.create_time, u.create_user, u.update_time, u.update_user, u.disabled_state
         from sys_user as u
         left join sys_dept as d on u.dept_id = d.id
-        where u.deleted_state == 0
+        where u.deleted_state = 0
         and u.id = #{id}
     </select>
 

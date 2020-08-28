@@ -25,6 +25,15 @@ public class SysDeptService {
     private SysDeptMapper sysDeptMapper;
 
     /**
+     * 查询部门列表
+     * @param dept
+     * @return
+     */
+    public List<SysDept> queryList(SysDept dept) {
+        return sysDeptMapper.selectList(dept);
+    }
+
+    /**
      * 分页查询部门列表
      * @param pageNum
      * @param pageSize

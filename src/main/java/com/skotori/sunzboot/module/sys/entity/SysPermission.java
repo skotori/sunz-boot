@@ -24,8 +24,6 @@ public class SysPermission {
     private String code;
     // 路径
     private String path;
-    // 组件
-    private String component;
     // 排序号
     private Integer sortNum;
     // 权限类型(1：菜单 2：按钮 3：接口)
@@ -106,14 +104,6 @@ public class SysPermission {
 
     public void setPath(String path) {
         this.path = path;
-    }
-
-    public String getComponent() {
-        return component;
-    }
-
-    public void setComponent(String component) {
-        this.component = component;
     }
 
     public Integer getSortNum() {
@@ -222,7 +212,6 @@ public class SysPermission {
                 ", name='" + name + '\'' +
                 ", code='" + code + '\'' +
                 ", path='" + path + '\'' +
-                ", component='" + component + '\'' +
                 ", sortNum=" + sortNum +
                 ", permissionType=" + permissionType +
                 ", remark='" + remark + '\'' +

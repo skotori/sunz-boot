@@ -23,6 +23,15 @@ public class SysRoleService {
     private SysRoleMapper sysRoleMapper;
 
     /**
+     * 查询角色列表
+     * @param role
+     * @return
+     */
+    public List<SysRole> queryList(SysRole role) {
+        return sysRoleMapper.selectList(role);
+    }
+
+    /**
      * 分页查询角色列表
      * @param pageNum
      * @param pageSize

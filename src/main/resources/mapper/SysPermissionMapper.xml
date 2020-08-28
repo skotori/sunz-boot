@@ -14,7 +14,7 @@
 
 
     <select id="selectMenuNodeList" parameterType="java.lang.String" resultType="com.skotori.sunzboot.common.tree.treeNode.MenuTreeNode">
-        select distinct p.id, p.parent_id, p.name as label, p.icon, p.name, p.code, p.path, p.component, p.sort_num, p.disabled_state
+        select distinct p.id, p.parent_id, p.name as label, p.icon, p.name, p.code, p.path, p.sort_num, p.disabled_state
         from sys_permission as p
         left join sys_role_permission as rp on p.id = rp.permission_id
         left join sys_role as r on rp.role_id = r.id
@@ -80,9 +80,6 @@
             <if test="path != null and path != ''">
                 path,
             </if>
-            <if test="component != null and component != ''">
-                component,
-            </if>
             <if test="sortNum != null and sortNum != ''">
                 sort_num,
             </if>
@@ -108,9 +105,6 @@
             #{code},
             <if test="path != null and path != ''">
                 #{path},
-            </if>
-            <if test="component != null and component != ''">
-                #{component},
             </if>
             <if test="sortNum != null and sortNum != ''">
                 #{sortNum},
@@ -155,9 +149,6 @@
         </if>
         <if test="path != null and path != ''">
             path = #{path},
-        </if>
-        <if test="component != null and component != ''">
-            component = #{component},
         </if>
         <if test="sortNum != null and sortNum != ''">
             sort_num = #{sortNum},

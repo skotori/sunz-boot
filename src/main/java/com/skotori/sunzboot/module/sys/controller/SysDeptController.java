@@ -30,6 +30,20 @@ public class SysDeptController {
     private SysDeptService sysDeptService;
 
     /**
+     * 查询部门列表
+     * @param dept
+     * @return
+     */
+    @PostMapping("queryList")
+    @Log(msg = "查询部门列表", type = OPERATE_LOG)
+    public Result queryList(@RequestBody SysDept dept) {
+        log.info("查询部门列表，body参数dept：[ {} ]", dept);
+        List<SysDept> deptList = sysDeptService.queryList(dept);
+        log.info("查询部门列表成功");
+        return Result.success(deptList);
+    }
+
+    /**
      * 分页查询部门列表
      * @param pageNum
      * @param pageSize

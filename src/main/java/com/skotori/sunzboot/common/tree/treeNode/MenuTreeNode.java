@@ -15,8 +15,6 @@ public class MenuTreeNode extends TreeNode {
     private String code;
     // 路径
     private String path;
-    // 组件
-    private String component;
     // 排序号
     private Integer sortNum;
     // 禁用状态(0：未禁用 1：已禁用)
@@ -52,14 +50,6 @@ public class MenuTreeNode extends TreeNode {
 
     public void setPath(String path) {
         this.path = path;
-    }
-
-    public String getComponent() {
-        return component;
-    }
-
-    public void setComponent(String component) {
-        this.component = component;
     }
 
     public Integer getSortNum() {

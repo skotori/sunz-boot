@@ -29,6 +29,20 @@ public class SysRoleController {
     private SysRoleService sysRoleService;
 
     /**
+     * 查询角色列表
+     * @param role
+     * @return
+     */
+    @PostMapping("queryList")
+    @Log(msg = "查询角色列表", type = OPERATE_LOG)
+    public Result queryList(@RequestBody SysRole role) {
+        log.info("查询角色列表，body参数role：[ {} ]", role);
+        List<SysRole> roleList = sysRoleService.queryList(role);
+        log.info("查询角色列表成功");
+        return Result.success(roleList);
+    }
+
+    /**
      * 分页查询角色列表
      * @param pageNum
      * @param pageSize
